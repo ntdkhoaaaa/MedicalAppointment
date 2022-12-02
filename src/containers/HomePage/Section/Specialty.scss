@@ -1,0 +1,28 @@
+.specialty-child {
+    cursor: pointer;
+
+    .specialty-name{
+        padding: 10px 0;
+
+        &:hover{
+            color: #45c3d2;
+        }
+    }
+}
+
+// .btn-section {
+//     float: right;
+//     padding: 10px 15px;
+//     border: none;
+//     outline: none;
+//     display: block;
+//     background: #ebebeb;
+//     color: black;
+//     cursor: pointer;
+//     text-transform: uppercase;
+
+//     &:hover {
+//         color: white;
+//         background: rgb(219, 219, 13);
+//     }
+// }
