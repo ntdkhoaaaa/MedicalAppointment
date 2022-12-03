@@ -1,4 +1,9 @@
 import axios from '../axios';
+import { setAuthHeader } from './filterService'
+
+const handleGetPermission = (token) => {
+    return axios.get('/api/check-permission', setAuthHeader(token))
+}
 const handleLoginApi = (userEmail, userPassword) => {
     return axios.post('/api/login', { email: userEmail, password: userPassword });
 }
@@ -89,6 +94,7 @@ const getDetailSpecialtyById = (data) => {
 const handleRegisterApi = async (data) => {
     return await axios.post('/api/register', data)
 }
+
 export {
     handleLoginApi,
     getAllUsers,
@@ -105,5 +111,5 @@ export {
     getProfileDoctorById, postPatientAppointment,
     postVerifyBooking, addNewSpecialty,
     getAllSpecialties, addNewClinic, getAllClinics,
-    getDetailSpecialtyById, handleRegisterApi
+    getDetailSpecialtyById, handleRegisterApi, handleGetPermission
 }

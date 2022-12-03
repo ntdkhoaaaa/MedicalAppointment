@@ -4,7 +4,7 @@ import {
     createNewUserService, getAllUsers,
     editUserService, getTopDoctorHomeService,
     getAllDoctors, saveDetailDoctorService, getAllMarkdown, getDetailInforDoctor,
-    getAllSpecialties, getAllClinics
+    getAllSpecialties, getAllClinics, handleGetPermission
 
 } from '../../services/userServices';
 import { toast } from "react-toastify";
@@ -170,8 +170,6 @@ export const fetchAllMarkdownSuccess = (data) => ({
 export const fetchAllMarkdownFailed = () => ({
     type: actionTypes.FETCH_ALL_MARKDOWN_FAILED,
 })
-
-
 export const fetchAllUsersSucess = (users) => ({
     type: actionTypes.FETCH_ALL_USERS_SUCCESS,
     users: users
@@ -436,6 +434,32 @@ export const fetchAllClinics = () => {
             dispatch({
                 type: actionTypes.FETCH_ALL_CLINICS_FAILED,
             })
+        }
+    }
+}
+export const fetchPermission = (token) => {
+    return async (dispatch, getState) => {
+        try {
+            console.log('UA CO VAO DAY KO')
+            let res = await handleGetPermission(token);
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.PERMISSION_SUCCESS,
+                    data: res.role
+                });
+            }
+            else {
+                dispatch({
+                    type: actionTypes.PERMISSION_FAIL,
+                    data: res.role
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: actionTypes.PERMISSION_FAIL,
+                data: 'R0'
+            });
+            console.log(error)
         }
     }
 }

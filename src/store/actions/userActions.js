@@ -3,9 +3,10 @@ import actionTypes from './actionTypes';
 export const addUserSuccess = () => ({
     type: actionTypes.ADD_USER_SUCCESS
 })
-export const userLoginSuccess = (userInfo) => ({
+export const userLoginSuccess = (userInfo, accessToken) => ({
     type: actionTypes.USER_LOGIN_SUCCESS,
-    userInfo: userInfo
+    userInfo: userInfo,
+    accessToken: accessToken,
 })
 export const userLoginFail = () => ({
     type: actionTypes.USER_LOGIN_FAIL

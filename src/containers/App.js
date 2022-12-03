@@ -26,6 +26,8 @@ import Doctor from '../routes/Doctor';
 import CustomScrollbars from '../components/CustomScrollbars';
 import VerifyEmail from './Patient/VerifyEmail';
 import DetailSpecialty from './Patient/Specialty/DetailSpecialty';
+import { fetchPermission } from '../store/actions';
+
 class App extends Component {
 
     handlePersistorState = () => {
@@ -47,6 +49,11 @@ class App extends Component {
     }
 
     render() {
+        let { isLoggedIn } = this.props;
+        if (isLoggedIn) {
+            console.log('token', this.props.accessToken)
+            this.props.getPermission(this.props.accessToken)
+        }
         return (
             <Fragment>
                 <Router history={history}>
@@ -89,12 +96,14 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         started: state.app.started,
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        accessToken: state.user.accessToken
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getPermission: (token) => dispatch(fetchPermission(token))
     };
 };
 
