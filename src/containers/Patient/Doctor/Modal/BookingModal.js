@@ -37,6 +37,14 @@ class BookingModal extends Component {
     }
     componentDidMount() {
         this.props.getGendersStart();
+        console.log('user info', this.props.userInfo)
+        if (this.props.isLoggedIn) {
+            this.setState({
+                email: this.props.userInfo?.email,
+                lastName: this.props.userInfo?.lastName,
+                firstName: this.props.userInfo?.firstName,
+            })
+        }
     }
     buildDataGenders = (data) => {
         let result = []
@@ -67,12 +75,20 @@ class BookingModal extends Component {
                 let doctorId = this.props.dataTime.doctorId
                 let timetype = this.props.dataTime.timetype
                 let date = this.props.dataTime.date
+                console.log('date', this.props.dataTime)
                 this.setState({
                     doctorId: doctorId,
                     timetype: timetype,
                     date: date
                 })
             }
+        }
+        if (this.props.userInfo !== prevProps.userInfo) {
+            this.setState({
+                email: this.props.userInfo?.email,
+                lastName: this.props.userInfo?.lastName,
+                firstName: this.props.userInfo?.firstName,
+            })
         }
     }
     handleOnChangeInput = (event, id) => {
@@ -135,13 +151,13 @@ class BookingModal extends Component {
             doctorId: this.state.doctorId,
             forwho: this.state.forwho,
             timetype: this.state.timetype,
-            date: this.state.date,
+            date: this.props.dataTime.date,
             language: this.props.language,
             pickDate: timeString,
             patientAge: this.state.patientAge,
             doctorName: doctorName,
         })
-        // console.log('check req', res)
+        console.log('check req', res)
         if (res && res.errCode === 0) {
             toast.success('Thêm lịch hẹn thành công')
         }
@@ -151,7 +167,7 @@ class BookingModal extends Component {
     }
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
-        // console.log('check state modal', dataTime)
+        console.log('check state modal', dataTime);
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : ''
         return (
             <Modal
@@ -178,6 +194,19 @@ class BookingModal extends Component {
                             />
                         </div>
                         <div className='row'>
+                            <div className='col-6 form-group'>
+                                <label><FormattedMessage id="patient.modal-booking.email" /></label>
+                                <input className='form-control'
+                                    readOnly={true}
+                                    value={this.state.email}
+                                    onChange={(event) => this.handleOnChangeInput(event, 'email')}></input>
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label><FormattedMessage id="patient.modal-booking.address-contact" /></label>
+                                <input className='form-control'
+                                    value={this.state.address}
+                                    onChange={(event) => this.handleOnChangeInput(event, 'address')}></input>
+                            </div>
                             <div className='col-4 form-group'>
                                 <label><FormattedMessage id="patient.modal-booking.lastname" /></label>
                                 <input className='form-control'
@@ -196,18 +225,7 @@ class BookingModal extends Component {
                                     value={this.state.phoneNumber}
                                     onChange={(event) => this.handleOnChangeInput(event, 'phoneNumber')}></input>
                             </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.modal-booking.email" /></label>
-                                <input className='form-control'
-                                    value={this.state.email}
-                                    onChange={(event) => this.handleOnChangeInput(event, 'email')}></input>
-                            </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.modal-booking.address-contact" /></label>
-                                <input className='form-control'
-                                    value={this.state.address}
-                                    onChange={(event) => this.handleOnChangeInput(event, 'address')}></input>
-                            </div>
+
                             <div className='col-12 form-group'>
                                 <label><FormattedMessage id="patient.modal-booking.prognostic" /></label>
                                 <input className='form-control'
@@ -252,7 +270,8 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
-
+        isLoggedIn: state.user.isLoggedIn,
+        userInfo: state.user.userInfo,
     };
 };
 
