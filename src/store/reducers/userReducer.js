@@ -15,6 +15,7 @@ const appReducer = (state = initialState, action) => {
                 isLoggedIn: true,
                 userInfo: action.userInfo,
                 accessToken: action.accessToken,
+                permission: action.userInfo.roleId,
             }
         case actionTypes.USER_LOGIN_FAIL:
             return {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, NavLink } from 'react-router-dom';
 import UserManage from '../containers/System/UserManage';
 import UserRedux from '../containers/System/Admin/UserRedux';
 import Header from '../containers/Header/Header';
@@ -9,8 +9,17 @@ import ManageSpecialty from '../containers/System/Specialty/ManageSpecialty';
 import ManageClinic from '../containers/System/Clinic/ManageClinic';
 class System extends Component {
     render() {
-        // 
-
+        console.log('aaa',this.props.permission)
+        if (this.props.permission === 'R2') {
+            return (
+                < Redirect to={'/doctor/manage-schedule'} />
+            );
+        }
+        if (this.props.permission === 'R3') {
+            return (
+                < Redirect to={'/home'} />
+            );
+        }
         const { systemMenuPath, isLoggedIn } = this.props;
         return (
             <React.Fragment>
@@ -35,7 +44,8 @@ class System extends Component {
 const mapStateToProps = state => {
     return {
         systemMenuPath: state.app.systemMenuPath,
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        permission: state.user.permission,
 
     };
 };

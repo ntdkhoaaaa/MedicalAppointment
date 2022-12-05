@@ -440,8 +440,9 @@ export const fetchAllClinics = () => {
 export const fetchPermission = (token) => {
     return async (dispatch, getState) => {
         try {
-            console.log('UA CO VAO DAY KO')
+
             let res = await handleGetPermission(token);
+            console.log('res', res)
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.PERMISSION_SUCCESS,

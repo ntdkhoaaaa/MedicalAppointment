@@ -259,6 +259,12 @@ class ManageSchedule extends Component {
         })
     }
     render() {
+        let { permission } = this.props;
+        if (permission === 'R3') {
+            return (
+                <Redirect to='/home' />
+            )
+        }
         let { rangeTime, isOpenModalCanceSchedule, selectedItem } = this.state;
         let { language } = this.props;
         console.log('render', selectedItem)
@@ -329,6 +335,7 @@ const mapStateToProps = state => {
         language: state.app.language,
         allDoctors: state.admin.allDoctors,
         allScheduleTime: state.admin.allScheduleTime,
+        permission: state.user.permission,
     };
 };
 

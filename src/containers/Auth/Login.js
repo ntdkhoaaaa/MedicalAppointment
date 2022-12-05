@@ -127,7 +127,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language
+        language: state.app.language,
+        permission: state.user.permission
     };
 };
 

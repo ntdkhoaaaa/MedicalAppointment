@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Redirect, Route, Switch, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './userManage.scss';
 import { getAllUsers, createNewUserService, deleteUserService, editUserService } from '../../services/userServices';
@@ -96,6 +97,17 @@ class UserManage extends Component {
         let res = await editUserService(user);
     }
     render() {
+        console.log("aaaa", this.props.permission)
+        if (this.props.permission === 'R2') {
+            return (
+                < Redirect to={'/doctor/manage-schedule'} />
+            );
+        }
+        if (this.props.permission === 'R3') {
+            return (
+                < Redirect to={'/home'} />
+            );
+        }
         let arrUsers = this.state.arrUsers;
         return (
             <div className="users-container">
@@ -158,6 +170,8 @@ class UserManage extends Component {
 
 const mapStateToProps = state => {
     return {
+        permission: state.user.permission,
+
     };
 };
 

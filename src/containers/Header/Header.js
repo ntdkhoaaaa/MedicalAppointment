@@ -21,20 +21,39 @@ class Header extends Component {
         this.props.changeLanguageAppRedux(language)
     }
     componentDidMount() {
-        let { userInfo } = this.props;
+        let { permission } = this.props;
         let menu = [];
-        if (userInfo && !_.isEmpty(userInfo)) {
-            let role = userInfo.roleId;
-            if (role === USER_ROLE.ADMIN) {
+        console.log("abccc", permission)
+        if (permission && !_.isEmpty(permission)) {
+            if (permission === USER_ROLE.ADMIN) {
                 menu = adminMenu;
             }
-            if (role === USER_ROLE.DOCTOR) {
+            if (permission === USER_ROLE.DOCTOR) {
                 menu = doctorMenu;
             }
         }
         this.setState({
             menuApp: menu
         })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.permission !== this.props.permission) {
+            let { permission } = this.props;
+            let menu = [];
+            console.log("abccc", permission)
+            if (permission && !_.isEmpty(permission)) {
+                if (permission === USER_ROLE.ADMIN) {
+                    menu = adminMenu;
+                }
+                if (permission === USER_ROLE.DOCTOR) {
+                    menu = doctorMenu;
+                }
+            }
+            this.setState({
+                menuApp: menu
+            })
+        }
     }
     render() {
         const { processLogout, language, userInfo } = this.props;
@@ -66,6 +85,7 @@ const mapStateToProps = state => {
         isLoggedIn: state.user.isLoggedIn,
         userInfo: state.user.userInfo,
         language: state.app.language,
+        permission: state.user.permission,
     };
 };
 
