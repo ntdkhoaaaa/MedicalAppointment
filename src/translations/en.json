@@ -49,7 +49,8 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
-            "schedule": "Manage Doctor's schedule"
+            "schedule": "Manage Doctor's schedule",
+            "manage-patient": "Manage Patient's"
         }
     },
     "manage-user": {
@@ -70,7 +71,7 @@
     "homepage": {
         "outstanding-doctor": "Weekly Outstanding Doctors",
         "for-more": "For More",
-        "popular-specialties":"Popular Specialties"
+        "popular-specialties": "Popular Specialties"
     },
     "manage-schedule": {
         "title": "Manage Doctor's Schedule",

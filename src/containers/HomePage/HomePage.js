@@ -25,15 +25,23 @@ class HomePage extends Component {
             slidesToScroll: 1,
         };
         return (
-            <div>
-                <HomeHeader isShowBanner={true} />
-                <Specialty settings={settings} />
-                <MedicalFacility settings={settings} />
-                <OutstandingDoctor settings={settings} />
-                <HandBook settings={settings} />
-                <About settings={settings} />
-                <HomeFooter />
-            </div>
+            <>
+                {!this.props.isLoggedIn || (this.props.isLoggedIn && this.props.permission) ?
+                    <div>
+                        <HomeHeader isShowBanner={true} />
+                        <Specialty settings={settings} />
+                        <MedicalFacility settings={settings} />
+                        <OutstandingDoctor settings={settings} />
+                        <HandBook settings={settings} />
+                        <About settings={settings} />
+                        <HomeFooter />
+                    </div> : <div>loading....</div>
+
+
+                }
+
+            </>
+
         );
     }
 
@@ -41,7 +49,8 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        permission: state.user.permission,
     };
 };
 

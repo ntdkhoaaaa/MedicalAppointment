@@ -94,7 +94,9 @@ const getDetailSpecialtyById = (data) => {
 const handleRegisterApi = async (data) => {
     return await axios.post('/api/register', data)
 }
-
+const getListPatientForDoctor = (data) => {
+    return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
+}
 export {
     handleLoginApi,
     getAllUsers,
@@ -111,5 +113,5 @@ export {
     getProfileDoctorById, postPatientAppointment,
     postVerifyBooking, addNewSpecialty,
     getAllSpecialties, addNewClinic, getAllClinics,
-    getDetailSpecialtyById, handleRegisterApi, handleGetPermission
+    getDetailSpecialtyById, handleRegisterApi, handleGetPermission, getListPatientForDoctor
 }

@@ -2,23 +2,33 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ManageSchedule from '../containers/System/Doctor/ManageSchedule';
+import ManagePatient from '../containers/System/Doctor/ManagePatient';
+
 import Header from '../containers/Header/Header';
 class Doctor extends Component {
     render() {
-        // 
-
         const { isLoggedIn } = this.props;
         return (
             <React.Fragment>
-                {isLoggedIn && <Header />}
-                <div className="system-container">
-                    <div className="system-list">
-                        <Switch>
-                            <Route path="/doctor/manage-schedule" component={ManageSchedule} />
-                        </Switch>
+                {this.props.permission ?
+                    <>
+                        <Header />
+                        <div className="system-container">
+                            <div className="system-list">
+                                <Switch>
+                                    <Route path="/doctor/manage-schedule" component={ManageSchedule} />
+                                    <Route path="/doctor/manager-patient" component={ManagePatient} />
+
+                                </Switch>
+                            </div>
+                        </div>
+                    </> :
+                    <div>
+                        Loading....
                     </div>
-                </div>
+                }
             </React.Fragment>
+
         );
     }
 }
@@ -26,8 +36,8 @@ class Doctor extends Component {
 const mapStateToProps = state => {
     return {
         systemMenuPath: state.app.systemMenuPath,
-        isLoggedIn: state.user.isLoggedIn
-
+        isLoggedIn: state.user.isLoggedIn,
+        permission: state.user.permission
     };
 };
 
