@@ -37,7 +37,6 @@ class BookingModal extends Component {
     }
     componentDidMount() {
         this.props.getGendersStart();
-        console.log('user info', this.props.userInfo)
         if (this.props.isLoggedIn) {
             this.setState({
                 email: this.props.userInfo?.email,

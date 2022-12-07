@@ -19,7 +19,6 @@ class Specialty extends Component {
         }
     }
     componentDidUpdate(prevProps, prevState, snapShot) {
-        console.log(this.state.arrSpecialties)
         if (prevProps.allSpecialties !== this.props.allSpecialties) {
             this.setState({
                 arrSpecialties: this.props.allSpecialties,

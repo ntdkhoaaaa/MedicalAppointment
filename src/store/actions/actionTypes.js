@@ -71,6 +71,7 @@ const actionTypes = Object.freeze({
     PERMISSION_SUCCESS: 'PERMISSION_SUCCESS',
     PERMISSION_FAIL: 'PERMISSION_FAIL',
 
+    REFRESH_TOKEN: 'REFRESH_TOKEN',
 
 })
 

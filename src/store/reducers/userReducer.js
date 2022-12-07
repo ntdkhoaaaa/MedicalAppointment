@@ -5,6 +5,8 @@ const initialState = {
     userInfo: null,
     accessToken: '',
     permission: '',
+    refreshToken: '',
+    loadPermission: false,
 }
 
 const appReducer = (state = initialState, action) => {
@@ -16,6 +18,8 @@ const appReducer = (state = initialState, action) => {
                 userInfo: action.userInfo,
                 accessToken: action.accessToken,
                 permission: action.userInfo.roleId,
+                refreshToken: action.refreshToken,
+                loadPermission: true,
             }
         case actionTypes.USER_LOGIN_FAIL:
             return {
@@ -28,12 +32,16 @@ const appReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: false,
                 userInfo: null,
-                accessToken: ''
+                accessToken: '',
+                permission: '',
+                refreshToken: '',
             }
         case actionTypes.PERMISSION_SUCCESS:
             return {
                 ...state,
-                permission: action.data
+                permission: action.data,
+                userInfo: action.userInfo,
+                loadPermission: true
             }
         case actionTypes.PERMISSION_FAIL:
             return {
@@ -41,7 +49,19 @@ const appReducer = (state = initialState, action) => {
                 permission: action.data,
                 isLoggedIn: false,
                 userInfo: null,
-                accessToken: ''
+                accessToken: '',
+                refreshToken: '',
+                loadPermission: false,
+            }
+        case actionTypes.REFRESH_TOKEN:
+            console.log('action', action)
+            return {
+                ...state,
+                accessToken: action.accessToken,
+                userInfo: action.user,
+                permission: action.user.roleId,
+                refreshToken: action.refreshToken,
+                loadPermission: true
             }
         default:
             return state;

@@ -42,7 +42,6 @@ class DoctorExtraInfor extends Component {
         this.setState({ isShowDetailedInfo: status });
     }
     render() {
-        // 
         let { language } = this.props;
 
         let { isShowDetailedInfo, extraInfor } = this.state

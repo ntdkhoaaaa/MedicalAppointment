@@ -33,29 +33,23 @@ export const fetchGenderSuccess = (genderData) => ({
     type: actionTypes.FETCH_GENDER_SUCCESS,
     data: genderData,
 })
-
 export const fetchGenderFail = () => ({
     type: actionTypes.FETCH_GENDER_FAILED,
 })
-
 export const fetchRolesSuccess = (rolesData) => ({
     type: actionTypes.FETCH_ROLES_SUCCESS,
     data: rolesData,
 })
-
 export const fetchRolesFail = () => ({
     type: actionTypes.FETCH_ROLES_FAILED,
 })
-
 export const fetchPositionSuccess = (positionData) => ({
     type: actionTypes.FETCH_POSITION_SUCCESS,
     data: positionData,
 })
-
 export const fetchPositionFail = () => ({
     type: actionTypes.FETCH_POSITION_FAILED,
 })
-
 
 export const fetchPositionStart = () => {
 
@@ -78,8 +72,6 @@ export const fetchPositionStart = () => {
         }
     }
 }
-
-
 
 export const fetchRolesStart = () => {
 
@@ -437,16 +429,15 @@ export const fetchAllClinics = () => {
         }
     }
 }
-export const fetchPermission = (token) => {
+export const fetchPermission = () => {
     return async (dispatch, getState) => {
         try {
-
-            let res = await handleGetPermission(token);
-            console.log('res', res)
+            let res = await handleGetPermission();
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.PERMISSION_SUCCESS,
-                    data: res.role
+                    data: res.role,
+                    userInfo: res.userInfo
                 });
             }
             else {

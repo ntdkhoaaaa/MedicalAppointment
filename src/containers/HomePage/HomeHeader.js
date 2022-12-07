@@ -13,7 +13,9 @@ class HomeHeader extends Component {
         this.props.changeLanguageAppRedux(language)
     }
     render() {
+        console.log('permission', this.props.permission)
         let language = this.props.language;
+        let userInfo = this.props.userInfo;
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -45,8 +47,8 @@ class HomeHeader extends Component {
                             <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => this.changeLanguage(LANGUAGES.VI)}>VN</span></div>
                             <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span></div>
                             {/* {language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}
-{language === LANGUAGES.EN ? 'language-en active' : 'language-en'}
- */}
+                            {language === LANGUAGES.EN ? 'language-en active' : 'language-en'}
+                            */}
                         </div>
                     </div>
                 </div>
@@ -101,7 +103,7 @@ const mapStateToProps = state => {
         isLoggedIn: state.user.isLoggedIn,
         userInfo: state.user.userInfo,
         language: state.app.language,
-
+        permission: state.user.permission,
     };
 };
 

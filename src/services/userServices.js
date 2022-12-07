@@ -1,8 +1,8 @@
 import axios from '../axios';
 import { setAuthHeader } from './filterService'
 
-const handleGetPermission = (token) => {
-    return axios.get('/api/check-permission', setAuthHeader(token))
+const handleGetPermission = () => {
+    return axios.get(`/api/check-permission`)
 }
 const handleLoginApi = (userEmail, userPassword) => {
     return axios.post('/api/login', { email: userEmail, password: userPassword });
