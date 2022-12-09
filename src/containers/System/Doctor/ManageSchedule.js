@@ -53,8 +53,10 @@ class ManageSchedule extends Component {
     buildDataInputSelect = (inputData) => {
         let result = [];
         let { language } = this.props;
+        console.log('data ', inputData)
         if (inputData && inputData.length > 0) {
             inputData.map((item, index) => {
+                console.log('vao dayyy')
                 let object = {};
                 let labelVi = `${item.lastName} ${item.firstName}`;
                 let labelEn = `${item.firstName} ${item.lastName}`;
@@ -63,6 +65,7 @@ class ManageSchedule extends Component {
                 result.push(object);
             })
         }
+        console.log('dataa', result)
         return result;
     }
     handleChange = async (selectedOption) => {
@@ -267,7 +270,6 @@ class ManageSchedule extends Component {
         }
         let { rangeTime, isOpenModalCanceSchedule, selectedItem } = this.state;
         let { language } = this.props;
-        console.log('render', selectedItem)
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         return (
             <div className='manage-schedule-container'>

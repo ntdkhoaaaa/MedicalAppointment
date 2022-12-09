@@ -40,7 +40,6 @@ class Header extends Component {
         if (prevProps.permission !== this.props.permission) {
             let { permission } = this.props;
             let menu = [];
-            console.log("abccc", permission)
             if (permission && !_.isEmpty(permission)) {
                 if (permission === USER_ROLE.ADMIN) {
                     menu = adminMenu;

@@ -7,9 +7,7 @@ import { ToastContainer } from 'react-toastify';
 
 
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
-
 import { path } from '../utils'
-
 import Home from '../routes/Home';
 // import Login from '../routes/Login';
 import Login from './Auth/Login';
@@ -50,17 +48,15 @@ class App extends Component {
     }
 
     render() {
-        let { isLoggedIn } = this.props;
-        if (isLoggedIn) {
-            console.log('token', this.props.accessToken)
-            this.props.getPermission(this.props.accessToken)
+        let { isLoggedIn, loadPermission } = this.props;
+        if (isLoggedIn && !loadPermission) {
+            this.props.getPermission()
         }
         return (
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
                         <ConfirmModal />
-
                         <div className="content-container">
                             <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                                 <Switch>
@@ -99,13 +95,14 @@ const mapStateToProps = state => {
     return {
         started: state.app.started,
         isLoggedIn: state.user.isLoggedIn,
-        accessToken: state.user.accessToken
+        refreshToken: state.user.refreshToken,
+        loadPermission: state.user.loadPermission,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPermission: (token) => dispatch(fetchPermission(token))
+        getPermission: () => dispatch(fetchPermission())
     };
 };
 

@@ -8,8 +8,8 @@ import ManageDoctor from '../containers/System/Admin/ManageDoctor'
 import ManageSpecialty from '../containers/System/Specialty/ManageSpecialty';
 import ManageClinic from '../containers/System/Clinic/ManageClinic';
 class System extends Component {
+
     render() {
-        console.log('aaa',this.props.permission)
         if (this.props.permission === 'R2') {
             return (
                 < Redirect to={'/doctor/manage-schedule'} />
@@ -23,19 +23,26 @@ class System extends Component {
         const { systemMenuPath, isLoggedIn } = this.props;
         return (
             <React.Fragment>
-                {isLoggedIn && <Header />}
-                <div className="system-container">
-                    <div className="system-list">
-                        <Switch>
-                            <Route path="/system/user-manage" component={UserManage} />
-                            <Route path="/system/user-redux" component={UserRedux} />
-                            <Route path="/system/manage-doctor" component={ManageDoctor} />
-                            <Route path="/system/manage-specialty" component={ManageSpecialty} />
-                            <Route path="/system/manage-clinic" component={ManageClinic} />
-                            <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
-                        </Switch>
+                {this.props.permission ?
+                    <>
+                        {isLoggedIn && <Header />}
+                        <div className="system-container">
+                            <div className="system-list">
+                                <Switch>
+                                    <Route path="/system/user-manage" component={UserManage} />
+                                    <Route path="/system/user-redux" component={UserRedux} />
+                                    <Route path="/system/manage-doctor" component={ManageDoctor} />
+                                    <Route path="/system/manage-specialty" component={ManageSpecialty} />
+                                    <Route path="/system/manage-clinic" component={ManageClinic} />
+                                    <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
+                                </Switch>
+                            </div>
+                        </div>
+                    </> :
+                    <div>
+                        Loading....
                     </div>
-                </div>
+                }
             </React.Fragment>
         );
     }

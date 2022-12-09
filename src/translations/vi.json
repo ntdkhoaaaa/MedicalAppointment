@@ -52,7 +52,7 @@
         },
         "doctor": {
             "schedule": "Quản lý kế hoạch khám bệnh",
-            "patient": "Quản lý bệnh nhân khám bệnh"
+            "patient": "Quản lý bệnh nhân"
         }
     },
     "manage-user": {

@@ -52,7 +52,7 @@
         },
         "doctor": {
             "schedule": "Manage Doctor's schedule",
-            "patient": "Manage Doctor's patient"
+            "patient": "Manage Patient's"
         }
     },
     "manage-user": {

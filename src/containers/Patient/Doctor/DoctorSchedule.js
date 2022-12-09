@@ -7,6 +7,8 @@ import { LANGUAGES } from '../../../utils';
 import { getScheduleDoctorByDate } from '../../../services/userServices'
 import { FormattedMessage } from 'react-intl';
 import BookingModal from './Modal/BookingModal';
+import { Redirect, withRouter } from 'react-router-dom';
+
 
 class DoctorSchedule extends Component {
     constructor(props) {
@@ -94,11 +96,18 @@ class DoctorSchedule extends Component {
         }
     }
     handleClickScheduleTime = (time) => {
-        // console.log(time)
-        this.setState({
-            isOpenModalBooking: true,
-            dataScheduleTimeModal: time
-        })
+
+        if (this.props.isLoggedIn) {
+            // console.log(time)
+            this.setState({
+                isOpenModalBooking: true,
+                dataScheduleTimeModal: time
+            })
+        }
+        else {
+            this.props.history.push('/login')
+        }
+
 
     }
     closeBookingModal = () => {
@@ -169,6 +178,7 @@ class DoctorSchedule extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 
@@ -178,4 +188,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoctorSchedule);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DoctorSchedule));

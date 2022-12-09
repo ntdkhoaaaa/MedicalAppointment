@@ -44,48 +44,54 @@ class DetailDoctor extends Component {
         // console.log('check markdown', detailDoctor.Markdown.description);
         return (
             <>
-                <HomeHeader
-                    isShowBanner={false} />
-                <div className='doctor-detail-container'>
-                    <div className='intro-doctor'>
-                        <div className='content-left'>
-                            <div className='image' style={{ backgroundImage: `url(${detailDoctor && detailDoctor.image ? detailDoctor.image : ''})` }}>
+                {!this.props.isLoggedIn || (this.props.isLoggedIn && this.props.permission) ?
+                    <>
+                        <HomeHeader
+                            isShowBanner={false} />
+                        <div className='doctor-detail-container'>
+                            <div className='intro-doctor'>
+                                <div className='content-left'>
+                                    <div className='image' style={{ backgroundImage: `url(${detailDoctor && detailDoctor.image ? detailDoctor.image : ''})` }}>
 
+                                    </div>
+                                </div>
+                                <div className='content-right'>
+                                    <div className='Up'>
+                                        {language === LANGUAGES.VI ? nameVi : nameEn}
+                                    </div>
+                                    <div className='Down'>
+                                        {detailDoctor.Markdown &&
+                                            detailDoctor.Markdown.description &&
+                                            <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.description }}>
+
+                                            </div>}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className='content-right'>
-                            <div className='Up'>
-                                {language === LANGUAGES.VI ? nameVi : nameEn}
+                            <div className='schedule-doctor'>
+                                <div className='content-left'>
+                                    <DoctorSchedule
+                                        doctorIdFromParent={this.state.currentDoctorId} />
+                                </div>
+                                <div className='content-right'>
+                                    <DoctorExtraInfor
+                                        doctorIdFromParent={this.state.currentDoctorId} />
+                                </div>
                             </div>
-                            <div className='Down'>
-                                {detailDoctor.Markdown &&
-                                    detailDoctor.Markdown.description &&
-                                    <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.description }}>
+                            <div className='detail-infor-doctor'>
+                                {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML
+                                    &&
+                                    <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}>
 
                                     </div>}
                             </div>
+                            <div className='comment-doctor'>
+                            </div>
                         </div>
-                    </div>
-                    <div className='schedule-doctor'>
-                        <div className='content-left'>
-                            <DoctorSchedule
-                                doctorIdFromParent={this.state.currentDoctorId} />
-                        </div>
-                        <div className='content-right'>
-                            <DoctorExtraInfor
-                                doctorIdFromParent={this.state.currentDoctorId} />
-                        </div>
-                    </div>
-                    <div className='detail-infor-doctor'>
-                        {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML
-                            &&
-                            <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}>
+                    </> : <div>loading...</div>
 
-                            </div>}
-                    </div>
-                    <div className='comment-doctor'>
-                    </div>
-                </div>
+                }
+
 
             </>
         );
@@ -95,6 +101,8 @@ class DetailDoctor extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        isLoggedIn: state.user.isLoggedIn,
+        permission: state.user.permission,
     };
 };
 

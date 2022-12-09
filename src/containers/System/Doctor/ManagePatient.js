@@ -1,155 +1,146 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../../utils';
-import './ManagePatient.scss'
+import { connect } from 'react-redux';
+import * as actions from "../../../store/actions"
 import DatePicker from '../../../components/Input/DatePicker';
-import { getPatientScheduleForDoctor } from '../../../services/userServices'
+
+import "./ManagePatient.scss";
+import { getListPatientForDoctor } from '../../../services/userServices';
+import MarkdownIt from 'markdown-it';
+import 'react-markdown-editor-lite/lib/index.css';
+import { Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedDoctor: '',
-            currentDate: new Date()
+            currentDate: moment(new Date()).startOf('days').valueOf(),
+            dataPatient: []
         }
     }
-    async componentDidMount() {
 
+    componentDidMount() {
+        let { user } = this.props;
+        let { currentDate } = this.state;
+        let formatedDate = new Date(currentDate).getTime();
+        this.getDataPatient(user, formatedDate)
     }
-    getSelectedScheduleforDoctor = async () => {
-        let { selectedDoctor, currentDate } = this.state;
-
-        // rangeTime.map(item => {
-        //     item.isSelected = false;
-        //     return item;
-        // })
-        let formatedDate = new Date(currentDate).getTime()
-        if (this.props.userInfo.id) {
-            let res = await getPatientScheduleForDoctor(
-                this.props.userInfo.id,
-                formatedDate.toString(),
-            )
-            console.log('log: res', res)
-            // if (res && res.errCode === 0) {
-            //     this.setState({
-            //         isSelectedSchedule: res.data ? res.data : []
-            //     })
-            // }
-            // rangeTime.map(item => {
-            //     this.checkIsSelected(item)
-            //     return item;
-            // })
-            // this.setState({
-            //     rangeTime: rangeTime
-            // })
+    getDataPatient = async (user, formatedDate) => {
+        let res = await getListPatientForDoctor({
+            doctorId: user.id,
+            date: formatedDate
+        })
+        if (res && res.errCode === 0) {
+            this.setState({
+                dataPatient: res.data
+            })
         }
     }
-    handleOnChangeDataPicker = async (date) => {
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.listusers !== this.props.listusers) {
+            this.setState({
+                userRedux: this.props.listusers,
+            })
+        }
+    }
+    handleOnChangeDatePicker = async (date) => {
         this.setState({
             currentDate: date[0]
+        }, () => {
+            let { user } = this.props;
+            let { currentDate } = this.state;
+            let formatedDate = new Date(currentDate).getTime();
+            this.getDataPatient(user, formatedDate)
         })
-        this.getSelectedScheduleforDoctor();
-        // let { selectedDoctor, currentDate, rangeTime } = this.state;
-
-
-        // rangeTime.map(item => {
-        //     item.isSelected = false;
-        //     return item;
-        // })
-        // let formatedDate = new Date(currentDate).getTime()
-        // if (selectedDoctor) {
-        //     let res = await getSelectedSchedule(
-        //         selectedDoctor.value,
-        //         formatedDate.toString(),
-        //     )
-
-        //     if (res && res.errCode === 0) {
-        //         this.setState({
-        //             isSelectedSchedule: res.data ? res.data : []
-        //         })
-        //     }
-        //     rangeTime.map(item => {
-        //         this.checkIsSelected(item)
-        //         return item;
-        //     })
-        //     this.setState({
-        //         rangeTime: rangeTime
-        //     })
-        // }
-
-    }
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language !== prevProps.language) {
-
-        }
     }
     render() {
-        let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-        console.log('props', this.props)
+        let { dataPatient } = this.state;
+        let { permission } = this.props;
+        console.log('permission: ', permission)
+        if (permission === 'R3') {
+            return (
+                <Redirect to='/home' />
+            )
+        }
+        console.log('co vo day k', dataPatient)
         return (
-            <div className='manage-patient-container'>
-                <div className='m-p-title'>
-                    Quản lý bệnh nhân khám bệnh
-                </div>
-                <div className='manage-patient-body row'>
-                    <div className='col-4 form-group'>
-                        <label>Chọn ngày khám</label>
-                        <DatePicker
-                            className='form-control'
-                            onChange={this.handleOnChangeDataPicker}
-                            value={this.state.currentDate}
-                            minDate={yesterday}
-                        />
+
+            <React.Fragment>
+                <div className='manage-patient-container'>
+                    <div className='m-p-title'>
+                        Quản lý bệnh nhân khám bệnh
                     </div>
-                    <div className='col-12 table-manage-patient'>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div className='manage-patient-body row'>
+                        <div className='col-4 form-group'>
+                            <label>Chọn ngày</label>
+                            <DatePicker
+                                onChange={this.handleOnChangeDatePicker}
+                                className="form-control"
+                                value={this.state.currentDate}
+                                minDate={new Date(new Date().setDate(new Date().getDate() - 1))}
+                            />
+                        </div>
+                        <div className='col-12 table-manage-patient'>
+                            <table style={{ width: '100%' }} >
+                                <tbody>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Thời gian</th>
+                                        <th>Họ và Tên</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Giới tính</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    {dataPatient && dataPatient.length > 0 ?
+                                        dataPatient.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{item.bookingDate}</td>
+                                                    <td>{`${item.patientData?.firstName} ${item.lastName}`}</td>
+                                                    <td>{item.address}</td>
+                                                    <td>{item.genderData?.valueVi}</td>
+                                                    <td>
+                                                        <button className='mp-btn-confirm'>
+                                                            Xác nhận
+                                                        </button>
+                                                        <button className='mp-btn-remedy'>
+                                                            Gửi hóa đơn
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            nodata
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language,
+        isLoggedIn: state.user.isLoggedIn,
         user: state.user.userInfo,
+        permission: state.user.permission,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        fetchUsersRedux: () => { dispatch(actions.fetchAllUsersStart()) },
+        fetchDeleteUser: (id) => { dispatch(actions.deleteUser(id)) }
     };
 };
 
