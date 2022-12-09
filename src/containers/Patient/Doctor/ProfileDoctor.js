@@ -79,7 +79,7 @@ class ProfileDoctor extends Component {
                     <div className='content-left' style={{ backgroundImage: `url(${dataProfile && dataProfile.image ? dataProfile.image : ''})` }}>
                     </div>
                     <div className='content-right'>
-                        <div className='Up' onClick={() => this.handleClickProfile()}>
+                        <div className='Up' >
                             <Link to={`/detail-doctor/${doctorId}`} >{language === LANGUAGES.VI ? nameVi : nameEn}</Link>
                         </div>
                         <div className='Down'>

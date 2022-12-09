@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './HomeHeader.scss'
 import logo from '../../assets/logo.svg'
 import { FormattedMessage } from 'react-intl';
+import * as actions from "../../store/actions";
+
 import { LANGUAGES } from "../../utils"
 import { changeLanguageApp } from '../../store/actions/';
 class HomeHeader extends Component {
@@ -12,8 +14,15 @@ class HomeHeader extends Component {
         //fire redux event:action
         this.props.changeLanguageAppRedux(language)
     }
+    componentDidMount() {
+        // let userInfo = this.props.userInfo;
+    }
     render() {
         let language = this.props.language;
+        let userInfo = this.props.userInfo
+        let isLoggedIn = this.props.isLoggedIn
+        let processLogout = this.props.processLogout
+        console.log(this.props.userInfo)
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -46,8 +55,20 @@ class HomeHeader extends Component {
                             <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span></div>
                             {/* {language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}
 {language === LANGUAGES.EN ? 'language-en active' : 'language-en'}
- */}
+ */}                        <div hidden={!isLoggedIn} className='profile-user'>
+                                <FormattedMessage id={"homeheader.hello"} />{userInfo?.firstName}
+                            </div>
+                            <div hidden={!isLoggedIn} className="btn btn-logout" onClick={processLogout} title="Log out">
+                                <i className="fas fa-sign-out-alt"></i>
+                            </div>
+                            <Link to='/login'>
+                                <div hidden={isLoggedIn} className="btn btn-logout" title="Log out">
+                                    <FormattedMessage id={"homeheader.login"} />
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </div>
+                            </Link>
                         </div>
+
                     </div>
                 </div>
                 {this.props.isShowBanner === true &&
@@ -86,6 +107,7 @@ class HomeHeader extends Component {
                                     <div className='icon-child'><i className="fas fa-briefcase-medical"></i></div>
                                     <div className='text-child'><FormattedMessage id={"banner.dentis-examination"} /></div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -107,6 +129,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        processLogout: () => dispatch(actions.processLogout()),
         changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
 };

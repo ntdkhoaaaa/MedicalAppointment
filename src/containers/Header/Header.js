@@ -23,7 +23,6 @@ class Header extends Component {
     componentDidMount() {
         let { permission } = this.props;
         let menu = [];
-        console.log("abccc", permission)
         if (permission && !_.isEmpty(permission)) {
             if (permission === USER_ROLE.ADMIN) {
                 menu = adminMenu;

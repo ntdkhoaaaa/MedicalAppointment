@@ -87,6 +87,7 @@ class ManageClinic extends Component {
                 name: '',
                 nameEn: '',
                 imageBase64: '',
+                previewImgURL: '',
                 descriptionHTML: '',
                 descriptionMarkdown: '',
                 address: '',

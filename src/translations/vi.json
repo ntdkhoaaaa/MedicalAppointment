@@ -9,7 +9,9 @@
         "Medical-package": "Gói khám",
         "General-health-check": "Khám sức khỏe tổng quát",
         "Support": "Hỗ trợ",
-        "welcome": "Xin chào Administrator, "
+        "welcome": "Xin chào Administrator, ",
+        "hello": "Xin chào, ",
+        "login": "Đăng nhập "
     },
     "banner": {
         "medical-platform": "Nền tảng y tế",
@@ -49,7 +51,8 @@
             "manage-handbook": "Quản lý cẩm nang"
         },
         "doctor": {
-            "schedule": "Quản lý kế hoạch khám bệnh"
+            "schedule": "Quản lý kế hoạch khám bệnh",
+            "patient": "Quản lý bệnh nhân khám bệnh"
         }
     },
     "manage-user": {
@@ -70,8 +73,7 @@
     "homepage": {
         "outstanding-doctor": "Bác sĩ nổi bậc tuần qua",
         "for-more": "Xem thêm",
-        "popular-specialties":"Chuyên khoa phổ biến"
-
+        "popular-specialties": "Chuyên khoa phổ biến"
     },
     "manage-schedule": {
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",

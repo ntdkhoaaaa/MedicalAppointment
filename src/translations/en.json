@@ -9,7 +9,9 @@
         "Medical-package": "Medical Packages",
         "General-health-check": "General Health Check",
         "Support": "Support",
-        "welcome": "Welcome Administrator, "
+        "welcome": "Welcome Administrator, ",
+        "hello": "Welcome, ",
+        "login": "Sign in "
     },
     "banner": {
         "medical-platform": "Medical Platform",
@@ -49,7 +51,8 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
-            "schedule": "Manage Doctor's schedule"
+            "schedule": "Manage Doctor's schedule",
+            "patient": "Manage Doctor's patient"
         }
     },
     "manage-user": {
@@ -70,7 +73,7 @@
     "homepage": {
         "outstanding-doctor": "Weekly Outstanding Doctors",
         "for-more": "For More",
-        "popular-specialties":"Popular Specialties"
+        "popular-specialties": "Popular Specialties"
     },
     "manage-schedule": {
         "title": "Manage Doctor's Schedule",

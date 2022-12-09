@@ -46,7 +46,6 @@ const mapStateToProps = state => {
         systemMenuPath: state.app.systemMenuPath,
         isLoggedIn: state.user.isLoggedIn,
         permission: state.user.permission,
-
     };
 };
 

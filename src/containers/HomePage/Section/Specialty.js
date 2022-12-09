@@ -19,7 +19,6 @@ class Specialty extends Component {
         }
     }
     componentDidUpdate(prevProps, prevState, snapShot) {
-        console.log(this.state.arrSpecialties)
         if (prevProps.allSpecialties !== this.props.allSpecialties) {
             this.setState({
                 arrSpecialties: this.props.allSpecialties,
@@ -33,6 +32,7 @@ class Specialty extends Component {
         if (this.props.history) {
             this.props.history.push(`/detail-specialty/${specialty.id}`)
         }
+
     }
     render() {
         let arrSpecialties = this.state.arrSpecialties;
