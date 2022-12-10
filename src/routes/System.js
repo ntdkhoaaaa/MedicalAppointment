@@ -8,7 +8,6 @@ import ManageDoctor from '../containers/System/Admin/ManageDoctor'
 import ManageSpecialty from '../containers/System/Specialty/ManageSpecialty';
 import ManageClinic from '../containers/System/Clinic/ManageClinic';
 class System extends Component {
-
     render() {
         if (this.props.permission === 'R2') {
             return (

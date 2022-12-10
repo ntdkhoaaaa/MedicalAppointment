@@ -2,7 +2,7 @@ import actionTypes from './actionTypes';
 import {
     getAllCodeService, deleteUserService,
     createNewUserService, getAllUsers,
-    editUserService, getTopDoctorHomeService,
+    editUserService, getTopDoctorHomeService, editUserInforByOwnService,
     getAllDoctors, saveDetailDoctorService, getAllMarkdown, getDetailInforDoctor,
     getAllSpecialties, getAllClinics, handleGetPermission
 
@@ -213,6 +213,26 @@ export const EditUser = (userId) => {
         } catch (e) {
             toast.success('Delete a new user failed')
 
+            dispatch(editUserFailed());
+            console.log("editUserFailed", e);
+        }
+    }
+}
+export const EditUserInforByOwn = (userId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await editUserInforByOwnService(userId);
+            if (res && res.errCode === 0) {
+                toast.success('Update user success')
+                dispatch(editUserSuccess());
+                dispatch(fetchAllUsersStart());
+            }
+            else {
+                toast.success('Delete a new user failed')
+                dispatch(editUserFailed());
+            }
+        } catch (e) {
+            toast.success('Delete a new user failed')
             dispatch(editUserFailed());
             console.log("editUserFailed", e);
         }

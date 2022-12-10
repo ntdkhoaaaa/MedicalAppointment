@@ -107,6 +107,17 @@
                     color: #49bce2;
                 }
             }
+            .name-patient{
+                cursor: pointer;
+                &.active {
+                    opacity: 1;
+    
+                    span {
+                        color: blue;
+                    }
+                }
+            }
+
         }
     }
 }

@@ -24,6 +24,9 @@ const deleteUserService = (userId) => {
 const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData);
 }
+const editUserInforByOwnService = (inputData) => {
+    return axios.put('/api/edit-on-own-user-infor', inputData);
+}
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/allcode?type=${inputType}`)
 }
@@ -117,5 +120,5 @@ export {
     postVerifyBooking, addNewSpecialty,
     getAllSpecialties, addNewClinic, getAllClinics,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
-    getDetailClinicById, getListPatientForDoctor
+    getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService
 }

@@ -67,7 +67,6 @@ class ManagePatient extends Component {
         }
         console.log('co vo day k', dataPatient)
         return (
-
             <React.Fragment>
                 <div className='manage-patient-container'>
                     <div className='m-p-title'>
@@ -100,9 +99,9 @@ class ManagePatient extends Component {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{item.bookingDate}</td>
-                                                    <td>{`${item.patientData?.firstName} ${item.lastName}`}</td>
+                                                    <td>{item.forWho}</td>
                                                     <td>{item.address}</td>
-                                                    <td>{item.genderData?.valueVi}</td>
+                                                    <td>{item.gender}</td>
                                                     <td>
                                                         <button className='mp-btn-confirm'>
                                                             Xác nhận
@@ -115,8 +114,8 @@ class ManagePatient extends Component {
                                             )
                                         })
                                         :
-                                        <tr>
-                                            nodata
+                                        <tr className='  no-patient'>
+                                            <td className='no-no' colSpan={6}>No patient for today</td>
                                         </tr>
                                     }
                                 </tbody>

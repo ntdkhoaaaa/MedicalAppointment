@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './HomeHeader.scss'
 import logo from '../../assets/logo.svg'
@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import * as actions from "../../store/actions";
 
 import { LANGUAGES } from "../../utils"
+import { UserProfile } from "../Patient/Profile/UserProfile"
 import { changeLanguageApp } from '../../store/actions/';
 class HomeHeader extends Component {
 
@@ -16,6 +17,13 @@ class HomeHeader extends Component {
     }
     componentDidMount() {
         // let userInfo = this.props.userInfo;
+    }
+    MoveToProfile = () => {
+        console.log("MoveToProfile")
+        if (this.props.history) {
+            console.log("MoveToProfile2")
+            this.props.history.push(`/profile`)
+        }
     }
     render() {
         console.log('permission', this.props.permission)
@@ -54,11 +62,8 @@ class HomeHeader extends Component {
                             <div className='support'><i className="far fa-question-circle"></i><FormattedMessage id={"homeheader.Support"} /></div>
                             <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => this.changeLanguage(LANGUAGES.VI)}>VN</span></div>
                             <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span></div>
-                            {/* {language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}
-<<<<<<< HEAD
-{language === LANGUAGES.EN ? 'language-en active' : 'language-en'}
- */}                        <div hidden={!isLoggedIn} className='profile-user'>
-                                <FormattedMessage id={"homeheader.hello"} />{userInfo?.firstName}
+                            <div hidden={!isLoggedIn} className='profile-user'>
+                                <FormattedMessage id={"homeheader.hello"} /><span className='name-patient active' onClick={() => this.MoveToProfile()}>{userInfo?.firstName}</span>
                             </div>
                             <div hidden={!isLoggedIn} className="btn btn-logout" onClick={processLogout} title="Log out">
                                 <i className="fas fa-sign-out-alt"></i>
@@ -136,4 +141,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));
