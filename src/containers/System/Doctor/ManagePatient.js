@@ -11,13 +11,16 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import ConfirmtoPatientModal from './ConfirmtoPatientModal';
 
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentDate: moment(new Date()).startOf('days').valueOf(),
-            dataPatient: []
+            dataPatient: [],
+            isOpenModalBooking: false,
+            dataScheduleTimeModal: {}
         }
     }
 
@@ -56,8 +59,28 @@ class ManagePatient extends Component {
             this.getDataPatient(user, formatedDate)
         })
     }
+    handleClickScheduleTime = (time) => {
+
+        if (this.props.isLoggedIn) {
+            // console.log(time)
+            this.setState({
+                isOpenModalBooking: true,
+                dataScheduleTimeModal: time
+            })
+        }
+        else {
+            this.props.history.push('/login')
+        }
+
+
+    }
+    closeBookingModal = () => {
+        this.setState({
+            isOpenModalBooking: false
+        })
+    }
     render() {
-        let { dataPatient } = this.state;
+        let { dataPatient , isOpenModalBooking,dataScheduleTimeModal } = this.state;
         let { permission } = this.props;
         console.log('permission: ', permission)
         if (permission === 'R3') {
@@ -103,10 +126,12 @@ class ManagePatient extends Component {
                                                     <td>{item.address}</td>
                                                     <td>{item.gender}</td>
                                                     <td>
-                                                        <button className='mp-btn-confirm'>
+                                                        <button className='mp-btn-confirm'
+                                                        >
                                                             Xác nhận
                                                         </button>
-                                                        <button className='mp-btn-remedy'>
+                                                        <button className='mp-btn-remedy'
+                                                         onClick={() => this.handleClickScheduleTime(item)}>
                                                             Gửi hóa đơn
                                                         </button>
                                                     </td>
@@ -123,6 +148,11 @@ class ManagePatient extends Component {
                         </div>
                     </div>
                 </div>
+                <ConfirmtoPatientModal
+                    isOpenModal={isOpenModalBooking}
+                    closeBookingModal={this.closeBookingModal}
+                    dataTime={dataScheduleTimeModal}
+                />
             </React.Fragment>
         );
     }
