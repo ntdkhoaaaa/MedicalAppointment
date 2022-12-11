@@ -11,7 +11,6 @@ import * as actions from '../../../store/actions'
 import { LANGUAGES } from "../../../utils"
 import { withRouter } from 'react-router';
 class Specialty extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -32,6 +31,7 @@ class Specialty extends Component {
         if (this.props.history) {
             this.props.history.push(`/detail-specialty/${specialty.id}`)
         }
+
     }
     render() {
         let arrSpecialties = this.state.arrSpecialties;

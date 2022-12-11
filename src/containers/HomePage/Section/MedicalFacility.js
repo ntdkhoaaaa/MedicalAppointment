@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './MedicalFacility.scss';
 import Slider from 'react-slick';
 import * as actions from "../../../store/actions";
+import { withRouter } from 'react-router';
 
 class MedicalFacility extends Component {
     constructor(props) {
@@ -24,6 +25,11 @@ class MedicalFacility extends Component {
     componentDidMount() {
         this.props.loadAllClinics();
     }
+    handleViewDetailClinic = (clinic) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-clinic/${clinic.id}`)
+        }
+    }
     render() {
         let arrMedicalFacilities = this.state.arrMedicalFacilities;
 
@@ -41,11 +47,13 @@ class MedicalFacility extends Component {
                                 arrMedicalFacilities.map((item, index) => {
                                     return (
                                         // <div className='section-customize'>
-                                        <div className='section-customize specialty-child' key={index}>
-                                            <div className='bg-image section-specialty'
+                                        <div className='section-customize clinic-child' key={index}
+                                            onClick={() => this.handleViewDetailClinic(item)}
+                                        >
+                                            <div className='bg-image section-clinic'
                                                 style={{ backgroundImage: `url(${item.image})` }}
                                             />
-                                            <div className='specialty-name'> {item.name}</div>
+                                            <div className='clinic-name'> {item.name}</div>
                                         </div>
                                     )
                                 })}
@@ -73,4 +81,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MedicalFacility));

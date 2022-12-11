@@ -9,7 +9,9 @@
         "Medical-package": "Medical Packages",
         "General-health-check": "General Health Check",
         "Support": "Support",
-        "welcome": "Welcome Administrator, "
+        "welcome": "Welcome Administrator, ",
+        "hello": "Welcome, ",
+        "login": "Sign in "
     },
     "banner": {
         "medical-platform": "Medical Platform",
@@ -50,7 +52,7 @@
         },
         "doctor": {
             "schedule": "Manage Doctor's schedule",
-            "manage-patient": "Manage Patient's"
+            "patient": "Manage Patient's"
         }
     },
     "manage-user": {

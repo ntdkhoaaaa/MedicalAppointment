@@ -1,0 +1,45 @@
+.doctor-detail-container{
+    margin: 50px 150px;
+    .preview-img{
+        height:300px;
+        width: 100%;
+        // :disabled
+        // background: transparent;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        font-size: 0;
+        background: center center;
+        background-repeat: no-repeat;
+        background-size: contain; 
+        cursor: pointer;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+    .content-right{
+        margin-top: 50px;
+        .radio-group{
+            display: flex;
+            label{
+                margin-left: 5px;
+                margin-right: 10px;
+            }
+  
+        }
+        .sub-title{
+            min-width: 100px;
+        }
+        .each-input{
+            min-width: 500px;
+        }
+        .btn-confirm{
+            width: 100px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            &:hover{
+                background-color: rgb(93, 252, 93);
+            }
+        }
+    }
+}

@@ -7,9 +7,7 @@ import { ToastContainer } from 'react-toastify';
 
 
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
-
 import { path } from '../utils'
-
 import Home from '../routes/Home';
 // import Login from '../routes/Login';
 import Login from './Auth/Login';
@@ -27,6 +25,8 @@ import CustomScrollbars from '../components/CustomScrollbars';
 import VerifyEmail from './Patient/VerifyEmail';
 import DetailSpecialty from './Patient/Specialty/DetailSpecialty';
 import { fetchPermission } from '../store/actions';
+import DetailClinic from './Patient/Clinics/DetailClinic';
+import UserProfile from './Patient/Profile/UserProfile';
 
 class App extends Component {
 
@@ -68,8 +68,10 @@ class App extends Component {
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                                    <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
+                                    <Route path={path.USER_PROFILE} component={userIsAuthenticated(UserProfile)} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

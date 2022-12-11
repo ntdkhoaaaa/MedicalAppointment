@@ -9,7 +9,9 @@
         "Medical-package": "Gói khám",
         "General-health-check": "Khám sức khỏe tổng quát",
         "Support": "Hỗ trợ",
-        "welcome": "Xin chào Administrator, "
+        "welcome": "Xin chào Administrator, ",
+        "hello": "Xin chào, ",
+        "login": "Đăng nhập "
     },
     "banner": {
         "medical-platform": "Nền tảng y tế",
@@ -50,7 +52,7 @@
         },
         "doctor": {
             "schedule": "Quản lý kế hoạch khám bệnh",
-            "manage-patient": "Quản lý bệnh nhân"
+            "patient": "Quản lý bệnh nhân"
         }
     },
     "manage-user": {

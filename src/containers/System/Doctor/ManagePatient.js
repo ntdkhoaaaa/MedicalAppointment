@@ -13,7 +13,6 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 
 class ManagePatient extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -59,6 +58,14 @@ class ManagePatient extends Component {
     }
     render() {
         let { dataPatient } = this.state;
+        let { permission } = this.props;
+        console.log('permission: ', permission)
+        if (permission === 'R3') {
+            return (
+                <Redirect to='/home' />
+            )
+        }
+        console.log('co vo day k', dataPatient)
         return (
             <React.Fragment>
                 <div className='manage-patient-container'>
@@ -91,10 +98,10 @@ class ManagePatient extends Component {
                                             return (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td>{item.timeTypeDataPatient.valueVi}</td>
-                                                    <td>{`${item.patientData?.firstName} ${item.patientData?.lastName}`}</td>
-                                                    <td>{item.patientData.address}</td>
-                                                    <td>{item.patientData?.genderData?.valueVi}</td>
+                                                    <td>{item.bookingDate}</td>
+                                                    <td>{item.forWho}</td>
+                                                    <td>{item.address}</td>
+                                                    <td>{item.gender}</td>
                                                     <td>
                                                         <button className='mp-btn-confirm'>
                                                             Xác nhận
@@ -107,8 +114,8 @@ class ManagePatient extends Component {
                                             )
                                         })
                                         :
-                                        <tr>
-                                            nodata
+                                        <tr className='  no-patient'>
+                                            <td className='no-no' colSpan={6}>No patient for today</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -119,14 +126,13 @@ class ManagePatient extends Component {
             </React.Fragment>
         );
     }
-
 }
 
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         user: state.user.userInfo,
-
+        permission: state.user.permission,
     };
 };
 

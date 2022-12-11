@@ -24,6 +24,9 @@ const deleteUserService = (userId) => {
 const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData);
 }
+const editUserInforByOwnService = (inputData) => {
+    return axios.put('/api/edit-on-own-user-infor', inputData);
+}
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/allcode?type=${inputType}`)
 }
@@ -91,6 +94,9 @@ const getAllClinics = () => {
 const getDetailSpecialtyById = (data) => {
     return axios.get(`/api/get-detail-specialty-byId?id=${data.id}&location=${data.location}`)
 }
+const getDetailClinicById = (data) => {
+    return axios.get(`/api/get-detail-clinic-byId?id=${data.id}`)
+}
 const handleRegisterApi = async (data) => {
     return await axios.post('/api/register', data)
 }
@@ -113,5 +119,6 @@ export {
     getProfileDoctorById, postPatientAppointment,
     postVerifyBooking, addNewSpecialty,
     getAllSpecialties, addNewClinic, getAllClinics,
-    getDetailSpecialtyById, handleRegisterApi, handleGetPermission, getListPatientForDoctor
+    getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
+    getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService
 }

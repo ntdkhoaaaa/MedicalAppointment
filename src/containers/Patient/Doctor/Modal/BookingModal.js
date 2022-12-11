@@ -42,6 +42,8 @@ class BookingModal extends Component {
                 email: this.props.userInfo?.email,
                 lastName: this.props.userInfo?.lastName,
                 firstName: this.props.userInfo?.firstName,
+                address: this.props.userInfo?.address,
+                phoneNumber: this.props.userInfo?.phoneNumber
             })
         }
     }
@@ -87,6 +89,8 @@ class BookingModal extends Component {
                 email: this.props.userInfo?.email,
                 lastName: this.props.userInfo?.lastName,
                 firstName: this.props.userInfo?.firstName,
+                address: this.props.userInfo?.address,
+                phoneNumber: this.props.userInfo?.phoneNumber
             })
         }
     }
@@ -103,9 +107,11 @@ class BookingModal extends Component {
             doB: date[0]
         })
     }
-    handleOnChangeGender = (selectedOption) => {
+    handleOnChangeGender = (gender) => {
+        console.log('onChangeGender ', gender)
+        let genderSelected = gender.label
         this.setState({
-            genderIdentity: selectedOption
+            genderIdentity: genderSelected
         })
     }
     capitalizeFirstLetter(string) {
@@ -120,7 +126,7 @@ class BookingModal extends Component {
                 this.capitalizeFirstLetter(moment.unix(+bookingTime.date / 1000).format('dddd - DD/MM/YYYY'))
                 :
                 moment.unix(+bookingTime.date / 1000).locale('en').format('ddd - DD/MM/YYYY')
-            return `${time}  -  ${date}`
+            return `${time} - ${date}`
         }
         return ''
 
@@ -138,7 +144,6 @@ class BookingModal extends Component {
     handleConfirmBooking = async () => {
         let timeString = this.renderBookingTime(this.props.dataTime)
         let doctorName = this.renderDoctorName(this.props.dataTime)
-
         let res = await postPatientAppointment({
             lastName: this.state.lastName,
             firstName: this.state.firstName,
@@ -165,8 +170,9 @@ class BookingModal extends Component {
         }
     }
     render() {
+        let { gender } = this.state;
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
-        console.log('check state modal', dataTime);
+        console.log('render', this.props.userInfo)
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : ''
         return (
             <Modal
@@ -247,7 +253,7 @@ class BookingModal extends Component {
                             <div className='col-3 form-group'>
                                 <label><FormattedMessage id="patient.modal-booking.genderIdentity" /></label>
                                 <Select
-                                    value={this.state.genderIdentity}
+                                    value={gender}
                                     onChange={this.handleOnChangeGender}
                                     options={this.state.genders}>
                                 </Select>

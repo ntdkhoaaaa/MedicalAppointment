@@ -32,7 +32,7 @@
         }
 
         .center-content {
-            width: 60%;
+            width: 50%;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -51,7 +51,7 @@
         }
 
         .right-content {
-            width: 20%;
+            width: 30%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -102,6 +102,22 @@
                     opacity: 1;
                 }
             }
+            .btn-logout{
+                :hover{
+                    color: #49bce2;
+                }
+            }
+            .name-patient{
+                cursor: pointer;
+                &.active {
+                    opacity: 1;
+    
+                    span {
+                        color: blue;
+                    }
+                }
+            }
+
         }
     }
 }

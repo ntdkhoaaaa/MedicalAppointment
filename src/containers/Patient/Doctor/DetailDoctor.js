@@ -43,7 +43,6 @@ class DetailDoctor extends Component {
         }
         // console.log('check markdown', detailDoctor.Markdown.description);
         return (
-
             <>
                 {!this.props.isLoggedIn || (this.props.isLoggedIn && this.props.permission) ?
                     <>

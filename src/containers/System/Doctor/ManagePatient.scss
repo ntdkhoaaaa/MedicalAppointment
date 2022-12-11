@@ -1,3 +1,4 @@
+
 .manage-patient-container {
     .m-p-title {
         font-size: 15px;
@@ -42,6 +43,13 @@
                 height: 30px;
                 border-radius: 3px;
                 background: #39dca0;
+            }
+            .no-patient{
+                background-color: red;
+                .no-no{
+                    text-align: center;
+                    font-size: 25px;
+                }
             }
         }
     }

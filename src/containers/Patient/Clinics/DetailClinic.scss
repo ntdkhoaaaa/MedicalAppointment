@@ -1,0 +1,60 @@
+
+.detail-clinic-container{
+    // background-color: #eee;
+    .detail-clinic-body{
+        padding:0 100px;
+        background: #eee;
+        display: flex;
+        flex-direction: column;
+    }
+    .each-doctor{
+        display: flex;
+        width: 100%;
+        min-height: 300px;
+        margin: 15px 0px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 1px 6px #20212447;
+        padding: 10px;
+        // border
+        .provinceSelect{
+            width: 20px !important;
+        }
+        .dt-content-left{
+            width: 50% !important; 
+            border-right: 1px solid #ddd;
+        }
+        .dt-content-right{
+            width: 50%;
+            padding: 10px;
+            .doctor-schedule{
+    
+            }
+            .doctor-extra-infor{
+                margin-top: 10px;
+                padding-top: 10px;
+                border-top: 1px solid #ddd;
+                .doctor-extra-infor-container{
+                    padding-left: 0 !important;
+                }
+            }
+        }
+    }
+    .header-description{
+        background-color: white !important;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+    .province-selection{
+        margin-top: 10px;
+        select{
+            height: 30px;
+            padding: 5px 8px;
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    }
+}
