@@ -35,7 +35,8 @@ class ManageSchedule extends Component {
         if (prevProps.allDoctors !== this.props.allDoctors) {
             let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
             this.setState({
-                listDoctocs: dataSelect
+                listDoctocs: dataSelect,
+                selectedDoctor: dataSelect[0]
             })
         }
         if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
