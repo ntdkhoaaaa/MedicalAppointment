@@ -65,7 +65,7 @@ class Register extends Component {
                 })
             }
             if (data && data.errCode === 0) {
-                toast.success('Tao user thanh cong/ vui long dang nhap')
+                toast.success(`Vui lòng xác nhận đăng kí tại email: ${this.state.email} để hoàn tất quá trình đăng kí`)
                 const { navigate } = this.props;
                 const redirectPath = '/login';
                 navigate(`${redirectPath}`);
