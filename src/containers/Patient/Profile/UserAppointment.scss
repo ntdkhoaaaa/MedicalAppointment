@@ -1,0 +1,58 @@
+.patient-appointment{
+    // margin: 0px 150px;
+    height: 500px;
+    padding: 20px 0;
+    margin: 20px 20px;
+
+    .table-manage-patient {
+
+        table,
+        th,
+        // td {
+        //     border: 1px solid black;
+        //     border-collapse: collapse;
+        // }
+
+        th,
+        td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 3px;
+        }
+
+        .mp-btn-cancel {
+            margin-right: 10px;
+            height: 30px;
+            min-width: 100px;
+            border-radius: 3px;
+            background: #ff0141;
+        }
+        .mp-btn-rate {
+            margin-right: 10px;
+            height: 30px;
+            min-width: 100px;
+            border-radius: 3px;
+            background: #fcff17;
+        }
+
+        .mp-btn-remedy {
+            height: 30px;
+            min-width: 100px;
+            border-radius: 3px;
+            background: #1df82f;
+        }
+        .no-patient{
+            background-color: red;
+            .no-no{
+                text-align: center;
+                font-size: 25px;
+            }
+        }
+    }
+}
