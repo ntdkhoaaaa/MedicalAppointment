@@ -168,6 +168,7 @@ class BookingModal extends Component {
         else {
             toast.error('Bạn nhập thiếu thông tin.Xin mời kiểm tra lại')
         }
+        this.props.closeBookingModal()
     }
     render() {
         let { gender } = this.state;
@@ -178,6 +179,7 @@ class BookingModal extends Component {
             <Modal
                 isOpen={isOpenModal}
                 size='lg'
+                toggle={closeBookingModal}
                 centered={true}
                 backdrop={true}
                 className='booking-modal-container'>

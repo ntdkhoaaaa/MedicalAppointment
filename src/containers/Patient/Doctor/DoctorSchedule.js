@@ -98,7 +98,7 @@ class DoctorSchedule extends Component {
     handleClickScheduleTime = (time) => {
 
         if (this.props.isLoggedIn) {
-            // console.log(time)
+            console.log('time', time)
             this.setState({
                 isOpenModalBooking: true,
                 dataScheduleTimeModal: time
