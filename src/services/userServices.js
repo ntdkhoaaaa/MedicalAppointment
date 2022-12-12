@@ -109,6 +109,9 @@ const getAllAppointmentOfPatient = (data) => {
 const cancelBookingFromPatient = (data) => {
     return axios.post(`/api/cancel-booking`, data)
 }
+const postVerifyRegister = (data) => {
+    return axios.post(`/api/verify-register`, data)
+}
 export {
     handleLoginApi,
     getAllUsers,
@@ -126,5 +129,5 @@ export {
     postVerifyBooking, addNewSpecialty, getAllAppointmentOfPatient,
     getAllSpecialties, addNewClinic, getAllClinics,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
-    getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService
+    getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister
 }

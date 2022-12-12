@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../utils';
 import HomeHeader from '../HomePage/HomeHeader';
-import { postVerifyBooking } from '../../services/userServices'
+import { postVerifyRegister } from '../../services/userServices'
 import './VerifyRegister.scss'
 class VerifyRegister extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class VerifyRegister extends Component {
         if (this.props.location && this.props.location.search) {
             let urlParams = new URLSearchParams(this.props.location.search);
             let token = urlParams.get('token');
-            let res = await postVerifyBooking({
+            let res = await postVerifyRegister({
                 token: token,
             })
             if (res && res.errCode === 0) {
@@ -56,13 +56,14 @@ class VerifyRegister extends Component {
                             <div className='verify-succeed'>
                                 {+errCode === 0 ?
                                     <div className='verify-confirm-succeed'>
-                                        <p>Lịch hẹn đã được xác nhận. </p>
+                                        <p>Tài khoản của bạn đã được đăng ký thành công!! </p>
+                                        <p>Vui lòng đăng nhập để sử dụng dịch vụ </p>
                                         <p>Cảm ơn đã sử dụng dịch vụ đặt lịch khám bệnh trực tuyến KMP</p>
 
                                     </div>
                                     :
                                     <div className='verify-confirm-fail'>
-                                        <p>Lịch hẹn không tồn tại hoặc đã được xác nhận trước đó. </p>
+                                        <p>Tài khoản không hợp lệ vui lòng thử lại!</p>
                                         <p>Cảm ơn đã sử dụng dịch vụ đặt lịch khám bệnh trực tuyến KMP</p>
                                     </div>
                                 }

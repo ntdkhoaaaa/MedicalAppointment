@@ -14,6 +14,7 @@ import Login from './Auth/Login';
 import Header from './Header/Header';
 import System from '../routes/System';
 import Register from './Auth/Register';
+import VerifyRegister from './Auth/VerifyRegister';
 
 import { CustomToastCloseButton } from '../components/CustomToast';
 import ConfirmModal from '../components/ConfirmModal';
@@ -71,6 +72,7 @@ class App extends Component {
                                     <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
+                                    <Route path={path.VERIFY_REGISTER} component={VerifyRegister} />
                                     <Route path={path.USER_PROFILE} component={userIsAuthenticated(UserProfile)} />
                                 </Switch>
                             </CustomScrollbars>
