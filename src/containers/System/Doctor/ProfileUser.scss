@@ -1,0 +1,84 @@
+
+.patient-detail-container{
+    margin: 0;
+    .for-more{
+        a{
+            color: #45c3d2;
+
+        }
+    }
+    .avatar{
+        margin-top: 20px;
+        .preview-img{
+            height: 170px;
+            width: 170px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            font-size: 0;
+            background: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
+    }
+
+        .content-left {
+            height: 30px;
+            width: 30px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            background: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    
+        .content-right {
+            width: calc(100%-30px);
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+            margin-bottom: 15px;
+            .title{
+                margin-bottom: 10px;
+                .each-input{
+                    min-width: 385px;
+                   border-top: none;
+                   border-left: none;
+                   border-right: none;
+                    border-bottom: 1px solid black;
+                }
+    
+            }
+            .sub-title{
+                min-width: 100px;
+            }
+            .each-input{
+                min-width: 500px;
+            }
+            .gender{
+                display: flex;
+                gap: 15px;
+            }
+            .radio-group{
+                display: flex;
+                label{
+                    margin-left: 5px;
+                    margin-right: 10px;
+                }
+      
+            }
+            .Up {
+                cursor: pointer;
+                font-size: 17px;
+                font-weight: 600;
+                a{
+                    color:#6bc0cf;
+                    &:hover{
+                        text-decoration: none;
+                    }
+                }
+            }
+    
+
+        }
+}

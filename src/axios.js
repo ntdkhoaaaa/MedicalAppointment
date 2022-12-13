@@ -30,7 +30,11 @@ const refreshToken = async (token) => {
             return { errCode: -1 };
         }
     } catch (error) {
-        console.log(error)
+        toast.error("Phiên làm việc hết hạn! Vui lòng đăng nhập lại")
+        reduxStore.dispatch({
+            type: actionTypes.PROCESS_LOGOUT,
+        })
+        return { errCode: -1 };
     }
 }
 

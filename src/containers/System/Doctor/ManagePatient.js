@@ -11,13 +11,16 @@ import 'react-markdown-editor-lite/lib/index.css';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import ConfirmtoPatientModal from './ConfirmtoPatientModal';
 
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentDate: moment(new Date()).startOf('days').valueOf(),
-            dataPatient: []
+            dataPatient: [],
+            isOpenModalBooking: false,
+            dataScheduleTimeModal: {}
         }
     }
 
@@ -28,25 +31,33 @@ class ManagePatient extends Component {
         this.getDataPatient(user, formatedDate)
     }
     getDataPatient = async (user, formatedDate) => {
+        console.log('wefbwue h bvbwebe')
         let res = await getListPatientForDoctor({
             doctorId: user.id,
             date: formatedDate
         })
+        console.log('check res', res)
         if (res && res.errCode === 0) {
             this.setState({
                 dataPatient: res.data
             })
         }
     }
-
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.listusers !== this.props.listusers) {
             this.setState({
                 userRedux: this.props.listusers,
             })
         }
+        if (prevState.isOpenModalBooking = this.state.isOpenModalBooking) {
+            let { user } = this.props;
+            let { currentDate } = this.state;
+            let formatedDate = new Date(currentDate).getTime();
+            this.getDataPatient(user, formatedDate)
+        }
     }
     handleOnChangeDatePicker = async (date) => {
+        console.log('wehbhffweifbiwb')
         this.setState({
             currentDate: date[0]
         }, () => {
@@ -56,9 +67,27 @@ class ManagePatient extends Component {
             this.getDataPatient(user, formatedDate)
         })
     }
+    handleClickScheduleTime = (time) => {
+        if (this.props.isLoggedIn) {
+            // console.log(time)
+            this.setState({
+                isOpenModalBooking: true,
+                dataScheduleTimeModal: time
+            })
+        }
+        else {
+            this.props.history.push('/login')
+        }
+    }
+    closeBookingModal = () => {
+        this.setState({
+            isOpenModalBooking: false
+        })
+    }
     render() {
-        let { dataPatient } = this.state;
-        let { permission } = this.props;
+        let { dataPatient, isOpenModalBooking, dataScheduleTimeModal, currentDate } = this.state;
+        let { permission, user } = this.props;
+        let formatedDate = new Date(currentDate).getTime();
         console.log('permission: ', permission)
         if (permission === 'R3') {
             return (
@@ -107,19 +136,23 @@ class ManagePatient extends Component {
                                                     <td>{item.patientAge}</td>
                                                     <td>{item.prognostic}</td>
                                                     <td>
-                                                        <button className='mp-btn-confirm'>
-                                                            Hủy hẹn
-                                                        </button>
-                                                        <button className='mp-btn-remedy'>
+                                                        <button className='mp-btn-remedy'
+                                                            onClick={() => this.handleClickScheduleTime(item)}>
                                                             Gửi hóa đơn
                                                         </button>
+                                                        <ConfirmtoPatientModal
+                                                            isOpenModal={isOpenModalBooking}
+                                                            closeBookingModal={this.closeBookingModal}
+                                                            dataTime={dataScheduleTimeModal}
+                                                            bookingId={item.id}
+                                                        />
                                                     </td>
                                                 </tr>
                                             )
                                         })
                                         :
                                         <tr className='  no-patient'>
-                                            <td className='no-no' colSpan={6}>No patient for today</td>
+                                            <td className='no-no' colSpan={8}>No patient for today</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -127,6 +160,7 @@ class ManagePatient extends Component {
                         </div>
                     </div>
                 </div>
+
             </React.Fragment>
         );
     }

@@ -109,9 +109,18 @@ const getAllAppointmentOfPatient = (data) => {
 const cancelBookingFromPatient = (data) => {
     return axios.post(`/api/cancel-booking`, data)
 }
+const postMedicalRecords = (data) => {
+    return axios.post(`/api/post-history-patient`, data)
+}
+const postRating = (data) => {
+    return axios.post(`/api/post-rating-patient`, data)
+}
+const getMedicalRecordByBookingId = (data) => {
+    return axios.get(`/api/get-history-patient?bookingId=${data}`)
+}
 export {
-    handleLoginApi,
-    getAllUsers,
+    handleLoginApi, postMedicalRecords, postRating,
+    getAllUsers, getMedicalRecordByBookingId,
     createNewUserService,
     deleteUserService,
     editUserService,

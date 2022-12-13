@@ -1,7 +1,7 @@
 .rating-modal-container{
-    .rating-modal-content{
-        height: auto;
 
+    .rating-modal-content{
+        height: 400px;
         display: flex;
         flex-direction: column;
         .rating-modal-header{
@@ -21,51 +21,58 @@
             padding: 0px 10px;
             height:80%;
             .rating{
-                padding: 30px 20px;
+                // padding: 30px 20px;
                 text-align: center;
-                display: flex;
+                // display: flex;
+                // justify-content: space-around;
                 width: 100%;
+                    padding: 10px;
+                margin-bottom: 5px;
                 .title-rating{
                     float: left;
-                    font-size: 2.0rem;
+                    font-size: 1.2rem;
                     color: #0a6f3c;
                     font-weight: 500;
                     // min-width: 100px;
-                    width: 40%;
+                    width: 30%;
+                    // padding: 10px;
                     img{
-                        width: 100%;
-                        height: inherit;
+                        width: 50%;
+                        height: 100%;
+                        text-align: center;
                     }
                 }
                 .style-module_starRatingWrap__q-lJC{
                     width: 60%;
                 }
+                .comment-rate{
+                    width: 100%;
+
+                }
             }
             .comment-content{
-                width: 200px;
                 border: 1px solid rgb(238, 238, 238);
                 padding: 12px;
                 border-radius: 4px;
                 resize: none;
                 width: 100%;
-                height: 250px;
+                height: 150px;
                 outline: 0px;
-                font-size: 2.0rem;
-                margin: 24px 0px 12px;
             }
+
         }
         .rating-modal-footer{
             // padding: 10px;
-            border-top: 1px solid #ccc;
+            // border-top: 1px solid #ccc;
             display: flex;
             justify-content: flex-end;
-            gap:15px;
+            gap:85px;
             margin-top: 5px;
 
             button{
                 border: none;
                 outline: none;
-                padding: 8px 5px;
+                padding: 3px 2px;
                 border-radius: 5px;
                 min-width: 100px;
             }

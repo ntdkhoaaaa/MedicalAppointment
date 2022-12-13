@@ -4,45 +4,87 @@ import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../../utils';
 import './UserAppointment.scss'
 import { data } from './data'
-import { getAllAppointmentOfPatient, cancelBookingFromPatient } from '../../../services/userServices';
-
+import { getAllAppointmentOfPatient, cancelBookingFromPatient, getMedicalRecordByBookingId } from '../../../services/userServices';
+import * as actions from '../../../store/actions'
 import ModalRatingAppointment from './ModalRatingAppointment';
 import TempModal from './TempModal';
+import ModalViewMedicalRecord from './ModalViewMedicalRecord';
 class UserAppointment extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpenModalRating: false,
-            PatientAppointment: []
+            isOpenViewMedicalRecord: false,
+            PatientAppointment: [],
+            deleteSuccessLoadAgain: false,
+            ratingBookingId: '',
+            viewingBookingId: '',
+            doctorId: '',
         }
     }
     async componentDidMount() {
         let { userInfo } = this.props
-        console.log('chheck redux user', userInfo)
-
         let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
         if (UserAppointment && UserAppointment.length > 0) {
             this.setState({
                 PatientAppointment: UserAppointment
             })
         }
-        console.log('done', this.state.PatientAppointment)
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        let { userInfo } = this.props
-
-        let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
-        if (UserAppointment && UserAppointment.length > 0) {
-            this.setState({
-                PatientAppointment: UserAppointment
-            })
+        if (prevProps.userInfo !== this.props.userInfo) {
+            let { userInfo } = this.props
+            let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
+            if (UserAppointment && UserAppointment.length > 0) {
+                this.setState({
+                    PatientAppointment: UserAppointment
+                })
+            }
         }
-        console.log('done', this.state.PatientAppointment)
+        if (prevState.deleteSuccessLoadAgain !== this.state.deleteSuccessLoadAgain) {
+            let { userInfo } = this.props
+            let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
+            if (UserAppointment && UserAppointment.length > 0) {
+                this.setState({
+                    PatientAppointment: UserAppointment
+                })
+            }
+        }
+        if (prevState.isOpenModalRating !== this.state.isOpenModalRating) {
+            let { userInfo } = this.props
+            let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
+            if (UserAppointment && UserAppointment.length > 0) {
+                this.setState({
+                    PatientAppointment: UserAppointment
+                })
+            }
+        }
+        if (prevState.isOpenViewMedicalRecord !== this.state.isOpenViewMedicalRecord) {
+            let { userInfo } = this.props
+            let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
+            if (UserAppointment && UserAppointment.length > 0) {
+                this.setState({
+                    PatientAppointment: UserAppointment
+                })
+            }
+        }
+
     }
-    RatingTime() {
+    RatingTime(index, doctorId) {
+        console.log('bwbwi', doctorId)
+
         this.setState({
-            isOpenModalRating: true
+            ratingBookingId: index,
+            doctorId: doctorId,
+
+            isOpenModalRating: true,
+        })
+    }
+    ViewingTime(index) {
+        this.setState({
+            viewingBookingId: index,
+            isOpenViewMedicalRecord: true,
         })
     }
     closeRatingModal = () => {
@@ -50,13 +92,29 @@ class UserAppointment extends Component {
             isOpenModalRating: false
         })
     }
+    closeViewMedicalRecordModal = () => {
+        this.setState({
+            isOpenViewMedicalRecord: false
+        })
+    }
     async CancelBooking(bookingId, PatientAppointment) {
-        console.log('Cancelling booking', bookingId)
-        await cancelBookingFromPatient({ id: bookingId })
+        let res = await cancelBookingFromPatient({ id: bookingId })
+        if (res && res.errCode === 1) {
+
+        }
+        if (res && res.errCode === 0) {
+            let { userInfo } = this.props
+            let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
+            if (UserAppointment && UserAppointment.length > 0) {
+                this.setState({
+                    PatientAppointment: UserAppointment
+                })
+            }
+        }
         PatientAppointment = this.props.PatientAppointment
     }
     render() {
-        let { isOpenModalRating, PatientAppointment } = this.state
+        let { isOpenModalRating, PatientAppointment, ratingBookingId, isOpenViewMedicalRecord, viewingBookingId, doctorId } = this.state
         let { userInfo } = this.props
 
         return (
@@ -74,42 +132,74 @@ class UserAppointment extends Component {
                             </tr>
                             {PatientAppointment && PatientAppointment.length > 0 ?
                                 PatientAppointment.map((item, index) => {
-                                    console.log(item)
+                                    console.log('item', item.doctorId)
                                     return (
                                         <tr key={index}>
-
-                                            <td>{item.bookingDate}</td>
-                                            <td>{item.forWho}</td>
-                                            <td>{item.prognostic}</td>
-                                            <td>{item.doctorInfoData.firstName} {item.doctorInfoData.lastName} <span> ({item.doctorInfoData.Doctor_Infor.nameSpecialty}) </span></td>
+                                            <td>{item?.bookingDate}</td>
+                                            <td>{item?.forWho}</td>
+                                            <td>{item?.prognostic}</td>
+                                            <td>{item?.doctorInfoData?.firstName} {item.doctorInfoData?.lastName} <span> ({item?.doctorInfoData?.Doctor_Infor?.nameSpecialty}) </span></td>
                                             <td>
                                                 <div>
-                                                    {item.doctorInfoData.Doctor_Infor.addressClinic}
+                                                    {item?.doctorInfoData?.Doctor_Infor?.addressClinic}
                                                 </div>
                                                 <div>
-                                                    {item.doctorInfoData.Doctor_Infor.nameClinic}
+                                                    {item?.doctorInfoData?.Doctor_Infor?.nameClinic}
                                                 </div>
                                             </td>
                                             <td>
-                                                <ModalRatingAppointment
-                                                    RatingInfor={item}
-                                                    closeRatingModal={this.closeRatingModal}
-                                                    isOpenModalRating={isOpenModalRating} />
                                                 {item.statusId === 'S1' ? 'Bạn hãy xác nhận thông tin lịch hẹn ở email đã đăng ký nhé' : item.statusId === 'S4' ? 'Bạn đã hủy hẹn' :
                                                     item.statusId === 'S2' ?
                                                         <button onClick={() => this.CancelBooking(item.id, PatientAppointment)} className='mp-btn-cancel'>
                                                             Hủy hẹn
                                                         </button>
                                                         :
-                                                        <div>
-                                                            <button onClick={() => this.RatingTime()} hidden={item.statusId === 'S5' ? true : false} className='mp-btn-rate'>
-                                                                Đánh giá
-                                                            </button>
+                                                        item.statusId === 'S3' ?
+                                                            <>
+                                                                <div>
+                                                                    <button
+                                                                        onClick={() => this.RatingTime(item.id, item.doctorId)}
+                                                                        hidden={item.statusId === 'S5' ? true : false}
+                                                                        className='mp-btn-rate'>
+                                                                        Đánh giá
+                                                                        <ModalRatingAppointment
+                                                                            doctorId={doctorId}
+                                                                            RatingInfor={item}
+                                                                            id={userInfo.id}
+                                                                            bookingId={ratingBookingId}
+                                                                            closeRatingModal={this.closeRatingModal}
+                                                                            isOpenModalRating={isOpenModalRating} />
+                                                                    </button>
+                                                                </div>
+                                                                < div >
+                                                                    <button
+                                                                        onClick={() => this.ViewingTime(item.id)}
+                                                                        className='mp-btn-remedy'>
+                                                                        <ModalViewMedicalRecord
+                                                                            closeViewMedicalRecordModal={this.closeViewMedicalRecordModal}
+                                                                            viewingBookingId={viewingBookingId}
+                                                                            isOpenViewMedicalRecord={isOpenViewMedicalRecord}
+                                                                        />
+                                                                        Xem bệnh án
+                                                                    </button>
+                                                                </div>
+                                                            </>
+                                                            :
+                                                            item.statusId === 'S5' ?
+                                                                < div >
+                                                                    <button
+                                                                        onClick={() => this.ViewingTime(item.id)}
+                                                                        className='mp-btn-remedy'>
+                                                                        <ModalViewMedicalRecord
+                                                                            closeViewMedicalRecordModal={this.closeViewMedicalRecordModal}
+                                                                            viewingBookingId={viewingBookingId}
+                                                                            isOpenViewMedicalRecord={isOpenViewMedicalRecord}
+                                                                        />
+                                                                        Xem bệnh án
+                                                                    </button>
+                                                                </div> : ''
 
-                                                            <button className='mp-btn-remedy'>
-                                                                Xem bệnh án
-                                                            </button>
-                                                        </div>}
+                                                }
 
 
                                             </td>
@@ -125,7 +215,7 @@ class UserAppointment extends Component {
                     </table>
                 </div>
 
-            </div>
+            </div >
         );
     }
 }
@@ -140,6 +230,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchUsersRedux: () => { dispatch(actions.fetchAllUsersStart()) },
+
 
     };
 };

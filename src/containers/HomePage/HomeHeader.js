@@ -19,19 +19,15 @@ class HomeHeader extends Component {
         // let userInfo = this.props.userInfo;
     }
     MoveToProfile = () => {
-        console.log("MoveToProfile")
         if (this.props.history) {
-            console.log("MoveToProfile2")
             this.props.history.push(`/profile`)
         }
     }
     render() {
-        console.log('permission', this.props.permission)
         let language = this.props.language;
         let userInfo = this.props.userInfo
         let isLoggedIn = this.props.isLoggedIn
         let processLogout = this.props.processLogout
-        console.log(this.props.userInfo)
         return (
             <React.Fragment>
                 <div className='home-header-container'>

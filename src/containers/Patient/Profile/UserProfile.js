@@ -27,7 +27,6 @@ class UserProfile extends Component {
     async componentDidMount() {
         // console.log(this.props.userInfo)
         let { userInfo } = this.props
-        console.log('chheck redux user', userInfo)
 
         let response = await getAllUsers(userInfo?.id);
         let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
@@ -48,7 +47,6 @@ class UserProfile extends Component {
                 PatientAppointment: UserAppointment
             })
         }
-        console.log('done', this.state.PatientAppointment)
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -61,7 +59,6 @@ class UserProfile extends Component {
             let response = await getAllUsers(userInfo?.id);
             if (response && response.errCode === 0) {
 
-                console.log(response)
                 this.setState({
                     email: response.users?.email,
                     firstName: response.users?.firstName,
@@ -79,9 +76,8 @@ class UserProfile extends Component {
                     PatientAppointment: UserAppointment
                 })
             }
-            console.log('done', this.state.PatientAppointment)
         }
-        
+
     }
 
     handleOnChangeImage = async (event) => {
@@ -127,9 +123,7 @@ class UserProfile extends Component {
             gender: gender,
             avatar: this.state.avatar
         }
-        console.log('alooooo')
         let res = await editUserInforByOwnService(user)
-        console.log('log res', res)
     }
     render() {
         let { language, permission, isLoggedIn } = this.props
@@ -247,7 +241,7 @@ class UserProfile extends Component {
                             </div>
                             <div className='patient-appointment'>
                                 <UserAppointment
-                                    />
+                                />
                             </div>
                         </>
                         :
