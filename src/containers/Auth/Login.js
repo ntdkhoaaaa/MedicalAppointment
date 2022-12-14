@@ -56,6 +56,11 @@ class Login extends Component {
             }
         }
     }
+    handleRegister = ()=> {
+        const { navigate } = this.props;
+        const redirectPath = "/register";
+        navigate(`${redirectPath}`);
+    }
     handleShowHidePassword = () => {
         this.setState({
             isShowPassword: !this.state.isShowPassword,
@@ -107,6 +112,12 @@ class Login extends Component {
                             <button className='btn-login' onClick={() => { this.handleLogin() }}>
                                 Login
                             </button>
+                        </div>
+
+                        <div className='col-12 '>
+                            <a className='link-register' onClick={() => { this.handleRegister() }}>
+                                Create a new account
+                            </a>
                         </div>
                         <div className='col-12'>
                             <span className='forgetpassword'>Forget your password</span>

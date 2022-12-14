@@ -103,6 +103,12 @@ const handleRegisterApi = async (data) => {
 const getListPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
+const getAllAppointmentOfPatient = (data) => {
+    return axios.get(`/api/get-all-appointment-of-user?id=${data}`)
+}
+const cancelBookingFromPatient = (data) => {
+    return axios.post(`/api/cancel-booking`, data)
+}
 export {
     handleLoginApi,
     getAllUsers,
@@ -111,13 +117,13 @@ export {
     editUserService,
     getAllCodeService,
     getTopDoctorHomeService,
-    getAllDoctors,
+    getAllDoctors, cancelBookingFromPatient,
     saveDetailDoctorService, getAllMarkdown,
     getDetailInforDoctor, saveBulkScheduleDoctor,
     getSelectedSchedule, getScheduleDoctorByDate,
     deleteSelectedSchedule, getExtraInforDoctorById,
     getProfileDoctorById, postPatientAppointment,
-    postVerifyBooking, addNewSpecialty,
+    postVerifyBooking, addNewSpecialty, getAllAppointmentOfPatient,
     getAllSpecialties, addNewClinic, getAllClinics,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
     getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService

@@ -109,26 +109,33 @@ class ManagePatient extends Component {
                             <table style={{ width: '100%' }} >
                                 <tbody>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>ID</th>
                                         <th>Thời gian</th>
                                         <th>Họ và Tên</th>
                                         <th>Địa chỉ</th>
                                         <th>Giới tính</th>
+                                        <th>Tuổi</th>
+                                        <th>Triệu chứng</th>
                                         <th>Action</th>
                                     </tr>
                                     {dataPatient && dataPatient.length > 0 ?
                                         dataPatient.map((item, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td>{index + 1}</td>
+                                                    <td>{item.id}</td>
                                                     <td>{item.bookingDate}</td>
                                                     <td>{item.forWho}</td>
                                                     <td>{item.address}</td>
                                                     <td>{item.gender}</td>
+                                                    <td>{item.patientAge}</td>
+                                                    <td>{item.prognostic}</td>
                                                     <td>
                                                         <button className='mp-btn-confirm'
                                                         >
                                                             Xác nhận
+                                                            </button>
+                                                        <button className='mp-btn-confirm'>
+                                                            Hủy hẹn
                                                         </button>
                                                         <button className='mp-btn-remedy'
                                                          onClick={() => this.handleClickScheduleTime(item)}>

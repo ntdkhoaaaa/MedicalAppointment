@@ -1,0 +1,90 @@
+.rating-modal-container{
+    .rating-modal-content{
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+        .rating-modal-header{
+            padding: 10px;
+            border-bottom:1px solid #ccc ;
+            .left{
+                font-size: 15px;
+                font-weight: 600;
+                color: #333;
+            }
+            .right{
+                float: right;
+                cursor: pointer;
+            }
+        }
+        .rating-modal-body{
+            padding: 0px 10px;
+            height:80%;
+            .rating{
+                padding: 30px 20px;
+                text-align: center;
+                display: flex;
+                width: 100%;
+                .title-rating{
+                    float: left;
+                    font-size: 2.0rem;
+                    color: #0a6f3c;
+                    font-weight: 500;
+                    // min-width: 100px;
+                    width: 40%;
+                    img{
+                        width: 100%;
+                        height: inherit;
+                    }
+                }
+                .style-module_starRatingWrap__q-lJC{
+                    width: 60%;
+                }
+            }
+            .comment-content{
+                width: 200px;
+                border: 1px solid rgb(238, 238, 238);
+                padding: 12px;
+                border-radius: 4px;
+                resize: none;
+                width: 100%;
+                height: 250px;
+                outline: 0px;
+                font-size: 2.0rem;
+                margin: 24px 0px 12px;
+            }
+        }
+        .rating-modal-footer{
+            // padding: 10px;
+            border-top: 1px solid #ccc;
+            display: flex;
+            justify-content: flex-end;
+            gap:15px;
+            margin-top: 5px;
+
+            button{
+                border: none;
+                outline: none;
+                padding: 8px 5px;
+                border-radius: 5px;
+                min-width: 100px;
+            }
+            .btn-rating-comfirm{
+                background-color: rgb(73, 234, 73);
+            }
+            .btn-rating-cancel{
+                background-color: rgb(255, 200, 81);
+            }
+        }
+    }
+
+}  
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color:whitesmoke !important;
+} 
