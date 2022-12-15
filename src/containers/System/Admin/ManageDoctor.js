@@ -46,6 +46,7 @@ class ManageDoctor extends Component {
             // nameClinic: '',
             addressClinic: '',
             note: '',
+            maximum: ''
 
         }
     }
@@ -210,6 +211,7 @@ class ManageDoctor extends Component {
             nameClinic: this.state.selectedClinic.label,
             addressClinic: this.state.addressClinic,
             note: this.state.note,
+            count: this.state.maximum
         })
         // console.log('check save ?', res)
         this.props.fetchAllMarkdown();
@@ -258,6 +260,7 @@ class ManageDoctor extends Component {
                     addressClinic: doctorInfor.addressClinic,
                     nameClinic: doctorInfor.nameClinic,
                     note: doctorInfor.note,
+                    maximum: doctorInfor.count,
                     selectedPayment: Payment,
                     selectedPrice: Price,
                     selectedProvince: Province,
@@ -276,6 +279,7 @@ class ManageDoctor extends Component {
                 selectedPrice: '',
                 selectedProvince: '',
                 note: '',
+                maximun: '',
                 contentHTML: '',
                 contentMarkdown: '',
                 description: '',
@@ -465,6 +469,14 @@ class ManageDoctor extends Component {
                             onChange={(event) => this.handleOnChangeText(event, 'note')}
                             value={this.state.note}
 
+                            className='form-control' />
+                    </div>
+                    <div className='col-2 form-group'>
+                        <label><FormattedMessage id='admin.manage-doctor.maximun-patient-in-same-time' /></label>
+                        <input
+                            onChange={(event) => this.handleOnChangeText(event, 'maximum')}
+                            value={this.state.maximum}
+                            type="number"
                             className='form-control' />
                     </div>
                 </div>

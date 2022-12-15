@@ -120,7 +120,8 @@
             "choose-province": "Chọn tỉnh thành",
             "clinic-name": "Tên phòng khám",
             "clinic-address": "Địa chỉ phòng khám",
-            "clinic-Note": "Ghi chú"
+            "clinic-Note": "Ghi chú",
+            "maximun-patient-in-same-time":"Giới hạn cho 1 khung giờ"
         }
     }
 }

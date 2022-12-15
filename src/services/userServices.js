@@ -112,9 +112,21 @@ const cancelBookingFromPatient = (data) => {
 const postVerifyRegister = (data) => {
     return axios.post(`/api/verify-register`, data)
 }
+const postMedicalRecords = (data) => {
+    return axios.post(`/api/post-history-patient`, data)
+}
+const postRating = (data) => {
+    return axios.post(`/api/post-rating-patient`, data)
+}
+const getMedicalRecordByBookingId = (data) => {
+    return axios.get(`/api/get-history-patient?bookingId=${data}`)
+}
+const getListExaminatedPatientForDoctor = (data) => {
+    return axios.get(`/api/get-list-examinated-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
+}
 export {
-    handleLoginApi,
-    getAllUsers,
+    handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
+    getAllUsers, getMedicalRecordByBookingId,
     createNewUserService,
     deleteUserService,
     editUserService,

@@ -1,0 +1,49 @@
+.review-medical-record-modal-container{
+    .review-modal-content{
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        .review-modal-header{
+            padding: 10px;
+            border-bottom:1px solid #ccc ;
+            .left{
+                font-size: 15px;
+                font-weight: 600;
+                color: #333;
+            }
+            .right{
+                float: right;
+                cursor: pointer;
+            }
+        }
+        .review-modal-body{
+            padding: 0px 10px;
+            height:80%;
+            .doctor-infor{
+                height:200px
+            }
+        }
+        .review-modal-footer{
+            // padding: 10px;
+            border-top: 1px solid #ccc;
+            display: flex;
+            justify-content: flex-end;
+            gap:15px;
+            margin-top: 5px;
+
+            button{
+                border: none;
+                outline: none;
+                padding: 8px 5px;
+                border-radius: 5px;
+                min-width: 100px;
+            }
+            .btn-review-comfirm{
+                background-color: rgb(73, 234, 73);
+            }
+            .btn-review-cancel{
+                background-color: rgb(255, 200, 81);
+            }
+        }
+    }
+}

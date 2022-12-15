@@ -14,6 +14,7 @@ import { LANGUAGES } from "../../../../utils"
 import { postPatientAppointment } from '../../../../services/userServices'
 import { toast } from "react-toastify";
 import moment from 'moment/moment';
+import ModalWaiting from '../../Profile/ModalWaiting';
 
 class BookingModal extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class BookingModal extends Component {
             doctorId: '',
             timetype: '',
             date: '',
-
+            isOpenModalWaiting: false
         }
     }
     componentDidMount() {
@@ -142,6 +143,7 @@ class BookingModal extends Component {
         return ''
     }
     handleConfirmBooking = async () => {
+        this.setState({ isOpenModalWaiting: true })
         let timeString = this.renderBookingTime(this.props.dataTime)
         let doctorName = this.renderDoctorName(this.props.dataTime)
         let res = await postPatientAppointment({
@@ -161,6 +163,8 @@ class BookingModal extends Component {
             patientAge: this.state.patientAge,
             doctorName: doctorName,
         })
+        this.setState({ isOpenModalWaiting: false })
+
         console.log('check req', res)
         if (res && res.errCode === 0) {
             toast.success('Thêm lịch hẹn thành công')
@@ -171,7 +175,7 @@ class BookingModal extends Component {
         this.props.closeBookingModal()
     }
     render() {
-        let { gender } = this.state;
+        let { gender, isOpenModalWaiting } = this.state;
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
         console.log('render', this.props.userInfo)
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : ''
@@ -188,7 +192,8 @@ class BookingModal extends Component {
                         <span className='left'><FormattedMessage id="patient.modal-booking.booking-infor" /></span>
                         <span className='right' onClick={closeBookingModal}><i className='fas fa-times'></i></span>
                     </div>
-
+                    <ModalWaiting
+                        isOpenModalWaiting={isOpenModalWaiting} />
                     <div className='booking-modal-body'>
                         {/* {JSON.stringify(dataTime)} */}
                         <div className='doctor-infor'>

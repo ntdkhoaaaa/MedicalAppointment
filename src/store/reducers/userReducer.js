@@ -54,7 +54,6 @@ const appReducer = (state = initialState, action) => {
                 loadPermission: false,
             }
         case actionTypes.REFRESH_TOKEN:
-            console.log('action', action)
             return {
                 ...state,
                 accessToken: action.accessToken,
