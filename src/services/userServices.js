@@ -124,6 +124,15 @@ const getMedicalRecordByBookingId = (data) => {
 const getListExaminatedPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-examinated-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
+const handleForgotPassWord = async (data) => {
+    return await axios.post('/api/forgot-password', data)
+}
+const checkTokenResetPassword = async (data) => {
+    return await axios.post('/api/get-info-reset-password-by-token', data)
+}
+const handleResetPassWord = async (data) => {
+    return await axios.post('/api/reset-password', data)
+}
 export {
     handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
     getAllUsers, getMedicalRecordByBookingId,
@@ -141,5 +150,6 @@ export {
     postVerifyBooking, addNewSpecialty, getAllAppointmentOfPatient,
     getAllSpecialties, addNewClinic, getAllClinics,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
-    getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister
+    getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister,
+    handleForgotPassWord, checkTokenResetPassword, handleResetPassWord,
 }

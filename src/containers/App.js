@@ -28,6 +28,8 @@ import DetailSpecialty from './Patient/Specialty/DetailSpecialty';
 import { fetchPermission } from '../store/actions';
 import DetailClinic from './Patient/Clinics/DetailClinic';
 import UserProfile from './Patient/Profile/UserProfile';
+import ForgetPassword from './Auth/ForgetPassword';
+import ResetPassword from './Auth/ResetPassword';
 
 class App extends Component {
 
@@ -74,6 +76,8 @@ class App extends Component {
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                     <Route path={path.VERIFY_REGISTER} component={VerifyRegister} />
                                     <Route path={path.USER_PROFILE} component={userIsAuthenticated(UserProfile)} />
+                                    <Route path={path.FORGOT_PASSWORD} component={userIsNotAuthenticated(ForgetPassword)} />
+                                    <Route path={path.RESET_PASSWORD} component={userIsNotAuthenticated(ResetPassword)} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

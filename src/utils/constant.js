@@ -10,7 +10,10 @@ export const path = {
     VERIFY_EMAIL_BOOKING: '/verify-booking',
     REGISTER: '/register',
     USER_PROFILE: '/profile',
-    VERIFY_REGISTER: '/verify-register'
+    VERIFY_REGISTER: '/verify-register',
+    FORGOT_PASSWORD: '/forgot-password',
+    RESET_PASSWORD: '/reset-password',
+
 };
 
 export const LANGUAGES = {

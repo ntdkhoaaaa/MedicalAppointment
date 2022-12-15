@@ -49,7 +49,7 @@ instance.interceptors.response.use(
 instance.interceptors.request.use(async (config) => {
     let state = reduxStore.getState();
     let currentDate = new Date();
-    if (state && state.user && state.user.accessToken && state.user.accessToken.trim().length > 0) {
+    if (state && state.user && state.user.isLoggedIn && state.user.accessToken && state.user.accessToken.trim().length > 0) {
         const decodeToken = jwt_decode(state.user.accessToken);
         if (decodeToken && decodeToken.exp * 1000 < currentDate.getTime()) {
             let res = await refreshToken(state.user.refreshToken);
