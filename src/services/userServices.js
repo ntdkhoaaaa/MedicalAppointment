@@ -118,8 +118,11 @@ const postRating = (data) => {
 const getMedicalRecordByBookingId = (data) => {
     return axios.get(`/api/get-history-patient?bookingId=${data}`)
 }
+const getListExaminatedPatientForDoctor = (data) => {
+    return axios.get(`/api/get-list-examinated-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
+}
 export {
-    handleLoginApi, postMedicalRecords, postRating,
+    handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
     getAllUsers, getMedicalRecordByBookingId,
     createNewUserService,
     deleteUserService,

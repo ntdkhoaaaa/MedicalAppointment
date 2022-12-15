@@ -67,7 +67,7 @@ class ModalRatingAppointment extends Component {
         }
         const onPointerEnter = () => console.log('Enter', rating)
         const onPointerLeave = () => console.log('Leave', rating)
-        console.log('doctorId', doctorId)
+
         return (
             <Modal
                 isOpen={isOpenModalRating}

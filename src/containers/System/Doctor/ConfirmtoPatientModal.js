@@ -21,18 +21,6 @@ class ConfirmtoPatientModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastName: "",
-      firstName: "",
-      phoneNumber: "",
-      email: "",
-      address: "",
-      reason: "",
-      patientAge: "",
-      genderIdentity: "",
-      forwho: "",
-      genders: [],
-      doctorId: "",
-      timetype: "",
       date: "",
       medicalRecord: "",
       kedonthuoc: "",
@@ -48,16 +36,6 @@ class ConfirmtoPatientModal extends Component {
     };
   }
   componentDidMount() {
-    this.props.getGendersStart();
-    if (this.props.isLoggedIn) {
-      this.setState({
-        email: this.props.userInfo?.email,
-        lastName: this.props.userInfo?.lastName,
-        firstName: this.props.userInfo?.firstName,
-        address: this.props.userInfo?.address,
-        phoneNumber: this.props.userInfo?.phoneNumber,
-      });
-    }
   }
   handleChange = (idx) => (e) => {
     const { name, value } = e.target;
@@ -99,14 +77,6 @@ class ConfirmtoPatientModal extends Component {
       ...copyState,
     });
   };
-  handleOnChangeDataPicker = (date) => {
-    this.setState({
-      doB: date[0],
-    });
-  };
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
   async handleConfirmBooking(bookingId, closeBookingModal) {
     console.log('Medical Records', this.state, bookingId)
     let data = {
@@ -124,8 +94,7 @@ class ConfirmtoPatientModal extends Component {
   render() {
     let { gender, receipts } = this.state;
     let { isOpenModal, closeBookingModal, dataTime, bookingId } = this.props;
-    console.log("render", this.props.userInfo);
-    console.log("don thuoc ", this.state.receipts);
+    console.log('booking id', bookingId)
     let patientId = dataTime && !_.isEmpty(dataTime) ? dataTime.patientId : "";
     return (
       <Modal

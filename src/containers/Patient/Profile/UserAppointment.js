@@ -9,6 +9,8 @@ import * as actions from '../../../store/actions'
 import ModalRatingAppointment from './ModalRatingAppointment';
 import TempModal from './TempModal';
 import ModalViewMedicalRecord from './ModalViewMedicalRecord';
+import ModalAnnounceCancel from './ModalAnnounceCancel';
+import ModalWaiting from './ModalWaiting';
 class UserAppointment extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +22,10 @@ class UserAppointment extends Component {
             ratingBookingId: '',
             viewingBookingId: '',
             doctorId: '',
+            bookingDate: '',
+            isOpenModalAnnounce: false,
+            CancelSuccess: false,
+            isOpenModalWaiting: false
         }
     }
     async componentDidMount() {
@@ -72,17 +78,15 @@ class UserAppointment extends Component {
 
     }
     RatingTime(index, doctorId) {
-        console.log('bwbwi', doctorId)
-
         this.setState({
             ratingBookingId: index,
             doctorId: doctorId,
-
             isOpenModalRating: true,
         })
     }
-    ViewingTime(index) {
+    ViewingTime(index, bookingDate) {
         this.setState({
+            bookingDate: bookingDate,
             viewingBookingId: index,
             isOpenViewMedicalRecord: true,
         })
@@ -97,28 +101,50 @@ class UserAppointment extends Component {
             isOpenViewMedicalRecord: false
         })
     }
+    closeAnnouncementModal = () => {
+        this.setState({
+            isOpenModalAnnounce: false
+        })
+    }
     async CancelBooking(bookingId, PatientAppointment) {
+        this.setState({
+            isOpenModalWaiting: true
+        })
         let res = await cancelBookingFromPatient({ id: bookingId })
+        console.log('check cancelled', res)
         if (res && res.errCode === 1) {
-
+            this.setState({
+                isOpenModalAnnounce: true,
+                isOpenModalWaiting: false,
+                CancelSuccess: false
+            })
         }
         if (res && res.errCode === 0) {
             let { userInfo } = this.props
             let UserAppointment = await getAllAppointmentOfPatient(userInfo?.id)
             if (UserAppointment && UserAppointment.length > 0) {
                 this.setState({
-                    PatientAppointment: UserAppointment
+                    PatientAppointment: UserAppointment,
+                    isOpenModalAnnounce: true,
+                    isOpenModalWaiting: false,
+                    CancelSuccess: true
                 })
             }
         }
         PatientAppointment = this.props.PatientAppointment
     }
     render() {
-        let { isOpenModalRating, PatientAppointment, ratingBookingId, isOpenViewMedicalRecord, viewingBookingId, doctorId } = this.state
+        let { isOpenModalRating, PatientAppointment, ratingBookingId, isOpenViewMedicalRecord, isOpenModalWaiting, viewingBookingId, doctorId, bookingDate, isOpenModalAnnounce, CancelSuccess } = this.state
         let { userInfo } = this.props
 
         return (
             <div className='patient-appointment'>
+                <ModalWaiting
+                    isOpenModalWaiting={isOpenModalWaiting} />
+                <ModalAnnounceCancel
+                    isOpenModalAnnounce={isOpenModalAnnounce}
+                    closeAnnouncementModal={this.closeAnnouncementModal}
+                    CancelSuccess={CancelSuccess} />
                 <div className='col-12 table-manage-patient table-striped'>
                     <table style={{ width: '100%' }} >
                         <tbody>
@@ -132,7 +158,6 @@ class UserAppointment extends Component {
                             </tr>
                             {PatientAppointment && PatientAppointment.length > 0 ?
                                 PatientAppointment.map((item, index) => {
-                                    console.log('item', item.doctorId)
                                     return (
                                         <tr key={index}>
                                             <td>{item?.bookingDate}</td>
@@ -173,9 +198,10 @@ class UserAppointment extends Component {
                                                                 </div>
                                                                 < div >
                                                                     <button
-                                                                        onClick={() => this.ViewingTime(item.id)}
+                                                                        onClick={() => this.ViewingTime(item.id, item.bookingDate)}
                                                                         className='mp-btn-remedy'>
                                                                         <ModalViewMedicalRecord
+                                                                            bookingDate={bookingDate}
                                                                             closeViewMedicalRecordModal={this.closeViewMedicalRecordModal}
                                                                             viewingBookingId={viewingBookingId}
                                                                             isOpenViewMedicalRecord={isOpenViewMedicalRecord}
@@ -198,9 +224,7 @@ class UserAppointment extends Component {
                                                                         Xem bệnh án
                                                                     </button>
                                                                 </div> : ''
-
                                                 }
-
 
                                             </td>
                                         </tr>

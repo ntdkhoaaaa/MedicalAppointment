@@ -13,7 +13,6 @@ class ModalViewMedicalRecord extends Component {
         }
     }
     async componentDidMount() {
-        console.log('call from component did mount')
         let { viewingBookingId } = this.props
         let res = await getMedicalRecordByBookingId(viewingBookingId)
         if (res && res.errCode === 0) {
@@ -29,7 +28,6 @@ class ModalViewMedicalRecord extends Component {
 
         }
         if (this.props.viewingBookingId !== prevProps.viewingBookingId) {
-            console.log('call from component did update')
             let { viewingBookingId } = this.props
             let res = await getMedicalRecordByBookingId(viewingBookingId)
             if (res && res.errCode === 0) {
@@ -40,10 +38,9 @@ class ModalViewMedicalRecord extends Component {
         }
     }
     render() {
-        let { viewingBookingId, isOpenViewMedicalRecord, closeViewMedicalRecordModal } = this.props
+        let { viewingBookingId, isOpenViewMedicalRecord, closeViewMedicalRecordModal, bookingDate } = this.props
         let { Record } = this.state
 
-        console.log('Modal hisstory', Record)
         return (
             <Modal
                 toggle={closeViewMedicalRecordModal}
@@ -62,12 +59,6 @@ class ModalViewMedicalRecord extends Component {
 
                     </div>
                     <div className="row">
-                        <div className="col-12 form-group">
-                            <label>Thời gian khám</label>
-                            <span
-                                className="form-control"
-                            >{Record?.medicalRecords}</span>
-                        </div>
                         <div className="col-12 form-group">
                             <label>Bệnh án</label>
                             <textarea
