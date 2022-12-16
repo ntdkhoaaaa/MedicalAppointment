@@ -34,6 +34,24 @@ class ResetPassword extends Component {
             })
             return;
         }
+        if (this.state.password.length < 8) {
+            this.setState({
+                errMessage: 'password must contain at least 8 characters 1 special character and 1 capital character ',
+            })
+            return;
+        }
+        if (!this.state.password.match(/[a-z]+/) || !this.state.password.match(/[A-Z]+/)) {
+            this.setState({
+                errMessage: 'password must contain at least 1 capital character and 1 character',
+            })
+            return;
+        }
+        if (!this.state.password.match(/[$@#&!%^&*_-]+/)) {
+            this.setState({
+                errMessage: 'password must contain at least 1 special character  ',
+            })
+            return;
+        }
         try {
             let data = await handleResetPassWord({
                 email: this.state.email,
