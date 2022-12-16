@@ -11,7 +11,7 @@ import moment from 'moment';
 import FormattedDate from '../../../components/Formating/FormattedDate';
 import _, { result, times } from 'lodash';
 import { toast } from "react-toastify";
-import { saveBulkScheduleDoctor, getSelectedSchedule } from '../../../services/userServices'
+import { saveBulkScheduleDoctor, getSelectedScheduleFromDoctor } from '../../../services/userServices'
 import ModalCancelSchedule from './ModalCancelSchedule'
 class ManageSchedule extends Component {
     constructor(props) {
@@ -36,21 +36,19 @@ class ManageSchedule extends Component {
             let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
             this.setState({
                 listDoctocs: dataSelect,
-                selectedDoctor: dataSelect[0]
+                selectedDoctor: dataSelect[1]
             })
         }
         if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
             let data = this.props.allScheduleTime;
             if (data && data.length > 0) {
-                data = data.map(item => ({ ...item, isSelected: false }))
+                data = data.map(item => ({ ...item, isSelected: false, isFullAppointment: false, isBooked: false }))
             }
             this.setState({
                 rangeTime: data
             })
         }
-
     }
-
     buildDataInputSelect = (inputData) => {
         let result = [];
         let { language } = this.props;
@@ -79,7 +77,7 @@ class ManageSchedule extends Component {
             })
             let formatedDate = new Date(currentDate).getTime()
             if (selectedOption) {
-                let res = await getSelectedSchedule(
+                let res = await getSelectedScheduleFromDoctor(
                     selectedOption.value,
                     formatedDate.toString(),
                 )
@@ -102,9 +100,19 @@ class ManageSchedule extends Component {
     };
     checkIsSelected = (item) => {
         let { isSelectedSchedule } = this.state;
-        isSelectedSchedule.forEach((element) => {
+        isSelectedSchedule?.nobooking.forEach((element) => {
             if (element.timetype === item.keyMap) {
                 item.isSelected = true;
+            }
+        })
+        isSelectedSchedule?.booked.forEach((element) => {
+            if (element.timetype === item.keyMap) {
+                item.isFullAppointment = true;
+            }
+        })
+        isSelectedSchedule?.full.forEach((element) => {
+            if (element.timetype === item.keyMap) {
+                item.isBooked = true;
             }
         })
     }
@@ -117,7 +125,7 @@ class ManageSchedule extends Component {
         })
         let formatedDate = new Date(currentDate).getTime()
         if (selectedDoctor) {
-            let res = await getSelectedSchedule(
+            let res = await getSelectedScheduleFromDoctor(
                 selectedDoctor.value,
                 formatedDate.toString(),
             )
@@ -141,34 +149,6 @@ class ManageSchedule extends Component {
             currentDate: date[0]
         })
         this.getSelectedScheduleforDoctor();
-        // let { selectedDoctor, currentDate, rangeTime } = this.state;
-
-
-        // rangeTime.map(item => {
-        //     item.isSelected = false;
-        //     return item;
-        // })
-        // let formatedDate = new Date(currentDate).getTime()
-        // if (selectedDoctor) {
-        //     let res = await getSelectedSchedule(
-        //         selectedDoctor.value,
-        //         formatedDate.toString(),
-        //     )
-
-        //     if (res && res.errCode === 0) {
-        //         this.setState({
-        //             isSelectedSchedule: res.data ? res.data : []
-        //         })
-        //     }
-        //     rangeTime.map(item => {
-        //         this.checkIsSelected(item)
-        //         return item;
-        //     })
-        //     this.setState({
-        //         rangeTime: rangeTime
-        //     })
-        // }
-
     }
     CheckCanceled = (data) => {
         if (data === true) {
@@ -192,7 +172,7 @@ class ManageSchedule extends Component {
                 isOpenModalCanceSchedule: true,
                 selectedButton: time
             })
-            isSelectedSchedule.forEach(schedule => {
+            isSelectedSchedule?.nobooking.forEach(schedule => {
                 if (schedule.timetype === time.keyMap) {
                     this.setState({
                         selectedItem: schedule,
@@ -272,6 +252,7 @@ class ManageSchedule extends Component {
         let { rangeTime, isOpenModalCanceSchedule, selectedItem } = this.state;
         let { language } = this.props;
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+        console.log('range time', rangeTime)
         return (
             <div className='manage-schedule-container'>
                 <ModalCancelSchedule
@@ -306,7 +287,8 @@ class ManageSchedule extends Component {
                                     return (
                                         <button
                                             key={index}
-                                            className={item.isSelected === true ? 'btn btn-schedule active' : 'btn btn-schedule'}
+                                            className={item.isSelected === true ? 'btn btn-schedule active' : item.isBooked === true ?
+                                                'btn btn-schedule booked' : item.isFullAppointment === true ? 'btn btn-schedule full' : 'btn btn-schedule'}
                                             onClick={() => this.handleClickBtnTime(item)}
                                         >
                                             {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
@@ -321,6 +303,11 @@ class ManageSchedule extends Component {
                                 className='btn btn-primary btn-save-schedule'>
                                 <FormattedMessage id="manage-schedule.save" />
                             </button>
+                        </div>
+                        <div className='color-description'>
+                            <div className='color'><span>wehjfeowi</span></div>
+                            <div className='color'><span>wehjfeowi</span></div>
+                            <div className='color'><span>wehjfeowi</span></div>
                         </div>
                     </div>
                 </div>

@@ -52,6 +52,12 @@
 
             .forgetpassword {
                 font-size: 12px;
+                color: #307aaf;
+                :hover{
+                    cursor: pointer;
+                    text-decoration: none;
+                    color: #c32424;
+                }
             }
 
             .social-login {

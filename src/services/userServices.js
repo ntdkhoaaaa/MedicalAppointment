@@ -52,6 +52,9 @@ const saveBulkScheduleDoctor = (data) => {
 const getSelectedSchedule = (doctorId, date) => {
     return axios.get(`/api/get-selected-schedule-byId?doctorId=${doctorId}&date=${date}`)
 }
+const getSelectedScheduleFromDoctor = (doctorId, date) => {
+    return axios.get(`/api/get-schedule-by-date-from-doctor?doctorId=${doctorId}&date=${date}`)
+}
 const getScheduleDoctorByDate = (doctorId, date) => {
     return axios.get(`/api/get-schedule-byDate?doctorId=${doctorId}&date=${date}`)
 }
@@ -136,7 +139,7 @@ const handleResetPassWord = async (data) => {
 export {
     handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
     getAllUsers, getMedicalRecordByBookingId,
-    createNewUserService,
+    createNewUserService, getSelectedScheduleFromDoctor,
     deleteUserService,
     editUserService,
     getAllCodeService,

@@ -8,6 +8,7 @@ import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
 import { handleLoginApi } from '../../services/userServices';
+import { Link } from 'react-router-dom';
 
 
 class Login extends Component {
@@ -109,7 +110,7 @@ class Login extends Component {
                             </button>
                         </div>
                         <div className='col-12'>
-                            <span className='forgetpassword'>Forget your password</span>
+                            <span className='forgetpassword'><Link to='/forgot-password'>Forget your password</Link></span>
                         </div>
                         <div className='col-12 text-center mt-3'>
                             <span className='text-otherlogin'>Or Login with:</span>

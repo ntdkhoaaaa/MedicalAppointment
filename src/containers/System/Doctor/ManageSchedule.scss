@@ -19,6 +19,14 @@
             &.active{
                 background: rgb(255, 150, 4);
             }
+            &.full{
+                background: rgb(4, 171, 255);
+                cursor: not-allowed;
+            }
+            &.booked{
+                background: rgb(30, 218, 155);
+                cursor: not-allowed;
+            }
         }
     }
     .btn-save-schedule{
