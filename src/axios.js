@@ -53,9 +53,16 @@ instance.interceptors.request.use(async (config) => {
         const decodeToken = jwt_decode(state.user.accessToken);
         if (decodeToken && decodeToken.exp * 1000 < currentDate.getTime()) {
             let res = await refreshToken(state.user.refreshToken);
-            config.headers["Authorization"] = res.data.accessToken;
+            if (res.errCode === 0) {
+                config.headers["Authorization"] = `Bearer ${res?.data?.accessToken}`;
+            } else {
+                toast.error("Phiên làm việc hết hạn! Vui lòng đăng nhập lại")
+                reduxStore.dispatch({
+                    type: actionTypes.PROCESS_LOGOUT,
+                })
+            }
         } else {
-            config.headers["Authorization"] = state.user.accessToken
+            config.headers["Authorization"] = `Bearer ${state.user.accessToken}`;
         }
     }
     return config;
