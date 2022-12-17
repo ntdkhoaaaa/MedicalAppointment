@@ -136,9 +136,12 @@ const checkTokenResetPassword = async (data) => {
 const handleResetPassWord = async (data) => {
     return await axios.post('/api/reset-password', data)
 }
+const getListPatientCommentByDoctorId = (data) => {
+    return axios.get(`/api/get-rating-patient?doctorId=${data}`)
+}
 export {
     handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
-    getAllUsers, getMedicalRecordByBookingId,
+    getAllUsers, getMedicalRecordByBookingId, getListPatientCommentByDoctorId,
     createNewUserService, getSelectedScheduleFromDoctor,
     deleteUserService,
     editUserService,

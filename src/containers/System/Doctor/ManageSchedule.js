@@ -100,27 +100,33 @@ class ManageSchedule extends Component {
     };
     checkIsSelected = (item) => {
         let { isSelectedSchedule } = this.state;
-        isSelectedSchedule?.nobooking.forEach((element) => {
-            if (element.timetype === item.keyMap) {
-                item.isSelected = true;
-            }
-        })
-        isSelectedSchedule?.booked.forEach((element) => {
-            if (element.timetype === item.keyMap) {
-                item.isFullAppointment = true;
-            }
-        })
-        isSelectedSchedule?.full.forEach((element) => {
-            if (element.timetype === item.keyMap) {
-                item.isBooked = true;
-            }
-        })
+        console.log('isSelectedSchedule', isSelectedSchedule)
+        if (isSelectedSchedule && isSelectedSchedule.length !== 0) {
+            isSelectedSchedule?.nobooking.forEach((element) => {
+                if (element.timetype === item.keyMap) {
+                    item.isSelected = true;
+                }
+            })
+            isSelectedSchedule?.booked.forEach((element) => {
+                if (element.timetype === item.keyMap) {
+                    item.isFullAppointment = true;
+                }
+            })
+            isSelectedSchedule?.full.forEach((element) => {
+                if (element.timetype === item.keyMap) {
+                    item.isBooked = true;
+                }
+            })
+        }
+
     }
     getSelectedScheduleforDoctor = async () => {
         let { selectedDoctor, currentDate, rangeTime } = this.state;
 
         rangeTime.map(item => {
             item.isSelected = false;
+            item.isFullAppointment = false;
+            item.isBooked = false;
             return item;
         })
         let formatedDate = new Date(currentDate).getTime()
@@ -142,6 +148,7 @@ class ManageSchedule extends Component {
             this.setState({
                 rangeTime: rangeTime
             })
+
         }
     }
     handleOnChangeDataPicker = async (date) => {
@@ -297,6 +304,18 @@ class ManageSchedule extends Component {
                                 })
                             }
                         </div>
+                        <div className='color-description'>
+                            <div className='color-active'>
+                                <span className='summary-status-active'><i className='fas fa-circle'></i> Lịch trống</span>
+                            </div>
+                            <div className='color-booked'>
+                                <span className='summary-status-booked'><i className='fas fa-circle'></i> Đã đặt</span>
+                            </div>
+                            <div className='color-full'>
+                                <span className='summary-status-full'><i className='fas fa-circle'></i> Đã kín</span>
+                            </div>
+
+                        </div>
                         <div className='col-12'>
                             <button
                                 onClick={() => this.handleSaveSchedule()}
@@ -304,14 +323,10 @@ class ManageSchedule extends Component {
                                 <FormattedMessage id="manage-schedule.save" />
                             </button>
                         </div>
-                        <div className='color-description'>
-                            <div className='color'><span>wehjfeowi</span></div>
-                            <div className='color'><span>wehjfeowi</span></div>
-                            <div className='color'><span>wehjfeowi</span></div>
-                        </div>
+
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }

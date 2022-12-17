@@ -32,4 +32,42 @@
     .btn-save-schedule{
         margin-top: 20px;
     }
+    .color-description{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        .summary-status-active{
+            color: #ffa800;
+            min-width: 150px;
+            font-size: 1.4rem;
+            font-weight: 500;
+            border: 1px solid #ffa800;
+            float: left;
+            text-align: center;
+
+            border-radius: 10px;
+        }
+        .summary-status-booked{
+            color: rgb(4, 171, 255);
+            min-width: 150px;
+            font-size: 1.4rem;
+            font-weight: 500;
+            float: left;
+            text-align: center;
+            border: 1px solid rgb(4, 171, 255);
+            border-radius: 10px;
+        }
+        .summary-status-full{
+            color: rgb(30, 218, 155);
+            min-width: 150px;
+            font-size: 1.4rem;
+            float: left;
+            text-align: center;
+
+            font-weight: 500;
+            border: 1px solid rgb(30, 218, 155);
+            border-radius: 10px;
+        }
+        
+    }
 }

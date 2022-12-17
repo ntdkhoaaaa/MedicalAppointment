@@ -6,6 +6,7 @@ import { getDetailInforDoctor } from '../../../services/userServices'
 import { LANGUAGES } from '../../../utils';
 import DoctorSchedule from './DoctorSchedule';
 import DoctorExtraInfor from './DoctorExtraInfor';
+import CommentDoctor from './CommentDoctor';
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
@@ -86,6 +87,9 @@ class DetailDoctor extends Component {
                                     </div>}
                             </div>
                             <div className='comment-doctor'>
+                                <CommentDoctor
+                                    doctorIdFromParent={this.state.currentDoctorId}
+                                />
                             </div>
                         </div>
                     </> : <div>loading...</div>
