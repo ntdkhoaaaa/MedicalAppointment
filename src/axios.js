@@ -15,7 +15,7 @@ const refreshToken = async (token) => {
     try {
         const res = await axios.post(`http://localhost:8081/api/refresh-token`, { refreshToken: token })
         if (res && res.data.errCode === 0 && res.data.user) {
-            reduxStore.dispatch({
+            await reduxStore.dispatch({
                 type: actionTypes.REFRESH_TOKEN,
                 accessToken: res.data.accessToken,
                 user: res.data.user,
@@ -24,14 +24,14 @@ const refreshToken = async (token) => {
             return { data: res.data, errCode: 0 };
         } else {
             toast.error("Phiên làm việc hết hạn! Vui lòng đăng nhập lại")
-            reduxStore.dispatch({
+            await reduxStore.dispatch({
                 type: actionTypes.PROCESS_LOGOUT,
             })
             return { errCode: -1 };
         }
     } catch (error) {
         toast.error("Phiên làm việc hết hạn! Vui lòng đăng nhập lại")
-        reduxStore.dispatch({
+        await reduxStore.dispatch({
             type: actionTypes.PROCESS_LOGOUT,
         })
         return { errCode: -1 };
@@ -53,9 +53,16 @@ instance.interceptors.request.use(async (config) => {
         const decodeToken = jwt_decode(state.user.accessToken);
         if (decodeToken && decodeToken.exp * 1000 < currentDate.getTime()) {
             let res = await refreshToken(state.user.refreshToken);
-            config.headers["Authorization"] = res.data.accessToken;
+            if (res.errCode === 0) {
+                config.headers["Authorization"] = `Bearer ${res?.data?.accessToken}`;
+            } else {
+                toast.error("Phiên làm việc hết hạn! Vui lòng đăng nhập lại")
+                reduxStore.dispatch({
+                    type: actionTypes.PROCESS_LOGOUT,
+                })
+            }
         } else {
-            config.headers["Authorization"] = state.user.accessToken
+            config.headers["Authorization"] = `Bearer ${state.user.accessToken}`;
         }
     }
     return config;
