@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../../utils';
 import './TableManageClinic.scss';
 import * as actions from "../../../store/actions";
+import { async } from 'q';
 
 class TableManageClinic extends Component {
     constructor(props) {
@@ -13,21 +14,23 @@ class TableManageClinic extends Component {
         }
     }
     async componentDidMount() {
-        this.props.loadAllClinics();
+        this.setState({
+            listClinic: this.props.listClinic
+        })
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language !== prevProps.language) {
-
-        }
-        if (prevProps.allClinics !== this.props.allClinics) {
+        if (prevProps.listClinic !== this.props.listClinic) {
             this.setState({
-                listClinic: this.props.allClinics
+                listClinic: this.props.listClinic
             })
         }
     }
-    handleEditClinic = (clinic) => {
-        this.props.handleEditClinicFromParentKey(clinic);
+    handleEditClinic = async (clinic) => {
+        await this.props.handleEditClinicFromParentKey(clinic);
+    }
+    handleDeleteClinic = async (clinic) => {
+        await this.props.handleDeleteClinic(clinic.id);
     }
     render() {
         let { listClinic } = this.state
@@ -58,7 +61,9 @@ class TableManageClinic extends Component {
                                         <button className="btn-delete"
                                         //  onClick={() => this.handleDeleteUser(item)}
                                         >
-                                            <i className="fas fa-trash"></i></button>
+                                            <i className="fas fa-trash"
+                                                onClick={() => this.handleDeleteClinic(item)}
+                                            ></i></button>
                                     </td>
                                 </tr>
                             )

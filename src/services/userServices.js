@@ -100,6 +100,9 @@ const getDetailSpecialtyById = (data) => {
 const getDetailClinicById = (data) => {
     return axios.get(`/api/get-detail-clinic-byId?id=${data.id}`)
 }
+const deleteClinicById = (id) => {
+    return axios.get(`/api/delete-clinic-by-id?id=${id}`)
+}
 const handleRegisterApi = async (data) => {
     return await axios.post('/api/register', data)
 }
@@ -157,5 +160,5 @@ export {
     getAllSpecialties, addNewClinic, getAllClinics,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
     getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister,
-    handleForgotPassWord, checkTokenResetPassword, handleResetPassWord,
+    handleForgotPassWord, checkTokenResetPassword, handleResetPassWord, deleteClinicById
 }

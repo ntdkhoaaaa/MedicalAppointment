@@ -36,7 +36,7 @@ class ManageSchedule extends Component {
             let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
             this.setState({
                 listDoctocs: dataSelect,
-                selectedDoctor: dataSelect[1]
+                selectedDoctor: dataSelect[0]
             })
         }
         if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
@@ -295,6 +295,7 @@ class ManageSchedule extends Component {
                                             key={index}
                                             className={item.isSelected === true ? 'btn btn-schedule active' : item.isBooked === true ?
                                                 'btn btn-schedule booked' : item.isFullAppointment === true ? 'btn btn-schedule full' : 'btn btn-schedule'}
+                                            disabled={item.isBooked === true ? true : item.isFullAppointment === true ? true : false}
                                             onClick={() => this.handleClickBtnTime(item)}
                                         >
                                             {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
