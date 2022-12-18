@@ -115,11 +115,7 @@ class Login extends Component {
                             </button>
                         </div>
 
-                        <div className='col-12 '>
-                            <a className='link-register' onClick={() => { this.handleRegister() }}>
-                                Create a new account
-                            </a>
-                        </div>
+                        
                         <div className='col-12'>
                             <span className='forgetpassword'><Link to='/forgot-password'>Forget your password</Link></span>
                         </div>
@@ -129,6 +125,11 @@ class Login extends Component {
                         <div className='col-12 social-login'>
                             <i className="fab fa-google google"></i>
                             <i className="fab fa-facebook-f facebook"></i>
+                        </div>
+                        <div className='col-12 '>
+                            <button className='btn-register' onClick={() => { this.handleRegister() }}>
+                                Register
+                            </button>
                         </div>
                     </div>
                 </div>
