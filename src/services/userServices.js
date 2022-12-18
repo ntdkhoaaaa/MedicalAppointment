@@ -86,14 +86,22 @@ const addNewSpecialty = (data) => {
 const getAllSpecialties = () => {
     return axios.get(`/api/get-all-specialties`)
 }
-
+const deleteSpecialtyById = (id) => {
+    return axios.get(`/api/delete-specialty-by-id?id=${id}`)
+}
+const updateSpecialtybyId = (data) => {
+    return axios.post(`/api/update-specialty-by-id`, data)
+}
+// clinic
 const addNewClinic = (data) => {
     return axios.post(`/api/add-new-clinic`, data)
+}
+const updateClinicbyId = (data) => {
+    return axios.post(`/api/update-clinic-by-id`, data)
 }
 const getAllClinics = () => {
     return axios.get(`/api/get-all-clinics`)
 }
-
 const getDetailSpecialtyById = (data) => {
     return axios.get(`/api/get-detail-specialty-byId?id=${data.id}&location=${data.location}`)
 }
@@ -160,5 +168,6 @@ export {
     getAllSpecialties, addNewClinic, getAllClinics,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
     getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister,
-    handleForgotPassWord, checkTokenResetPassword, handleResetPassWord, deleteClinicById
+    handleForgotPassWord, checkTokenResetPassword, handleResetPassWord,
+    deleteClinicById, updateClinicbyId, deleteSpecialtyById, updateSpecialtybyId
 }

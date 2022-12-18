@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, CRUD_ACTIONS } from '../../../utils';
 import './ManageClinic.scss'
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from '../../../utils'
 import TableManageClinic from './TableManageClinic';
-import { addNewClinic, deleteClinicById } from '../../../services/userServices'
+import { addNewClinic, deleteClinicById, updateClinicbyId } from '../../../services/userServices'
 import { toast } from 'react-toastify';
 import 'react-image-lightbox/style.css';
 import Lightbox from 'react-image-lightbox';
@@ -28,7 +28,9 @@ class ManageClinic extends Component {
             address: '',
             addressEn: '',
             isOpen: false,
-            listClinic: []
+            listClinic: [],
+            idClinic: '',
+            action: CRUD_ACTIONS.CREATE,
         }
     }
     async componentDidMount() {
@@ -88,36 +90,69 @@ class ManageClinic extends Component {
 
     }
     handleSaveNewSpecialty = async () => {
-        let res = await addNewClinic({
-            name: this.state.name,
-            nameEn: this.state.nameEn,
-            imageBase64: this.state.imageBase64,
-            descriptionHTML: this.state.descriptionHTML,
-            descriptionMarkdown: this.state.descriptionMarkdown,
-            address: this.state.address,
-            addressEn: this.state.addressEn
-        })
-        await this.props.loadAllClinics();
-        if (res && res.errCode === 0) {
-            toast.success('Create a new clinic successfully')
-            this.setState({
-                name: '',
-                nameEn: '',
-                imageBase64: '',
-                previewImgURL: '',
-                descriptionHTML: '',
-                descriptionMarkdown: '',
-                address: '',
-                addressEn: '',
+        if (this.state.action === CRUD_ACTIONS.CREATE) {
+            let res = await addNewClinic({
+                name: this.state.name,
+                nameEn: this.state.nameEn,
+                imageBase64: this.state.imageBase64,
+                descriptionHTML: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
+                address: this.state.address,
+                addressEn: this.state.addressEn
             })
+            await this.props.loadAllClinics();
+            if (res && res.errCode === 0) {
+                toast.success('Create a new clinic successfully')
+                this.setState({
+                    name: '',
+                    nameEn: '',
+                    imageBase64: '',
+                    previewImgURL: '',
+                    descriptionHTML: '',
+                    descriptionMarkdown: '',
+                    address: '',
+                    addressEn: '',
+                })
+            }
+            else {
+                toast.error('Create a new clinic fail')
+            }
         }
         else {
-            toast.error('Create a new clinic fail')
+            let res = await updateClinicbyId({
+                name: this.state.name,
+                nameEn: this.state.nameEn,
+                imageBase64: this.state.imageBase64,
+                descriptionHTML: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
+                address: this.state.address,
+                addressEn: this.state.addressEn,
+                id: this.state.idClinic
+            })
+            await this.props.loadAllClinics();
+            if (res && res.errCode === 0) {
+                toast.success('Create a new clinic successfully')
+                this.setState({
+                    name: '',
+                    nameEn: '',
+                    imageBase64: '',
+                    previewImgURL: '',
+                    descriptionHTML: '',
+                    descriptionMarkdown: '',
+                    address: '',
+                    addressEn: '',
+                    action: CRUD_ACTIONS.CREATE,
+                })
+            }
+            else {
+                toast.error('Create a new clinic fail')
+            }
         }
-        console.log('saveNewSpecialty', res)
+
     }
-    handleEditClinicFromParent = (clinic) => {
+    handleEditClinicFromParent = async (clinic) => {
         this.setState({
+            imageBase64: clinic.image,
             name: clinic.name,
             nameEn: clinic.nameEn,
             previewImgURL: clinic.image,
@@ -125,8 +160,11 @@ class ManageClinic extends Component {
             descriptionMarkdown: clinic.descriptionMarkdown,
             address: clinic.address,
             addressEn: clinic.addressEn,
+            action: CRUD_ACTIONS.EDIT,
+            idClinic: clinic.id
         })
     }
+
     render() {
         return (
             <div className='manage-specialty-container'>
