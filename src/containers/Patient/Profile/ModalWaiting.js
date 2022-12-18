@@ -23,13 +23,14 @@ class ModalWaiting extends Component {
         let { isOpenModalWaiting } = this.props
         return (
             <Modal
+                size='sm'
                 isOpen={isOpenModalWaiting}>
                 <div className='modal-waiting'>
                     <img src='https://cdn-icons-png.flaticon.com/512/5229/5229377.png' />
-                    <div>Bạn đợi 1 xí nhé, hệ thống đang xử lý yêu cầu của bạn</div>
+                    <div className='title'>Bạn đợi 1 xí nhé, hệ thống đang xử lý yêu cầu của bạn</div>
                 </div>
 
-            </Modal>
+            </Modal >
         );
     }
 }

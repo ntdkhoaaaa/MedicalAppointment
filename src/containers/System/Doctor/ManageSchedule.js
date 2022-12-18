@@ -239,7 +239,6 @@ class ManageSchedule extends Component {
         }
         else {
             toast.error('error save Bulk Schedule Doctor');
-            console.log('error save Bulk Schedule Doctor', res)
         }
         this.getSelectedScheduleforDoctor();
 

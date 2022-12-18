@@ -8,6 +8,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ProfileDoctor from '../Doctor/ProfileDoctor';
 import { Rating } from 'react-simple-star-rating'
 import { postRating } from '../../../services/userServices';
+import { toast } from "react-toastify";
 
 class ModalRatingAppointment extends Component {
     constructor(props) {
@@ -43,6 +44,7 @@ class ModalRatingAppointment extends Component {
         let res = await postRating(data)
         if (res.errCode === 0) {
             closeRatingModal()
+
         }
     }
     onChange = (event, id) => {

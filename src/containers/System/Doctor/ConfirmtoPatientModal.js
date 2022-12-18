@@ -17,6 +17,7 @@ import moment from "moment/moment";
 import UserProfile from "../../Patient/Profile/UserProfile";
 import ProfileUser from "./ProfileUser";
 
+
 class ConfirmtoPatientModal extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +88,10 @@ class ConfirmtoPatientModal extends Component {
     }
     let res = await postMedicalRecords(data)
     if (res && res.errCode === 0) {
+
       closeBookingModal()
+      toast.success('Đánh giá bác sĩ thành công');
+
       // getDataPatient()
     }
   }
@@ -103,17 +107,17 @@ class ConfirmtoPatientModal extends Component {
         centered={true}
         backdrop={true}
         toggle={closeBookingModal}
-        className="booking-modal-container"
+        className="medical-record-modal-container"
       >
-        <div className="booking-modal-content">
-          <div className="booking-modal-header">
+        <div className="medical-record-modal-content">
+          <div className="medical-record-modal-header">
             <span className="left">Nhập đơn thuốc khám bệnh</span>
             <span className="right" onClick={closeBookingModal}>
               <i className="fas fa-times"></i>
             </span>
           </div>
 
-          <div className="booking-modal-body">
+          <div className="medical-record-modal-body">
             {/* {JSON.stringify(dataTime)} */}
             <div className="doctor-infor">
               <ProfileUser patientId={patientId} />
