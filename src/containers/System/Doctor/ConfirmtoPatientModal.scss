@@ -1,9 +1,9 @@
-.booking-modal-container{
-    .booking-modal-content{
+.medical-record-modal-container{
+    .medical-record-modal-content{
         height: auto;
         display: flex;
         flex-direction: column;
-        .booking-modal-header{
+        .medical-record-modal-header{
             padding: 10px;
             border-bottom:1px solid #ccc ;
             .left{
@@ -16,7 +16,7 @@
                 cursor: pointer;
             }
         }
-        .booking-modal-body{
+        .medical-record-modal-body{
             padding: 0px 10px;
             height:80%;
             .doctor-infor{
