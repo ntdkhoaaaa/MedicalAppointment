@@ -7,10 +7,11 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from '../../../utils'
 import TableManageClinic from './TableManageClinic';
-import { addNewClinic } from '../../../services/userServices'
+import { addNewClinic, deleteClinicById } from '../../../services/userServices'
 import { toast } from 'react-toastify';
 import 'react-image-lightbox/style.css';
 import Lightbox from 'react-image-lightbox';
+import * as actions from "../../../store/actions";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -26,16 +27,22 @@ class ManageClinic extends Component {
             descriptionMarkdown: '',
             address: '',
             addressEn: '',
-            isOpen: false
+            isOpen: false,
+            listClinic: []
         }
     }
     async componentDidMount() {
-
+        this.props.loadAllClinics();
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
 
+        }
+        if (prevProps.allClinics !== this.props.allClinics) {
+            this.setState({
+                listClinic: this.props.allClinics
+            })
         }
     }
     handleOnChangeInput = (event, id) => {
@@ -70,8 +77,17 @@ class ManageClinic extends Component {
             isOpen: true
         })
     }
+    handleDeleteClinic = async (id) => {
+        let res = await deleteClinicById(id);
+        await this.props.loadAllClinics();
+        if (res && res.errCode === 0) {
+            toast.success("Xóa clinic thành cônggg")
+        } else {
+            toast.error("Xóa không thành công kiểm tra lại");
+        }
+
+    }
     handleSaveNewSpecialty = async () => {
-        console.log('saveNewSpecialty', this.state)
         let res = await addNewClinic({
             name: this.state.name,
             nameEn: this.state.nameEn,
@@ -81,6 +97,7 @@ class ManageClinic extends Component {
             address: this.state.address,
             addressEn: this.state.addressEn
         })
+        await this.props.loadAllClinics();
         if (res && res.errCode === 0) {
             toast.success('Create a new clinic successfully')
             this.setState({
@@ -176,6 +193,8 @@ class ManageClinic extends Component {
                         <TableManageClinic
                             handleEditClinicFromParentKey={this.handleEditClinicFromParent}
                             action={this.state.action}
+                            handleDeleteClinic={this.handleDeleteClinic}
+                            listClinic={this.state.listClinic}
                         />
                     </div>
                 </div>
@@ -195,12 +214,13 @@ class ManageClinic extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        allClinics: state.admin.allClinics,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        loadAllClinics: () => dispatch(actions.fetchAllClinics())
     };
 };
 
