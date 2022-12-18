@@ -165,7 +165,6 @@ class ManagePatient extends Component {
                                         dataPatient.map((item, index) => {
                                             return (
                                                 <tr key={index}>
-
                                                     <td width='18%'>{item.bookingDate}</td>
                                                     <td width='15%'>{item.forWho}</td>
                                                     <td width='25%'>{item.address}</td>
