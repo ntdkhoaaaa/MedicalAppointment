@@ -82,7 +82,7 @@ class ManageClinic extends Component {
             addressEn: this.state.addressEn
         })
         if (res && res.errCode === 0) {
-            toast.success('Create a new Specialty successfully')
+            toast.success('Create a new clinic successfully')
             this.setState({
                 name: '',
                 nameEn: '',
@@ -95,7 +95,7 @@ class ManageClinic extends Component {
             })
         }
         else {
-            toast.error('Create a new Specialty fail')
+            toast.error('Create a new clinic fail')
         }
         console.log('saveNewSpecialty', res)
     }
@@ -103,7 +103,7 @@ class ManageClinic extends Component {
         this.setState({
             name: clinic.name,
             nameEn: clinic.nameEn,
-            // imageBase64: clinic.,
+            previewImgURL: clinic.image,
             descriptionHTML: clinic.descriptionHTML,
             descriptionMarkdown: clinic.descriptionMarkdown,
             address: clinic.address,

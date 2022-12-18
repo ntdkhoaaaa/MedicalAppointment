@@ -41,11 +41,11 @@ class CommentDoctor extends Component {
         let { listComment } = this.state
         console.log(listComment)
         return (
-            <>
-            
+            <div className='comment-container'>
                 {
                     listComment && listComment.length > 0 &&
                     listComment.map(item => {
+                        console.log('check image: ', item.Booking.patientData.image)
                         return (
                             <div className='comment-item'>
                                 <div className='comment-user-infor'>
@@ -112,7 +112,7 @@ class CommentDoctor extends Component {
                         )
                     })
                 }
-            </>
+            </div>
         );
     }
 }

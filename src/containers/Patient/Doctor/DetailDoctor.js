@@ -34,7 +34,6 @@ class DetailDoctor extends Component {
 
     }
     render() {
-        // 
         let { detailDoctor } = this.state;
         let { language } = this.props;
         let nameVi, nameEn;
@@ -42,7 +41,6 @@ class DetailDoctor extends Component {
             nameVi = `${detailDoctor.positionData.valueVi},${detailDoctor.lastName} ${detailDoctor.firstName}`;
             nameEn = `${detailDoctor.positionData.valueEn},${detailDoctor.firstName} ${detailDoctor.lastName}`;
         }
-        // console.log('check markdown', detailDoctor.Markdown.description);
         return (
             <>
                 {!this.props.isLoggedIn || (this.props.isLoggedIn && this.props.permission) ?

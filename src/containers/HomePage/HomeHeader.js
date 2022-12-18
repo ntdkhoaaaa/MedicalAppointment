@@ -23,18 +23,24 @@ class HomeHeader extends Component {
             this.props.history.push(`/profile`)
         }
     }
+    MoveToHome = () => {
+        if (this.props.history) {
+            this.props.history.push(`/home`)
+        }
+    }
     render() {
         let language = this.props.language;
         let userInfo = this.props.userInfo
         let isLoggedIn = this.props.isLoggedIn
         let processLogout = this.props.processLogout
+        
         return (
             <React.Fragment>
                 <div className='home-header-container'>
                     <div className='home-header-content'>
                         <div className='left-content'>
                             <i className="fas fa-bars"></i>
-                            <img className='header-logo' src={logo} onClick />
+                            <img className='header-logo' src={logo} onClick={() => this.MoveToHome()} />
                         </div>
                         <div className='center-content'>
                             <div className='child-content'>

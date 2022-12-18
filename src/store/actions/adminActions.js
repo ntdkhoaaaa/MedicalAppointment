@@ -181,7 +181,7 @@ export const deleteUser = (userId) => {
                 dispatch(fetchAllUsersStart());
             }
             else {
-                toast.success('Delete user failed')
+                toast.error('Delete user failed')
                 dispatch(deleteUserFailed());
             }
         } catch (e) {
@@ -207,11 +207,11 @@ export const EditUser = (userId) => {
                 dispatch(fetchAllUsersStart());
             }
             else {
-                toast.success('Delete a new user failed')
+                toast.error('Delete a new user failed')
                 dispatch(editUserFailed());
             }
         } catch (e) {
-            toast.success('Delete a new user failed')
+            toast.error('Delete a new user failed')
 
             dispatch(editUserFailed());
             console.log("editUserFailed", e);
@@ -228,11 +228,11 @@ export const EditUserInforByOwn = (userId) => {
                 dispatch(fetchAllUsersStart());
             }
             else {
-                toast.success('Delete a new user failed')
+                toast.error('Delete a new user failed')
                 dispatch(editUserFailed());
             }
         } catch (e) {
-            toast.success('Delete a new user failed')
+            toast.error('Delete a new user failed')
             dispatch(editUserFailed());
             console.log("editUserFailed", e);
         }

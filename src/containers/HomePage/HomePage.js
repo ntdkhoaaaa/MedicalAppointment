@@ -5,7 +5,7 @@ import HomeHeader from './HomeHeader';
 import Specialty from './Section/Specialty';
 import MedicalFacility from './Section/MedicalFacility';
 import './HomePage.scss';
-
+import { USER_ROLE } from '../../utils'
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"
@@ -24,8 +24,20 @@ class HomePage extends Component {
             slidesToShow: 4,
             slidesToScroll: 1,
         };
+        let { permission } = this.props;
+        if (permission === USER_ROLE.ADMIN) {
+            return (
+                <Redirect to={'/system/user-manage'} />
+            )
+        }
+        if (permission === USER_ROLE.DOCTOR) {
+            return (
+                <Redirect to={'/doctor/manage-schedule'} />
+            )
+        }
         return (
             <>
+
                 {!this.props.isLoggedIn || (this.props.isLoggedIn && this.props.permission) ?
                     <div>
                         <HomeHeader isShowBanner={true} />
