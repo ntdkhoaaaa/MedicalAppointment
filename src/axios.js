@@ -13,7 +13,7 @@ const instance = axios.create({
 
 const refreshToken = async (token) => {
     try {
-        const res = await axios.post(`http://localhost:8081/api/refresh-token`, { refreshToken: token })
+        const res = await axios.post(`http://localhost:8080/api/refresh-token`, { refreshToken: token })
         if (res && res.data.errCode === 0 && res.data.user) {
             await reduxStore.dispatch({
                 type: actionTypes.REFRESH_TOKEN,

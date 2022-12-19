@@ -9,7 +9,7 @@
         "Medical-package": "Gói khám",
         "General-health-check": "Khám sức khỏe tổng quát",
         "Support": "Hỗ trợ",
-        "welcome": "Xin chào Administrator, ",
+        "welcome": "Xin chào bạn, ",
         "hello": "Xin chào, ",
         "login": "Đăng nhập "
     },
@@ -121,7 +121,7 @@
             "clinic-name": "Tên phòng khám",
             "clinic-address": "Địa chỉ phòng khám",
             "clinic-Note": "Ghi chú",
-            "maximun-patient-in-same-time":"Giới hạn cho 1 khung giờ"
+            "maximun-patient-in-same-time": "Giới hạn cho 1 khung giờ"
         }
     }
 }
