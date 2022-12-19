@@ -45,7 +45,7 @@ class CommentDoctor extends Component {
                 {
                     listComment && listComment.length > 0 &&
                     listComment.map(item => {
-                        console.log('check image: ', item.Booking.patientData.image)
+
                         return (
                             <div className='comment-item'>
                                 <div className='comment-user-infor'>
@@ -56,8 +56,8 @@ class CommentDoctor extends Component {
                                         </div>
                                         <div className='user-detail'>
                                             <div className='comment-username'>
-                                                {item?.Booking?.patientData?.firstName}
-                                                {item?.Booking?.patientData?.lastName}
+                                                <span>       {item?.Booking?.patientData?.firstName} {item?.Booking?.patientData?.lastName}</span>
+
                                             </div>
                                             <div className='content-addition'>
                                                 {item?.Booking?.patientData?.gender === 'O' ? 'Khác' :
@@ -68,14 +68,16 @@ class CommentDoctor extends Component {
                                     </div>
                                     <div className='infor-down'>
                                         <span> <i class="far fa-comment"></i>
-                                            {item?.Booking?.patientData?.gender === 'O' ? 'Khác' :
-                                                item?.Booking?.patientData?.gender === 'F' ? 'Nữ' : 'Nam'
-                                            }
+
+                                            {item.sothang === 0 && item.songay > 0 && `Đã đánh giá vào ${item.songay} ngày trước`}
+                                            {item.sothang === 0 && item.songay === 0 && 'Đã đánh giá gần đây'}
+                                            {item.sothang > 0 && `Đã đánh giá vào ${item.sothang} trước`}
+                                            {/* Đã bình luận được được {item.sothang} tháng {item.songay} ngày */}
                                         </span>
                                     </div>
 
                                 </div>
-                                <div className='comment-container'>
+                                <div className='comment-content'>
                                     <div className='comment-container-up'>
                                         <Rating
                                             initialValue={item.rate}
@@ -83,7 +85,7 @@ class CommentDoctor extends Component {
                                             label
                                             readonly
                                             transition
-                                            fillColor='orange'
+                                            fillColor='#ffc10e'
                                             emptyColor='gray'
                                             className='foo'
                                         />
@@ -100,7 +102,7 @@ class CommentDoctor extends Component {
                                     <div className='comment-container-down'>
                                         <div className='confirmed'>
                                             <i class="fas fa-check-circle"></i>
-                                            <span> Đã mua hàng</span>
+                                            <span> Đã khám bệnh</span>
                                         </div>
                                         <div className='comment-content'>
                                             {item.comment}

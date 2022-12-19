@@ -11,6 +11,7 @@ import TempModal from './TempModal';
 import ModalViewMedicalRecord from './ModalViewMedicalRecord';
 import ModalAnnounceCancel from './ModalAnnounceCancel';
 import ModalWaiting from './ModalWaiting';
+import { toast } from 'react-toastify';
 class UserAppointment extends Component {
     constructor(props) {
         super(props);
@@ -116,7 +117,6 @@ class UserAppointment extends Component {
             this.setState({
                 isOpenModalAnnounce: true,
                 isOpenModalWaiting: false,
-                CancelSuccess: false
             })
         }
         if (res && res.errCode === 0) {
@@ -125,11 +125,11 @@ class UserAppointment extends Component {
             if (UserAppointment && UserAppointment.length > 0) {
                 this.setState({
                     PatientAppointment: UserAppointment,
-                    isOpenModalAnnounce: true,
+                    isOpenModalAnnounce: false,
                     isOpenModalWaiting: false,
-                    CancelSuccess: true
                 })
             }
+            toast.success('Bạn đã hủy hẹn thành công')
         }
         PatientAppointment = this.props.PatientAppointment
     }
@@ -144,7 +144,7 @@ class UserAppointment extends Component {
                 <ModalAnnounceCancel
                     isOpenModalAnnounce={isOpenModalAnnounce}
                     closeAnnouncementModal={this.closeAnnouncementModal}
-                    CancelSuccess={CancelSuccess} />
+                />
                 <div className='col-12 table-manage-patient table-striped'>
                     <table style={{ width: '100%' }} >
                         <tbody>

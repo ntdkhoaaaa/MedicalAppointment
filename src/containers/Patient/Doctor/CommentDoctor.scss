@@ -1,10 +1,10 @@
 
 .comment-container{
-    width: 80%;
-    margin:0px 150px ;
+    width: 73%;
+    margin:0px 200px ;
     .comment-item{
         width: 100%;
-        min-height: 300px;
+        min-height: 150px;
         border: 1px solid #ccc;
         margin-bottom: 10px;
         padding: 10px 15px 10px 15px;
@@ -14,12 +14,11 @@
         .comment-user-infor{
             width: 30%;
             // display: flex;
-            padding: 20px 30px;
-    
+            padding: 10px 30px;
             .infor-up{
                 width: 100%;
                 display: flex;
-                height: 40%;
+                height: 50%;
                 .image {
                     height: 70%;
                     width: 30%;
@@ -33,36 +32,36 @@
                     // margin-top: 15px;
                     // margin-left: 15px;
                     .comment-username{
-                        width: 70%;
-                        font-size: 20px;
+                        width: 100%;
+                        font-size: 15px;
                         font-weight: 600;
                     }
                     .content-addition{
-                        font-size: 20px;
+                        font-size: 10px;
                         margin-top: 7px;
                     }
                 }
     
             }
             .infor-down{
-                margin: 12px 0px 0px;
+
                 color: #ddd;
                 display: flex;
                 -webkit-box-align: center;
                 align-items: center;
-                font-size: 23px;
+                font-size: 10px;
                 font-weight: 400;
                 line-height: 20px;
             }
             
     
         }
-        .comment-container{
+        .comment-content{
             width: 70%;
             .comment-container-up{
-                padding: 30px 20px;
+                padding: 10px 20px;
                 display: flex;
-                width: 50%;
+                width: 90%;
                 .title-rating{
                     // float: left;
                     // font-size: 2.0rem;
@@ -72,7 +71,7 @@
                     // width: 40%;
                     // margin: 0px 0px 0px 12px;
                     padding-top: 3px;
-                    font-size: 25px;
+                    font-size: 20px;
                     line-height: 24px;
                     font-weight: 500;
                     color: black;
@@ -87,8 +86,8 @@
             }
             .comment-container-down{
                 .confirmed{
-                    // color: rgb(0 171 86);
-                    font-size: 1.7rem;
+                    color: #49bce2;
+                    font-size: 20px;
                 }
                 .comment-content{
                     // width: 200px;
@@ -99,8 +98,8 @@
                     width: 100%;
                     height: fit-content;
                     outline: 0px;
-                    font-size: 2.0rem;
-                    margin: 24px 0px 12px;
+                    font-size: 15px;
+                    margin: 4px 0px 12px;
                 }
             }
             // .title-rating{

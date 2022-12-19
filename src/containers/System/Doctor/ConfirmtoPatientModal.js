@@ -88,10 +88,8 @@ class ConfirmtoPatientModal extends Component {
     }
     let res = await postMedicalRecords(data)
     if (res && res.errCode === 0) {
-
       closeBookingModal()
-      toast.success('Đánh giá bác sĩ thành công');
-
+      toast.success('Thêm đơn thuốc cho bệnh nhân thành công');
       // getDataPatient()
     }
   }

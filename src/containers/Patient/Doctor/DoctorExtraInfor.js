@@ -52,11 +52,11 @@ class DoctorExtraInfor extends Component {
                     <div className='text-address'><FormattedMessage id="patient.detail-doctor.address" /></div>
                     <div className='clinic-name'>
                         {extraInfor && extraInfor.nameClinic ?
-                            language === LANGUAGES.VI ? <span>{extraInfor.clinicData.name}</span> : <span>{extraInfor.clinicData.nameEn}</span>
+                            language === LANGUAGES.VI ? <span>{extraInfor?.clinicData?.name}</span> : <span>{extraInfor?.clinicData?.nameEn}</span>
                             : ''}</div>
                     <div className='address'>
                         {extraInfor && extraInfor.nameClinic ?
-                            language === LANGUAGES.VI ? <span>{extraInfor.clinicData.address}</span> : <span>{extraInfor.clinicData.addressEn}</span>
+                            language === LANGUAGES.VI ? <span>{extraInfor?.clinicData?.address}</span> : <span>{extraInfor?.clinicData?.addressEn}</span>
                             : ''}
                     </div>
                 </div>
