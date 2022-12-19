@@ -9,7 +9,7 @@ import * as actions from "../../store/actions";
 import { LANGUAGES } from "../../utils"
 import { UserProfile } from "../Patient/Profile/UserProfile"
 import { changeLanguageApp } from '../../store/actions/';
-import _ from 'lodash'
+import _, { upperCase } from 'lodash'
 import { getListSearch } from '../../services/userServices'
 
 class HomeHeader extends Component {
@@ -55,21 +55,22 @@ class HomeHeader extends Component {
         let keyword = event.target.value;
         let doctorFilter, specialtyFilter, clinicFilter;
         if (!_.isEmpty(keyword)) {
+            keyword = upperCase(keyword)
             //get dataUser
             doctorFilter = this.state.doctorData.filter((item) => {
-                return item.lastName.includes(keyword) || item.firstName.includes(keyword)
+                return upperCase(item.lastName).includes(keyword) || upperCase(item.firstName).includes(keyword)
             })
             doctorFilter = doctorFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-doctor/${obj.id}` }))
 
 
             specialtyFilter = this.state.specialtyData.filter((item) => {
-                return item.name.includes(keyword)
+                return upperCase(item.name).includes(keyword)
             })
             specialtyFilter = specialtyFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-specialty/${obj.id}` }))
 
 
             clinicFilter = this.state.clinicData.filter((item) => {
-                return item.name.includes(keyword)
+                return upperCase(item.name).includes(keyword)
             })
             clinicFilter = clinicFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-clinic/${obj.id}` }))
 
@@ -161,11 +162,17 @@ class HomeHeader extends Component {
                                     }
                                     {doctorFilter && doctorFilter.length > 0 &&
                                         doctorFilter.map((item, index) => {
+                                            console.log('check image: ', item)
                                             return (
                                                 <div className='result-search'>
-                                                    <Link className='link' to={item.link} >
-                                                        {item.lastName}
-                                                    </Link>
+                                                    <div className='image' style={{ backgroundImage: `url(${item && item.image ? item.image : ''})` }}>
+                                                    </div>
+                                                    <div className='name-link'>
+                                                        <Link className='link' to={item.link} >
+                                                            {item.lastName} {item.firstName}
+                                                        </Link>
+                                                    </div>
+
                                                 </div>
                                             )
                                         })
@@ -179,9 +186,14 @@ class HomeHeader extends Component {
                                         specialtyFilter.map((item, index) => {
                                             return (
                                                 <div className='result-search'>
-                                                    <Link className='link' to={item.link} >
-                                                        {item.name}
-                                                    </Link>
+                                                    <div className='image' style={{ backgroundImage: `url(${item && item.image ? item.image : ''})` }}>
+                                                    </div>
+                                                    <div className='name-link'>
+                                                        <Link className='link' to={item.link} >
+                                                            {item.name}
+                                                        </Link>
+                                                    </div>
+
                                                 </div>
                                             )
                                         })
@@ -195,9 +207,14 @@ class HomeHeader extends Component {
                                         clinicFilter.map((item, index) => {
                                             return (
                                                 <div className='result-search'>
-                                                    <Link className='link' to={item.link} >
-                                                        {item.name}
-                                                    </Link>
+                                                    <div className='image' style={{ backgroundImage: `url(${item && item.image ? item.image : ''})` }}>
+                                                    </div>
+                                                    <div className='name-link'>
+                                                        <Link className='link' to={item.link} >
+                                                            {item.name}
+                                                        </Link>
+                                                    </div>
+
                                                 </div>
                                             )
                                         })

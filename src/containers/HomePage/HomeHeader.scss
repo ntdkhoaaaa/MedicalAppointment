@@ -137,7 +137,7 @@
     opacity: 0.95;
 
     .content-up {
-        height: 65%;
+        height: 85%;
         padding-top: 15px;
         background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
 
@@ -218,8 +218,7 @@
                 border-radius: 5px;
                 background-color: #fff;
                 box-shadow: 0 1px 6px #20212447;
-
-                z-index: 1000 !important;
+                z-index: 100000000 !important;
 
                 .header-search {
                     text-align: center;
@@ -232,15 +231,31 @@
                 }
 
                 .result-search {
-                    height: 40px !important;
+                    height: 50px !important;
                     width: 100% !important;
                     margin: 2px 0px !important;
                     border-radius: 5px !important;
-                    background-color: wheat;
+                    background-color: #49bce226;
                     margin-bottom: 2px;
+                    display: flex;
+                    z-index: 10000000;
+                    .name-link{
+                        display: flex;
+                        align-items: center;
+                        .link {
+                            text-decoration: none;
+                            color: black !important;
+                            text-align: center;
+                        }
+                    }
 
-                    .link {
-                        text-decoration: none;
+                    .image{
+                        height: inherit;
+                        width: 20%;
+                        border-radius: 50%;
+                        background: center center;
+                        background-repeat: no-repeat;
+                        background-size: contain;
                     }
                 }
             }
@@ -251,6 +266,7 @@
     }
 
     .content-down {
+        z-index: 10;
         height: 35%;
         display: flex;
         padding-bottom: 10px;
@@ -264,7 +280,6 @@
             display: flex;
             gap: 50px;
             justify-content: center;
-
             .option-child {
                 width: 100px;
 
