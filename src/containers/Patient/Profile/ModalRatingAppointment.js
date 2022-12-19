@@ -43,8 +43,12 @@ class ModalRatingAppointment extends Component {
 
         let res = await postRating(data)
         if (res.errCode === 0) {
+            this.setState({
+                rating: 0,
+                comment: ''
+            })
             closeRatingModal()
-
+            toast.success('Đánh giá buổi khám bệnh thành công')
         }
     }
     onChange = (event, id) => {

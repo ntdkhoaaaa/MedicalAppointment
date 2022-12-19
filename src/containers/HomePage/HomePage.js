@@ -27,7 +27,7 @@ class HomePage extends Component {
         let { permission } = this.props;
         if (permission === USER_ROLE.ADMIN) {
             return (
-                <Redirect to={'/system/user-manage'} />
+                <Redirect to={'/system/user-redux'} />
             )
         }
         if (permission === USER_ROLE.DOCTOR) {

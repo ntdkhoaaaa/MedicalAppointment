@@ -9,6 +9,8 @@ import * as actions from "../../../store/actions"
 import { EditUserInforByOwn } from '../../../store/actions';
 import { Redirect, withRouter } from 'react-router';
 import UserAppointment from './UserAppointment';
+import { toast } from "react-toastify";
+
 class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -124,6 +126,12 @@ class UserProfile extends Component {
             avatar: this.state.avatar
         }
         let res = await editUserInforByOwnService(user)
+        if (res && res.errCode === 0) {
+            toast.success('Cập nhật thông tin thành công')
+        }
+        else {
+            toast.error('Cập nhật thông tin không thành công.Xem lại thông tin và hình ảnh theo quy định')
+        }
     }
     render() {
         let { language, permission, isLoggedIn } = this.props

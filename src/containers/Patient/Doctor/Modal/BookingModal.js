@@ -167,6 +167,23 @@ class BookingModal extends Component {
 
         console.log('check req', res)
         if (res && res.errCode === 0) {
+            this.setState({
+                lastName: this.state.lastName,
+                firstName: this.state.firstName,
+                phoneNumber: this.state.phoneNumber,
+                email: this.state.email,
+                address: this.state.address,
+                reason: '',
+                genderIdentity: '',
+                doctorId: '',
+                forwho: '',
+                timetype: '',
+                date: '',
+                language: '',
+                pickDate: '',
+                patientAge: '',
+                doctorName: '',
+            })
             toast.success('Thêm lịch hẹn thành công')
         }
         else {
