@@ -66,15 +66,23 @@ class HomeHeader extends Component {
                 return item.name.includes(keyword)
             })
             specialtyFilter = specialtyFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-specialty/${obj.id}` }))
-            console.log('aaaa', doctorFilter, specialtyFilter)
+
+
+            clinicFilter = this.state.clinicData.filter((item) => {
+                return item.name.includes(keyword)
+            })
+            clinicFilter = clinicFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-clinic/${obj.id}` }))
+
             this.setState({
                 doctorFilter: doctorFilter,
-                specialtyFilter: specialtyFilter
+                specialtyFilter: specialtyFilter,
+                clinicFilter: clinicFilter
             })
         } else {
             this.setState({
                 doctorFilter: [],
-                specialtyFilter: []
+                specialtyFilter: [],
+                clinicFilter: []
             })
         }
 
@@ -84,7 +92,7 @@ class HomeHeader extends Component {
         let userInfo = this.props.userInfo
         let isLoggedIn = this.props.isLoggedIn
         let processLogout = this.props.processLogout
-        let { doctorFilter, specialtyFilter } = this.state;
+        let { doctorFilter, specialtyFilter, clinicFilter } = this.state;
 
         return (
             <React.Fragment>
@@ -170,11 +178,26 @@ class HomeHeader extends Component {
                                     {specialtyFilter && specialtyFilter.length > 0 &&
                                         specialtyFilter.map((item, index) => {
                                             return (
-                                                <div  >
-                                                    <div>
+                                                <div className='result-search'>
+                                                    <Link className='link' to={item.link} >
                                                         {item.name}
-                                                        {item.link}
-                                                    </div>
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    {clinicFilter && clinicFilter.length > 0 &&
+                                        <div className='header-search'>
+                                            Thông tin phòng khám
+                                        </div>
+                                    }
+                                    {clinicFilter && clinicFilter.length > 0 &&
+                                        clinicFilter.map((item, index) => {
+                                            return (
+                                                <div className='result-search'>
+                                                    <Link className='link' to={item.link} >
+                                                        {item.name}
+                                                    </Link>
                                                 </div>
                                             )
                                         })
