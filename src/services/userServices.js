@@ -150,6 +150,9 @@ const handleResetPassWord = async (data) => {
 const getListPatientCommentByDoctorId = (data) => {
     return axios.get(`/api/get-rating-patient?doctorId=${data}`)
 }
+const getListSearch = () => {
+    return axios.get(`/api/get-data-search`)
+}
 export {
     handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
     getAllUsers, getMedicalRecordByBookingId, getListPatientCommentByDoctorId,
@@ -169,5 +172,5 @@ export {
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
     getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister,
     handleForgotPassWord, checkTokenResetPassword, handleResetPassWord,
-    deleteClinicById, updateClinicbyId, deleteSpecialtyById, updateSpecialtybyId
+    deleteClinicById, updateClinicbyId, deleteSpecialtyById, updateSpecialtybyId, getListSearch
 }

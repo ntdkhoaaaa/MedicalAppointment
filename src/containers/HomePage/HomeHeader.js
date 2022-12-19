@@ -9,14 +9,37 @@ import * as actions from "../../store/actions";
 import { LANGUAGES } from "../../utils"
 import { UserProfile } from "../Patient/Profile/UserProfile"
 import { changeLanguageApp } from '../../store/actions/';
-class HomeHeader extends Component {
+import _ from 'lodash'
+import { getListSearch } from '../../services/userServices'
 
+class HomeHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            doctorFilter: [],
+            doctorData: [],
+            specialtyFilter: [],
+            specialtyData: [],
+            clinicFilter: [],
+            clinicData: [],
+        }
+    }
     changeLanguage = (language) => {
         //fire redux event:action
         this.props.changeLanguageAppRedux(language)
+
     }
-    componentDidMount() {
+    async componentDidMount() {
+        let res = await getListSearch();
+        if (res && res.errCode === 0) {
+            this.setState({
+                doctorData: res.dataDoctor,
+                specialtyData: res.dataSpecialty,
+                clinicData: res.dataClinic
+            })
+        }
         // let userInfo = this.props.userInfo;
+
     }
     MoveToProfile = () => {
         if (this.props.history) {
@@ -28,12 +51,41 @@ class HomeHeader extends Component {
             this.props.history.push(`/home`)
         }
     }
+    searchData = (event) => {
+        let keyword = event.target.value;
+        let doctorFilter, specialtyFilter, clinicFilter;
+        if (!_.isEmpty(keyword)) {
+            //get dataUser
+            doctorFilter = this.state.doctorData.filter((item) => {
+                return item.lastName.includes(keyword) || item.firstName.includes(keyword)
+            })
+            doctorFilter = doctorFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-doctor/${obj.id}` }))
+
+
+            specialtyFilter = this.state.specialtyData.filter((item) => {
+                return item.name.includes(keyword)
+            })
+            specialtyFilter = specialtyFilter.slice(0, 5).map(obj => ({ ...obj, link: `/detail-specialty/${obj.id}` }))
+            console.log('aaaa', doctorFilter, specialtyFilter)
+            this.setState({
+                doctorFilter: doctorFilter,
+                specialtyFilter: specialtyFilter
+            })
+        } else {
+            this.setState({
+                doctorFilter: [],
+                specialtyFilter: []
+            })
+        }
+
+    }
     render() {
         let language = this.props.language;
         let userInfo = this.props.userInfo
         let isLoggedIn = this.props.isLoggedIn
         let processLogout = this.props.processLogout
-        
+        let { doctorFilter, specialtyFilter } = this.state;
+
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -86,8 +138,48 @@ class HomeHeader extends Component {
                             <div className='title1'><FormattedMessage id={"banner.medical-platform"} /></div>
                             <div className='title2'><FormattedMessage id={"banner.comprehensive-health-care"} /></div>
                             <div className='search'>
-                                <i className="fas fa-search"></i>
-                                <input type="text" placeholder='Tìm chuyên khoa khám bệnh' />
+                                <div className='search-input'>
+                                    <i className="fas fa-search"></i>
+                                    <input type="text" placeholder='Tìm chuyên khoa khám bệnh' onChange={(event) => this.searchData(event)} />
+
+                                </div>
+                                <div className={(doctorFilter && doctorFilter.length > 0)
+                                    || (specialtyFilter && specialtyFilter.length > 0)
+                                    ? 'search-result' : ''}>
+                                    {doctorFilter && doctorFilter.length > 0 &&
+                                        <div className='header-search'>
+                                            Thông tin bác sĩ
+                                        </div>
+                                    }
+                                    {doctorFilter && doctorFilter.length > 0 &&
+                                        doctorFilter.map((item, index) => {
+                                            return (
+                                                <div className='result-search'>
+                                                    <Link className='link' to={item.link} >
+                                                        {item.lastName}
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    {specialtyFilter && specialtyFilter.length > 0 &&
+                                        <div className='header-search'>
+                                            Thông tin chuyên khoa
+                                        </div>
+                                    }
+                                    {specialtyFilter && specialtyFilter.length > 0 &&
+                                        specialtyFilter.map((item, index) => {
+                                            return (
+                                                <div  >
+                                                    <div>
+                                                        {item.name}
+                                                        {item.link}
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
                         <div className='content-down'>
