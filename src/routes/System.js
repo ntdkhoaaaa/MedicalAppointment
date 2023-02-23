@@ -7,11 +7,12 @@ import Header from '../containers/Header/Header';
 import ManageDoctor from '../containers/System/Admin/ManageDoctor'
 import ManageSpecialty from '../containers/System/Specialty/ManageSpecialty';
 import ManageClinic from '../containers/System/Clinic/ManageClinic';
+import ManageMedicine from '../containers/System/Doctor/ManageMedicine';
 class System extends Component {
     render() {
         if (this.props.permission === 'R2') {
             return (
-                < Redirect to={'/doctor/manage-schedule'} />
+                <Redirect to={'/doctor/manage-schedule'} />
             );
         }
         if (this.props.permission === 'R3') {
@@ -22,7 +23,7 @@ class System extends Component {
         const { systemMenuPath, isLoggedIn } = this.props;
         return (
             <React.Fragment>
-                {this.props.permission ?
+                {this.props.permission?
                     <>
                         {isLoggedIn && <Header />}
                         <div className="system-container">

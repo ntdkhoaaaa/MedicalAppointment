@@ -18,7 +18,7 @@ class UserRedux extends Component {
             DegreeArr: [],
             previewImgURL: '',
             isOpen: false,
-
+            
             idUser: '',
             email: '',
             password: '',
@@ -52,7 +52,6 @@ class UserRedux extends Component {
             this.setState({
                 roleIdArr: arrRoles,
                 role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : ''
-
             })
         }
         if (prevProps.positionRedux !== this.props.positionRedux) {
@@ -108,17 +107,6 @@ class UserRedux extends Component {
         this.setState({
             ...copyState
         });
-        // email: '',
-        // password: '',
-        // firstName: '',
-        // lastName: '',
-        // phoneNumber: '',
-        // address: '',
-        // gender: '',
-        // position: '',
-        // role: '',
-        // avatar: '',
-        // email, password, firstName, lastName, phoneNumber, address, gender, position, role, avatar
     }
     ValiadateInput = () => {
         let isValid = true;
@@ -241,7 +229,7 @@ class UserRedux extends Component {
                                     value={phoneNumber}
                                     onChange={(event) => { this.onChangeInput(event, 'phoneNumber') }} />
                             </div>
-                            <div className='col-9'>
+                            <div className='col-6'>
                                 <label><FormattedMessage id={"manage-user.address"} /></label>
                                 <input type="text" className='form-control'
                                     value={address}
@@ -251,7 +239,6 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id={"manage-user.gender"} /></label>
                                 <select className='form-control'
                                     value={gender}
-
                                     onChange={(event) => { this.onChangeInput(event, 'gender') }} >
                                     {/* <option>Choose...</option> */}
                                     {genders && genders.length > 0 && genders.map((item, index) => {
@@ -265,7 +252,6 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id={"manage-user.roleID"} /></label>
                                 <select className='form-control'
                                     value={role}
-
                                     onChange={(event) => { this.onChangeInput(event, 'role') }}>
                                     {/* <option>Choose...</option> */}
                                     {roles && roles.length > 0 && roles.map((item, index) => {
@@ -275,6 +261,20 @@ class UserRedux extends Component {
                                     })}
                                 </select>
                             </div>
+                            <div className='col-3'>
+                                <label><FormattedMessage id={"manage-user.clinic"} /></label>
+                                <select className='form-control'
+                                    value={gender}
+                                    onChange={(event) => { this.onChangeInput(event, 'gender') }} >
+                                    {/* <option>Choose...</option> */}
+                                    {genders && genders.length > 0 && genders.map((item, index) => {
+                                        return (
+                                            <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+
                             <div className='col-3'>
                                 <label><FormattedMessage id={"manage-user.position"} /></label>
                                 <select className='form-control'
@@ -304,7 +304,6 @@ class UserRedux extends Component {
                             <div className='col-12 my-3'>
                                 <button className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning' : 'btn btn-primary'}
                                     onClick={() => this.handleSaveUser()}>
-
                                     {this.state.action === CRUD_ACTIONS.EDIT ?
                                         <FormattedMessage id='manage-user.edit' /> :
                                         <FormattedMessage id='manage-user.save' />}

@@ -1,0 +1,117 @@
+
+.manage-medicine {
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  width: 100%;
+
+  .involve-table-button {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    .manage-medicine-title {
+      font-size: 2.5rem;
+    }
+    .add-new-medicine {
+      width: 20%;
+      display: flex;
+      align-items: center;
+      .icon-container {
+        position: sticky;
+        top: 300px;
+        bottom: auto;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #50e655;
+        transition: width 0.5s;
+        &:hover {
+          cursor: pointer;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          i {
+            font-size: 40px;
+            height: 120px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+          }
+        }
+        i {
+          height: 80px;
+          font-size: 20px;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+        }
+      }
+    }
+    .manage-medicine-table {
+      display: flex;
+      width: 70%;
+      justify-content: center;
+      #TableManageMedicine {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 80%;
+        align-items: center;
+      }
+
+      #TableManageMedicine td,
+      #TableManageMedicine th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        align-items: center;
+      }
+
+      #TableManageMedicine tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #TableManageMedicine tr:hover {
+        background-color: #ddd;
+      }
+
+      #TableManageMedicine th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #50e655;
+        color: white;
+      }
+    }
+  }
+
+  .manage-medicine-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+  .search-container{
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    border: 1px solid greenyellow;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    i {
+        margin: 0 5px;
+    }
+    .search-medicine{
+      height: 30px;
+      width: 360px;
+      background: transparent;
+      border: none;
+      outline: none;
+  }
+  }
+
+}

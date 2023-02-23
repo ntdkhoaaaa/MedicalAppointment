@@ -42,7 +42,7 @@
             "manage-doctor": "Doctors",
             "manage-admin": "Manage Doctors",
             "crud": "CRUD user",
-            "crud-redux": "CRUD redux",
+            "crud-redux": "Manage Users",
             "clinic": "Clinics",
             "manage-clinic": "Manage clinics",
             "specialty": "Specialty",
@@ -51,8 +51,10 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
+            "general":"Manage General",
             "schedule": "Manage Doctor's schedule",
-            "patient": "Manage Patient's"
+            "patient": "Manage Patient's",
+            "medicine":"Manage Medicine"
         }
     },
     "manage-user": {
@@ -65,6 +67,7 @@
         "address": "Address",
         "gender": "Gender Identity",
         "roleID": "Role",
+        "clinic": "Clinic",
         "position": "Degree",
         "image": "Image",
         "edit": "Edit User",

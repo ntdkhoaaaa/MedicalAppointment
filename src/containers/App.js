@@ -9,18 +9,13 @@ import { ToastContainer } from 'react-toastify';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
 import { path } from '../utils'
 import Home from '../routes/Home';
-// import Login from '../routes/Login';
 import Login from './Auth/Login';
-import Header from './Header/Header';
 import System from '../routes/System';
 import Register from './Auth/Register';
 import VerifyRegister from './Auth/VerifyRegister';
-
-import { CustomToastCloseButton } from '../components/CustomToast';
 import ConfirmModal from '../components/ConfirmModal';
 import HomePage from './HomePage/HomePage.js'
 import DetailDoctor from './Patient/Doctor/DetailDoctor';
-// import Doctor from './routes/Doctor'
 import Doctor from '../routes/Doctor';
 import CustomScrollbars from '../components/CustomScrollbars';
 import VerifyEmail from './Patient/VerifyEmail';

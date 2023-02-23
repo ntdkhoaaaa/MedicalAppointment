@@ -8,9 +8,6 @@ export const adminMenu = [
             {
                 name: 'menu.admin.manage-doctor', link: '/system/manage-doctor',
             },
-            // {
-            //     name: 'menu.admin.manage-admin', link: '/system/user-admin',
-            // },
             {
                 name: 'menu.doctor.schedule', link: '/doctor/manage-schedule',
             }
@@ -53,7 +50,7 @@ export const adminMenu = [
 ];
 export const doctorMenu = [
     {
-        name: 'menu.admin.manage-user',
+        name: 'menu.doctor.general',
         menus: [
             { //Quản lý kế hoạch khám bệnh
 
@@ -64,6 +61,10 @@ export const doctorMenu = [
 
                 name: 'menu.doctor.patient',
                 link: '/doctor/manage-patient',
+            },
+            { //Quản lý thuốc
+                name: 'menu.doctor.medicine',
+                link: '/doctor/manage-medicine',
             }
 
         ]

@@ -150,7 +150,6 @@ class HomeHeader extends Component {
                                 <div className='search-input'>
                                     <i className="fas fa-search"></i>
                                     <input type="text" placeholder='Tìm chuyên khoa khám bệnh' onChange={(event) => this.searchData(event)} />
-
                                 </div>
                                 <div className={(doctorFilter && doctorFilter.length > 0)
                                     || (specialtyFilter && specialtyFilter.length > 0)

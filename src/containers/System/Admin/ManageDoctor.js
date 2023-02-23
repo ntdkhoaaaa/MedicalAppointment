@@ -28,8 +28,6 @@ class ManageDoctor extends Component {
             descriptionHTML: '',
             listDoctocs: '',
             hasOldData: false,
-
-
             //save to detail doctor's infor
             listPrices: [],
             listPayments: [],
@@ -218,6 +216,7 @@ class ManageDoctor extends Component {
     }
     handleChange = async (selectedDoctor) => {
         let { listPayments, listPrices, listProvinces, listClinics, listSpecialties } = this.state
+        console.log(selectedDoctor)
         this.setState({ selectedDoctor: selectedDoctor });
         let res = await getDetailInforDoctor(selectedDoctor.value);
         if (res && res.errCode === 0 && res.data && res.data.Markdown) {
@@ -230,9 +229,7 @@ class ManageDoctor extends Component {
                 let provinceId = doctorInfor.provinceId;
                 let specialtyId = doctorInfor.specialtyId;
                 let clinicId = doctorInfor.clinicId;
-
                 let Payment = '', Price = '', Province = '', Clinic = '', Specialty = ''
-
                 Payment = listPayments.find(item => {
                     return item && item.value === paymentId
                 })
@@ -292,8 +289,6 @@ class ManageDoctor extends Component {
         let stateCopy = { ... this.state };
 
         let { language, allClinics } = this.props
-
-
         stateCopy[stateName] = selectedInfor;
         this.setState({
             ...stateCopy,
@@ -378,7 +373,6 @@ class ManageDoctor extends Component {
     }
     render() {
         let { hasOldData } = this.state
-        console.log('check state', this.state);
         return (
             <div className='manage-doctor-container'>
 

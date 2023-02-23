@@ -97,7 +97,6 @@ class UserManage extends Component {
         let res = await editUserService(user);
     }
     render() {
-        console.log("aaaa", this.props.permission)
         if (this.props.permission === 'R2') {
             return (
                 < Redirect to={'/doctor/manage-schedule'} />

@@ -20,7 +20,6 @@ class ModalViewMedicalRecord extends Component {
                 Record: res.historyInfo
             })
         }
-
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {

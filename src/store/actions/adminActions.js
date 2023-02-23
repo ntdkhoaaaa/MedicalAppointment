@@ -4,12 +4,11 @@ import {
     createNewUserService, getAllUsers,
     editUserService, getTopDoctorHomeService, editUserInforByOwnService,
     getAllDoctors, saveDetailDoctorService, getAllMarkdown, getDetailInforDoctor,
-    getAllSpecialties, getAllClinics, handleGetPermission
+    getAllSpecialties, getAllClinics, handleGetPermission,
 
 } from '../../services/userServices';
 import { toast } from "react-toastify";
 export const fetchGenderStart = () => {
-
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -290,6 +289,7 @@ export const fetchAllDoctors = () => {
         }
     }
 }
+
 export const saveDetailDoctor = (data) => {
     return async (dispatch, getState) => {
         try {

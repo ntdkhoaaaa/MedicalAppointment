@@ -42,7 +42,7 @@
             "manage-doctor": "Bác sĩ",
             "manage-admin": "Administrator",
             "crud": "CRUD user",
-            "crud-redux": "CRUD redux",
+            "crud-redux": "Quản lý người dùng",
             "clinic": "Phòng khám",
             "manage-clinic": "Quản lý phòng Khám",
             "specialty": "Chuyên khoa",
@@ -51,8 +51,10 @@
             "manage-handbook": "Quản lý cẩm nang"
         },
         "doctor": {
+            "general":"Quản lý chung",
             "schedule": "Quản lý kế hoạch khám bệnh",
-            "patient": "Quản lý bệnh nhân"
+            "patient": "Quản lý bệnh nhân",
+            "medicine":"Quản lý thuốc"
         }
     },
     "manage-user": {
@@ -64,6 +66,7 @@
         "phonenumber": "Số điện thoại",
         "address": "Địa chỉ",
         "gender": "Bản dạng giới",
+        "clinic": "Phòng khám",
         "roleID": "Vai trò",
         "position": "Học vị",
         "image": "Hình ảnh",

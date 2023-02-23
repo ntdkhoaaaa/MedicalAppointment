@@ -235,10 +235,10 @@ class ManageSchedule extends Component {
             date: formatedDate
         });
         if (res && res.errCode === 0) {
-            toast.success('save Bulk Schedule Doctor success');
+            toast.success('Đăng ký lịch hẹn thành công');
         }
         else {
-            toast.error('error save Bulk Schedule Doctor');
+            toast.error('Lỗi đăng ký lịch hẹn');
         }
         this.getSelectedScheduleforDoctor();
 

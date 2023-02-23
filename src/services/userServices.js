@@ -111,6 +111,26 @@ const getDetailClinicById = (data) => {
 const deleteClinicById = (id) => {
     return axios.get(`/api/delete-clinic-by-id?id=${id}`)
 }
+const addNewMedicine=async(data)=>{
+    return axios.post('/api/add-new-medicine',data)
+}
+const getMedicineByClinicId=async(data)=>{
+    return axios.get(`/api/get-medicine-by-clinicId?clinicId=${data}`)
+}
+const deleteMedicineById=async(data)=>{
+    return axios.delete(`/api/delete-medicine-by-id?id=${data}`)
+}
+const getMedicineById=async(data)=>{
+    return axios.get(`/api/get-medicine-by-Id?id=${data}`)
+}
+const editMedicineInfor=async(data)=>{
+    return axios.put(`/api/edit-medicine-infor`,data)
+}
+const warningDuplicateMedicine=async(data)=>{
+    return axios.post('/api/check-dulicate-medicine',data)
+}
+
+
 const handleRegisterApi = async (data) => {
     return await axios.post('/api/register', data)
 }
@@ -153,11 +173,13 @@ const getListPatientCommentByDoctorId = (data) => {
 const getListSearch = () => {
     return axios.get(`/api/get-data-search`)
 }
+
 export {
     handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
     getAllUsers, getMedicalRecordByBookingId, getListPatientCommentByDoctorId,
-    createNewUserService, getSelectedScheduleFromDoctor,
-    deleteUserService,
+    createNewUserService, getSelectedScheduleFromDoctor,addNewMedicine,
+    deleteMedicineById,getMedicineById,editMedicineInfor,
+    deleteUserService,getMedicineByClinicId,warningDuplicateMedicine,
     editUserService,
     getAllCodeService,
     getTopDoctorHomeService,

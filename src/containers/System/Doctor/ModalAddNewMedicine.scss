@@ -1,0 +1,83 @@
+.modal-add-new-medicine {
+}
+
+.modal-content {
+    width: 700px;
+  h5 {
+    font-size: 2.5rem !important;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+    .modal-title {
+      font-size: 2.5rem !important;
+      color: rgb(51, 221, 102);
+    }
+  }
+  .modal-body { width: 700px;
+    .title-excel-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .add-excel-title {
+        font-size: 1.5rem !important;
+      }
+    }
+    .add-row-btn{
+        margin: 10px 20px;
+    }
+    .medicine-table {
+      width: 600px;
+      border-collapse: collapse;   
+      margin-top: 15px; 
+      td,
+      th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      .isDuplicated tr{
+        background-color: red($color: #fb0f0f);
+      }
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04aa6d;
+        color: white;
+      }
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-around;
+      .btn-add-new-medicine {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        width: 120px;
+        font-size: 15px;
+        height: 40px;
+        background-color: green;
+      }
+      .btn-cancel-medicine {
+        outline: none;
+        border: none;
+        font-size: 15px;
+        border-radius: 5px;
+        width: 120px;
+        background-color: red;
+        height: 40px;
+      }
+    }
+  }
+}
