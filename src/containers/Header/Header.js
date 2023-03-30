@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
-import { adminMenu, doctorMenu } from './menuApp';
+import { adminMenu, doctorMenu,accountantMenu } from './menuApp';
 import './Header.scss';
 import { LANGUAGES, USER_ROLE } from "../../utils"
 import { FormattedMessage } from 'react-intl';
@@ -30,6 +30,9 @@ class Header extends Component {
             if (permission === USER_ROLE.DOCTOR) {
                 menu = doctorMenu;
             }
+            if (permission === USER_ROLE.ACCOUNTANT) {
+                menu = accountantMenu;
+            }
         }
         this.setState({
             menuApp: menu
@@ -46,6 +49,9 @@ class Header extends Component {
                 }
                 if (permission === USER_ROLE.DOCTOR) {
                     menu = doctorMenu;
+                }
+                if (permission === USER_ROLE.ACCOUNTANT) {
+                    menu = accountantMenu;
                 }
             }
             this.setState({

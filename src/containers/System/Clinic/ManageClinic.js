@@ -87,9 +87,8 @@ class ManageClinic extends Component {
         } else {
             toast.error("Xóa không thành công kiểm tra lại");
         }
-
     }
-    handleSaveNewSpecialty = async () => {
+    handleSaveNewClinic = async () => {
         if (this.state.action === CRUD_ACTIONS.CREATE) {
             let res = await addNewClinic({
                 name: this.state.name,
@@ -223,7 +222,7 @@ class ManageClinic extends Component {
                     </div>
                     <div className='col-12'>
                         <button className='btn-add-new-specialty'
-                            onClick={() => this.handleSaveNewSpecialty()}>
+                            onClick={() => this.handleSaveNewClinic()}>
                             Save
                         </button>
                     </div>

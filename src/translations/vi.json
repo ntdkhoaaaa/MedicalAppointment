@@ -55,6 +55,13 @@
             "schedule": "Quản lý kế hoạch khám bệnh",
             "patient": "Quản lý bệnh nhân",
             "medicine":"Quản lý thuốc"
+        },
+        "accountant":{
+            "general":"Quản lý chung",
+            "manage-clinic": "Quản lý phòng Khám",
+            "manage-clinic-specialties": "Quản lý chuyên khoa phòng khám",
+            "manage-clinic-doctors": "Quản lý bác sĩ",
+            "manage-doctors-schedule":"Quản lý lịch khám bệnh"
         }
     },
     "manage-user": {

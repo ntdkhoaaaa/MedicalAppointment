@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
-import { LANGUAGES, CRUD_ACTIONS } from '../../../utils';
-import './ManageSpecialty.scss'
+import { LANGUAGES,CRUD_ACTIONS } from '../../../utils';
+import { CommonUtils } from '../../../utils'
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import { CommonUtils } from '../../../utils'
-import { addNewSpecialty, deleteSpecialtyById, updateSpecialtybyId } from '../../../services/userServices'
 import { toast } from 'react-toastify';
-import TableManageSpecialty from './TableManageSpecialty';
+import { addNewSpecialtyOfClinic,deleteClinicSpecialtyById,updateClinicSpecialtybyId } from '../../../services/userServices'
+import  TableSpecialtiesClinic from './TableSpecialtiesClinic.js'
 import * as actions from "../../../store/actions";
 import 'react-image-lightbox/style.css';
 import Lightbox from 'react-image-lightbox';
-
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class ManageSpecialty extends Component {
+class ManageClinicSpecialties extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,16 +30,27 @@ class ManageSpecialty extends Component {
         }
     }
     async componentDidMount() {
-        this.props.loadAllSpeciatlties()
+        this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId)
+        
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
 
         }
-        if (prevProps.allSpecialties !== this.props.allSpecialties) {
+        // if(this.props.clinicSpecialties!== prevProps.clinicSpecialties){
+        //     let {clinicSpecialties} = this.props
+        //     let {listSpecialty}=this.state
+        //     listSpecialty=clinicSpecialties
+        //     console.log(listSpecialty)
+        //     this.setState({
+        //         ...listSpecialty
+        //     })
+        //     console.log(this.state.listSpecialty)
+        // }
+        if (prevProps.clinicSpecialties !== this.props.clinicSpecialties) {
             this.setState({
-                listSpecialty: this.props.allSpecialties
+                listSpecialty: this.props.clinicSpecialties
             })
         }
     }
@@ -72,15 +81,17 @@ class ManageSpecialty extends Component {
         }
     }
     handleSaveNewSpecialty = async () => {
+        console.log(this.state)
         if (this.state.action === CRUD_ACTIONS.CREATE) {
-            let res = await addNewSpecialty({
+            let res = await addNewSpecialtyOfClinic({
                 name: this.state.name,
                 nameEn: this.state.nameEn,
+                clinicId: this.props.userInfo.clinicId,
                 imageBase64: this.state.imageBase64,
                 descriptionHTML: this.state.descriptionHTML,
                 descriptionMarkdown: this.state.descriptionMarkdown,
             })
-            await this.props.loadAllSpeciatlties();
+            await this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
 
             if (res && res.errCode === 0) {
                 toast.success('Create a new Specialty successfully')
@@ -95,10 +106,9 @@ class ManageSpecialty extends Component {
             }
             else {
                 toast.error('Create a new Specialty fail')
-
             }
         } else {
-            let res = await updateSpecialtybyId({
+            let res = await updateClinicSpecialtybyId({
                 name: this.state.name,
                 nameEn: this.state.nameEn,
                 imageBase64: this.state.imageBase64,
@@ -106,8 +116,7 @@ class ManageSpecialty extends Component {
                 descriptionMarkdown: this.state.descriptionMarkdown,
                 id: this.state.idSpecialty,
             })
-            await this.props.loadAllSpeciatlties();
-
+            await this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
             if (res && res.errCode === 0) {
                 toast.success('Update Specialty successfully')
                 this.setState({
@@ -122,7 +131,6 @@ class ManageSpecialty extends Component {
             }
             else {
                 toast.error('Update Specialty fail')
-
             }
         }
     }
@@ -132,11 +140,11 @@ class ManageSpecialty extends Component {
             isOpen: true
         })
     }
-
     handleDeleteSpecialty = async (id) => {
-        let res = await deleteSpecialtyById(id);
-        await this.props.loadAllSpeciatlties();
+        let res = await deleteClinicSpecialtyById(id);
+        await this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
         if (res && res.errCode === 0) {
+            toast.success("Xóa chuyên khoa thành cônggg")
             this.setState({
                 name: '',
                 nameEn: '',
@@ -146,11 +154,9 @@ class ManageSpecialty extends Component {
                 action: CRUD_ACTIONS.CREATE,
                 previewImgURL: ''
             })
-            toast.success("Xóa chuyên khoa thành cônggg")
         } else {
             toast.error("Xóa không thành công kiểm tra lại");
         }
-
     }
     handleEditSpecialtyFromParent = async (specialty) => {
         this.setState({
@@ -165,6 +171,8 @@ class ManageSpecialty extends Component {
         })
     }
     render() {
+        let {listSpecialty}=this.state
+        
         return (
             <div className='manage-specialty-container'>
                 <div className='ms-title'>Quản lý chuyên khoa</div>
@@ -206,17 +214,19 @@ class ManageSpecialty extends Component {
                             onChange={this.handleEditorChange} />
                     </div>
                     <div className='col-12'>
-                        <button className='btn-add-new-specialty'
-                            onClick={() => this.handleSaveNewSpecialty()}>
+                        <button 
+                        className={this.state.action === CRUD_ACTIONS.EDIT ? 'btn-warning btn-add-new-specialty btn ' : 'btn-add-new-specialty btn btn-primary'}
+                            onClick={() => this.handleSaveNewSpecialty()}
+                            >
                             Save
                         </button>
                     </div>
                     <div className='col-12  mb-5'>
-                        <TableManageSpecialty
-                            handleEditSpecialtyFromParentKey={this.handleEditSpecialtyFromParent}
+                        <TableSpecialtiesClinic
+                            handleEditClinicSpecialtyFromParentKey={this.handleEditSpecialtyFromParent}
                             action={this.state.action}
-                            handleDeleteSpecialty={this.handleDeleteSpecialty}
-                            listSpecialty={this.state.listSpecialty}
+                            handleDeleteClinicSpecialty={this.handleDeleteSpecialty}
+                            listSpecialty={listSpecialty}
                         />
                     </div>
                 </div>
@@ -235,14 +245,15 @@ class ManageSpecialty extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        allSpecialties: state.admin.allSpecialties,
+        userInfo: state.user.userInfo,
+        clinicSpecialties:state.clinicAccountant.clinicSpecialties
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadAllSpeciatlties: () => dispatch(actions.fetchAllSpecialties())
+        fetchAllSpecialtiesOfClinic: (data) => dispatch(actions.fetchAllSpecialtiesOfClinic(data))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSpecialty);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageClinicSpecialties);

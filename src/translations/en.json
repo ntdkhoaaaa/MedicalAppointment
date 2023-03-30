@@ -55,6 +55,13 @@
             "schedule": "Manage Doctor's schedule",
             "patient": "Manage Patient's",
             "medicine":"Manage Medicine"
+        },
+        "accountant":{
+            "general":"Manage General",
+            "manage-clinic":"Manage clinics",
+            "manage-clinic-specialties":"Manage clinics speicalties",
+            "manage-clinic-doctors": "Manage Doctors",
+            "manage-doctors-schedule":"Manage Doctors's schedule"
         }
     },
     "manage-user": {

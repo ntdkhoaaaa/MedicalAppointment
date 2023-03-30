@@ -95,7 +95,6 @@ class ModalAddNewMedicine extends Component {
     }
     if(this.state.receipts.length===1){
       if(this.state.receipts[idx].isDuplicated===true){
-        console.log('check duplicate');
         this.setState({
           receipts: [
             {

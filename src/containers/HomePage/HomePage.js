@@ -35,6 +35,11 @@ class HomePage extends Component {
                 <Redirect to={'/doctor/manage-schedule'} />
             )
         }
+        if (permission === USER_ROLE.ACCOUNTANT) {
+            return (
+                <Redirect to={'/accountant/manage-clinic'} />
+            )
+        }
         return (
             <>
 

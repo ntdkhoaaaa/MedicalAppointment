@@ -94,7 +94,7 @@ class UserProfile extends Component {
             })
         }
     }
-    setGenderCheck = (gender) => {
+    setGenderCheck =    (gender) => {
         this.setState({
             gender: gender.gender
         })
@@ -174,6 +174,11 @@ class UserProfile extends Component {
         if (permission === USER_ROLE.DOCTOR) {
             return (
                 <Redirect to='/doctor/manage-schedule' />
+            )
+        }
+        if (permission === USER_ROLE.ACCOUNTANT) {
+            return (
+                <Redirect to='/accountant/manage-clinic' />
             )
         }
         return (

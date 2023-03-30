@@ -70,3 +70,26 @@ export const doctorMenu = [
         ]
     }
 ]
+export const accountantMenu = [
+    {
+        name: 'menu.accountant.general',
+        menus: [
+            { //Quản lý thông tin phòng khám
+                name: 'menu.accountant.manage-clinic',
+                link: '/accountant/manage-clinic',
+            },
+            { //Quản lý chuyên khoa phòng khám
+                name: 'menu.accountant.manage-clinic-specialties',
+                link: '/accountant/manage-clinic-specialties',
+            },
+            { //Quản lý quản lý thông tin bác sĩ
+                name: 'menu.accountant.manage-clinic-doctors',
+                link: '/accountant/manage-clinic-doctors',
+            },
+            { //Quản lý kế hoạch khám bệnh của bác sĩ trong phòng khám
+                name: 'menu.accountant.manage-doctors-schedule',
+                link: '/accountant/manage-doctors-schedule',
+            }
+        ]
+    }
+]

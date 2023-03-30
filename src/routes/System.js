@@ -10,9 +10,16 @@ import ManageClinic from '../containers/System/Clinic/ManageClinic';
 import ManageMedicine from '../containers/System/Doctor/ManageMedicine';
 class System extends Component {
     render() {
+        console.log(this.props.permission)
+
         if (this.props.permission === 'R2') {
             return (
                 <Redirect to={'/doctor/manage-schedule'} />
+            );
+        }
+        if (this.props.permission === 'R4') {
+            return (
+                <Redirect to={'/accountant/manage-clinic'} />
             );
         }
         if (this.props.permission === 'R3') {

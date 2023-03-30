@@ -206,12 +206,11 @@ export const EditUser = (userId) => {
                 dispatch(fetchAllUsersStart());
             }
             else {
-                toast.error('Delete a new user failed')
+                toast.error('Edit user failed')
                 dispatch(editUserFailed());
             }
         } catch (e) {
-            toast.error('Delete a new user failed')
-
+            toast.error('Edit user failed')
             dispatch(editUserFailed());
             console.log("editUserFailed", e);
         }

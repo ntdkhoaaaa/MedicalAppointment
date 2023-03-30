@@ -8,10 +8,24 @@ import Header from '../containers/Header/Header';
 class Doctor extends Component {
     render() {
         const { isLoggedIn } = this.props;
-        
+        if (this.props.permission === 'R4') {
+            return (
+                <Redirect to={'/accountant/manage-clinic'} />
+            );
+        }
+        if (this.props.permission === 'R3') {
+            return (
+                < Redirect to={'/home'} />
+            );
+        }
+        if (this.props.permission === 'R1') {
+            return (
+                <Redirect to={'/system/user-redux'} />
+            );
+        }
         return (
             <React.Fragment>
-                {this.props.permission ?
+                {this.props.permission==='R2' ?
                     <>
                         <Header />
                         <div className="system-container">
