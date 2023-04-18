@@ -10,10 +10,10 @@ import "react-image-lightbox/style.css";
 import Lightbox from "react-image-lightbox";
 import * as actions from "../../../store/actions";
 import { updateClinicbyId } from "../../../services/userServices";
-import "./ManageClinicByAccountant.scss";
+// import "./ManageClinicByAccountant.scss";
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class ManageClinicByAccountant extends Component {
+class ManageHospitalByAccountant extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -236,4 +236,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ManageClinicByAccountant);
+)(ManageHospitalByAccountant);

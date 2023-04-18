@@ -9,7 +9,7 @@
         "Medical-package": "Gói khám",
         "General-health-check": "Khám sức khỏe tổng quát",
         "Support": "Hỗ trợ",
-        "welcome": "Xin chào bạn, ",
+        "welcome": "Chào mừng đến với KMP Appointment,",
         "hello": "Xin chào, ",
         "login": "Đăng nhập "
     },
@@ -60,9 +60,23 @@
             "general":"Quản lý chung",
             "manage-clinic": "Quản lý phòng Khám",
             "manage-clinic-specialties": "Quản lý chuyên khoa phòng khám",
-            "manage-clinic-doctors": "Quản lý bác sĩ",
+            "manage-clinic-doctors": "Quản lý tài khoản bác sĩ",
+            "manage-doctors-extra-infor": "Quản lý thông tin bác sĩ",
             "manage-doctors-schedule":"Quản lý lịch khám bệnh"
+        },
+        "accountantHospital": {
+            "general":"Quản lý chung",
+            "manage-hospital": "Quản lý thông tin bệnh viện",
+            "manage-hospital-specialties": "Quản lý chuyên khoa bệnh viện",
+            "manage-hospital-doctors": "Quản lý bác sĩ",
+            "manage-doctors-schedule":"Quản lý lịch khám bệnh"
+        },
+        "doctorHospital": {
+            "general":"Quản lý chung",
+            "schedule": "Quản lý kế hoạch khám bệnh",
+            "patient": "Quản lý bệnh nhân"
         }
+
     },
     "manage-user": {
         "add": "Thêm mới người dùng",

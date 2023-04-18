@@ -13,8 +13,12 @@ const getAllUsers = (inputId) => {
 const createNewUserService = (data) => {
     return axios.post('/api/create-new-user', data)
 }
+
 const createNewDoctorService = (data) => {
     return axios.post('/api/create-new-doctor', data)
+}
+const createNewClinicDoctorService = (data) => {
+    return axios.post('/api/create-new-clinic-doctor', data)
 }
 const deleteUserService = (userId) => {
     return axios.delete('/api/delete-user', {
@@ -24,8 +28,25 @@ const deleteUserService = (userId) => {
     })
     // return axios.delete('/api/delete-user', { id: userId })
 }
+const deleteDoctorService = (userId) => {
+    return axios.post('/api/delete-doctor', userId)
+    // return axios.delete('/api/delete-user', { id: userId })
+}
 const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData);
+}
+
+const deleteDoctorClinicService = (userId) => {
+    return axios.post('/api/delete-doctor-clinic', userId)
+    // return axios.delete('/api/delete-user', { id: userId })
+}
+const editDoctorClinicService = (inputData) => {
+    return axios.post('/api/edit-doctor-clinic', inputData);
+}
+
+
+const editDoctorHospitalService = (inputData) => {
+    return axios.post('/api/edit-doctor-hospital', inputData);
 }
 const editUserInforByOwnService = (inputData) => {
     return axios.put('/api/edit-on-own-user-infor', inputData);
@@ -64,6 +85,9 @@ const getSelectedScheduleFromDoctor = (doctorId, date) => {
 const getScheduleDoctorByDate = (doctorId, date) => {
     return axios.get(`/api/get-schedule-byDate?doctorId=${doctorId}&date=${date}`)
 }
+const getScheduleDoctorByDateContainUserId = (doctorId, date,userId) => {
+    return axios.get(`/api/get-schedule-byDate-contain-userId?doctorId=${doctorId}&date=${date}&userId=${userId}`)
+}
 const deleteSelectedSchedule = (data) => {
     return axios.delete('/api/delete-selected-schedule', {
         data: {
@@ -100,6 +124,9 @@ const getAllSpecialtiesOfClinic = (data) => {
 }
 const getClinicWeekSchedules = (data) => {
     return axios.post(`/api/get-clinic-week-schedules`,data)
+}
+const getDoctorWeekSchedules = (data) => {
+    return axios.post(`/api/get-doctor-week-schedules`,data)
 }
 const deleteSpecialtyById = (id) => {
     return axios.get(`/api/delete-specialty-by-id?id=${id}`)
@@ -156,6 +183,9 @@ const warningDuplicateMedicine=async(data)=>{
 const getAllDoctorOfClinic=async(data)=>{
     return axios.post('/api/get-all-doctor-clinic',data)
 }
+const getAllDoctorOfHospital=async(data)=>{
+    return axios.post('/api/get-all-doctors-hospital',data)
+}
 
 const handleRegisterApi = async (data) => {
     return await axios.post('/api/register', data)
@@ -203,21 +233,21 @@ const getListSearch = () => {
 export {
     handleLoginApi, postMedicalRecords, postRating, getListExaminatedPatientForDoctor,
     getAllUsers, getMedicalRecordByBookingId, getListPatientCommentByDoctorId,createNewDoctorService,
-    createNewUserService, getSelectedScheduleFromDoctor,addNewMedicine,
+    createNewUserService, getSelectedScheduleFromDoctor,addNewMedicine,createNewClinicDoctorService,
     deleteClinicSpecialtyById,updateClinicSpecialtybyId,saveBulkScheduleForClinic,
     deleteMedicineById,getMedicineById,editMedicineInfor,getDetailClinicByIdInAccountantSide,
     deleteUserService,getMedicineByClinicId,warningDuplicateMedicine,addNewSpecialtyOfClinic,
-    editUserService,getAllSpecialtiesOfClinic,
+    editUserService,getAllSpecialtiesOfClinic,getAllDoctorOfHospital,deleteDoctorService,
     getAllCodeService,getAllDoctorOfClinic,getClinicWeekSchedules,
-    getTopDoctorHomeService,
-    getAllDoctors, cancelBookingFromPatient,
+    getTopDoctorHomeService,editDoctorHospitalService,getDoctorWeekSchedules,
+    getAllDoctors, cancelBookingFromPatient,getScheduleDoctorByDateContainUserId,
     saveDetailDoctorService, getAllMarkdown,
     getDetailInforDoctor, saveBulkScheduleDoctor,
     getSelectedSchedule, getScheduleDoctorByDate,
     deleteSelectedSchedule, getExtraInforDoctorById,
-    getProfileDoctorById, postPatientAppointment,
+    getProfileDoctorById, postPatientAppointment,deleteDoctorClinicService,
     postVerifyBooking, addNewSpecialty, getAllAppointmentOfPatient,
-    getAllSpecialties, addNewClinic, getAllClinics,
+    getAllSpecialties, addNewClinic, getAllClinics,editDoctorClinicService,
     getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
     getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister,
     handleForgotPassWord, checkTokenResetPassword, handleResetPassWord,

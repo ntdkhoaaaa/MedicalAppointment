@@ -1,33 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
-import "./ManageSchedule.scss";
 import { FormattedMessage } from "react-intl";
-import Select from "react-select";
+import { LANGUAGES } from "../../../utils";
+import "./ManageClinicDoctorSchedules.scss";
 import * as actions from "../../../store/actions";
-import { LANGUAGES, dateFormat } from "../../../utils";
+import Select from "react-select";
 import DatePicker from "../../../components/Input/DatePicker";
-import moment from "moment";
-import FormattedDate from "../../../components/Formating/FormattedDate";
-import _, { result, times } from "lodash";
 import { toast } from "react-toastify";
+import _, { result, times } from "lodash";
+
 import {
   saveBulkScheduleDoctor,
   getSelectedScheduleFromDoctor,
 } from "../../../services/userServices";
-import ModalCancelSchedule from "./ModalCancelSchedule";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import Calendar from "react-calendar";
-const events = [];
-class ManageSchedule extends Component {
+class ManageClinicDoctorSchedules extends Component {
   constructor(props) {
     super(props);
     this.state = {
       listDoctocs: [],
       doctorWeekSchedules: [],
       selectedDoctor: {},
-      currentDate: "",
+      currentDate: new Date(),
       rangeTime: [],
       isSelectedSchedule: [],
       isOpenModalCanceSchedule: false,
@@ -37,20 +30,21 @@ class ManageSchedule extends Component {
     };
   }
   async componentDidMount() {
-    await this.props.fetchAllDoctors();
+    await this.props.fetchAllDoctorsOfClinic({
+      clinicId: this.props.userInfo.clinicId,
+      specialtyCode: "All",
+      positionCode: "All",
+    });
     await this.props.fetchAllScheduleTime();
+
     await this.props.fetchAllScheduleForWeek(
-      this.props.user.id,
+      this.props.clinicDoctors[0].doctorId,
       new Date().getTime()
     );
   }
+
   async componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.allDoctors !== this.props.allDoctors) {
-      let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
-      this.setState({
-        listDoctocs: dataSelect,
-        selectedDoctor: dataSelect[0],
-      });
+    if (this.props.language !== prevProps.language) {
     }
     if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
       let data = this.props.allScheduleTime;
@@ -66,19 +60,22 @@ class ManageSchedule extends Component {
         rangeTime: data,
       });
     }
-    if (prevProps.doctorWeekSchedules !== this.props.doctorWeekSchedules) {
+    if (prevProps.clinicDoctors !== this.props.clinicDoctors) {
+      let { clinicDoctors } = this.props;
+      let dataSelect = this.buildDataInputSelect(clinicDoctors);
       this.setState({
-        eventState: [],
+        listDoctocs: dataSelect,
+        selectedDoctor: dataSelect[0],
       });
+    }
+    if (prevProps.doctorWeekSchedules !== this.props.doctorWeekSchedules) {
       let { language } = this.props;
       let temp = [];
-      console.log("check doctor week schedules");
       let doctorWeekSchedules = await this.props.doctorWeekSchedules;
       doctorWeekSchedules.map((item) => {
         let object = {};
         let hour = new Date(Date.parse(item.picked_date));
         let tempDay = hour.getDay(item.valueVi[0]);
-        hour.setHours(item.valueVi[0]);
         object.title = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
         object.start = tempDay;
         object.timetype = item.timetype;
@@ -115,200 +112,37 @@ class ManageSchedule extends Component {
         item.isSelected = false;
         return item;
       });
-      let formatedDate = new Date(currentDate).getTime();
       if (selectedOption) {
-        let res = await getSelectedScheduleFromDoctor(
+        await this.props.fetchAllScheduleForWeek(
           selectedOption.value,
-          formatedDate.toString()
+          new Date().getTime()
         );
-        if (res && res.errCode === 0) {
-          this.setState({
-            isSelectedSchedule: res.data ? res.data : [],
-          });
-        }
-        rangeTime.map((item) => {
-          this.checkIsSelected(item);
-          return item;
-        });
-        this.setState({
-          rangeTime: rangeTime,
-        });
       }
-    }
-  };
-  checkIsSelected = (item) => {
-    let { isSelectedSchedule } = this.state;
-    if (isSelectedSchedule && isSelectedSchedule.length !== 0) {
-      isSelectedSchedule?.nobooking.forEach((element) => {
-        if (element.timetype === item.keyMap) {
-          item.isSelected = true;
-        }
-      });
-      isSelectedSchedule?.booked.forEach((element) => {
-        if (element.timetype === item.keyMap) {
-          item.isBooked = true;
-        }
-      });
-      isSelectedSchedule?.full.forEach((element) => {
-        if (element.timetype === item.keyMap) {
-          item.isFullAppointment = true;
-        }
-      });
-    }
-  };
-  getSelectedScheduleforDoctor = async () => {
-    let { selectedDoctor, currentDate, rangeTime } = this.state;
-    rangeTime.map((item) => {
-      item.isSelected = false;
-      item.isFullAppointment = false;
-      item.isBooked = false;
-      return item;
-    });
-    let formatedDate = new Date(currentDate).getTime();
-    if (selectedDoctor) {
-      let res = await getSelectedScheduleFromDoctor(
-        selectedDoctor.value,
-        formatedDate.toString()
-      );
-      console.log("schedule", res);
-      if (res && res.errCode === 0) {
-        this.setState({
-          isSelectedSchedule: res.data ? res.data : [],
-        });
-      }
-      rangeTime.map((item) => {
-        this.checkIsSelected(item);
-        return item;
-      });
-      this.setState({
-        rangeTime: rangeTime,
-      });
     }
   };
   handleOnChangeDataPicker = async (date) => {
+    console.log('onChangeDataPicker',date)
     this.setState({
       currentDate: date[0],
     });
-    this.getSelectedScheduleforDoctor();
+    await this.props.fetchAllScheduleForWeek(
+      this.state.selectedDoctor.value,
+      date[0].getTime()
+    );
+
   };
-  CheckCanceled = async (data) => {
-    if (data === true) {
-      await this.props.fetchAllScheduleForWeek(
-        this.props.user.id,
-        new Date().getTime()
-      );
-      let { selectedButton, rangeTime } = this.state;
-      if (rangeTime && rangeTime.length > 0) {
-        rangeTime = rangeTime.map((item) => {
-          if (item.id === selectedButton.id) item.isSelected = !item.isSelected;
-          return item;
-        });
-        this.setState({
-          rangeTime: rangeTime,
-        });
-      }
-    }
-  };
-  handleClickBtnTime = (time) => {
-    let { rangeTime, isSelectedSchedule, currentDate } = this.state;
-    if (currentDate === "") {
-      toast.warning("You have to choose a date");
-    } else {
-      if (time.isSelected === true) {
-        this.setState({
-          isOpenModalCanceSchedule: true,
-          selectedButton: time,
-        });
-        isSelectedSchedule?.nobooking.forEach((schedule) => {
-          if (schedule.timetype === time.keyMap) {
-            this.setState({
-              selectedItem: schedule,
-            });
-          }
-        });
-      } else {
-        if (rangeTime && rangeTime.length > 0) {
-          rangeTime = rangeTime.map((item) => {
-            if (item.id === time.id) item.isSelected = !item.isSelected;
-            return item;
-          });
-          this.setState({
-            rangeTime: rangeTime,
-          });
-        }
-      }
-    }
-  };
-  handleSaveSchedule = async () => {
-    let { rangeTime, selectedDoctor, currentDate } = this.state;
-    let result = [];
-    if (!currentDate) {
-      toast.error("Invalid date!");
-      return;
-    }
-    if (selectedDoctor && _.isEmpty(selectedDoctor)) {
-      toast.error("Invalid selected doctor!");
-      return;
-    }
-    let formatedDate = new Date(currentDate).getTime();
-    if (rangeTime && rangeTime.length > 0) {
-      let selectedTime = rangeTime.filter((item) => item.isSelected === true);
-      if (selectedTime && selectedTime.length > 0) {
-        selectedTime.map((schedule) => {
-          let object = {};
-          object.doctorId = selectedDoctor.value;
-          object.date = formatedDate;
-          object.timetype = schedule.keyMap;
-          object.picked_date = formatedDate;
-          result.push(object);
-        });
-      } else {
-        toast.error("Invalid selected item!");
-        return;
-      }
-    }
-    let res = await saveBulkScheduleDoctor({
-      arrSchedule: result,
-      doctorId: selectedDoctor.value,
-      date: formatedDate,
-    });
-    console.log("result: ", res);
-    if (res && res.errCode === 0) {
-      toast.success("Đăng ký lịch hẹn thành công");
-      await this.props.fetchAllScheduleForWeek(
-        this.props.user.id,
-        new Date().getTime()
-      );
-    } else {
-      toast.error("Lỗi đăng ký lịch hẹn");
-    }
-    this.getSelectedScheduleforDoctor();
-  };
-  toggleFromParent = () => {
-    this.setState({
-      isOpenModalCanceSchedule: !this.state.isOpenModalCanceSchedule,
-    });
-  };
+
   render() {
-    let { permission } = this.props;
-    if (permission === "R3") {
-      return <Redirect to="/home" />;
-    }
-    let { rangeTime, isOpenModalCanceSchedule, selectedItem, eventState } =
+    let { rangeTime, eventState,currentDate } =
       this.state;
-    let { language, doctorWeekSchedules } = this.props;
-    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    let currentDate = new Date();
     let arrDayofWeek = [];
-    currentDate.setHours(0);
-    currentDate.setMinutes(0);
-    currentDate.setMilliseconds(0);
-    currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1);
+    console.log('check current date',currentDate)
+    let tempDate=new Date(currentDate)
+    tempDate.setDate(tempDate.getDate() - tempDate.getDay() + 1);
     for (var i = 0; i < 7; i++) {
-      arrDayofWeek.push(new Date(currentDate).toLocaleDateString());
-      currentDate.setDate(currentDate.getDate() + 1);
+      arrDayofWeek.push(new Date(tempDate).toLocaleDateString());
+      tempDate.setDate(tempDate.getDate() + 1);
     }
-    // let  mon, tue, wed, thu, fri, sat, sun  = [];
     let mon = [];
     let tue = [];
     let wed = [];
@@ -316,7 +150,6 @@ class ManageSchedule extends Component {
     let fri = [];
     let sat = [];
     let sun = [];
-    console.log("eventState", rangeTime);
     if (eventState && eventState.length > 0) {
       eventState.forEach((element) => {
         if (element.start === 1) {
@@ -343,13 +176,7 @@ class ManageSchedule extends Component {
       });
     }
     return (
-      <div className="manage-schedule-container">
-        <ModalCancelSchedule
-          isOpen={isOpenModalCanceSchedule}
-          toggleFromParent={this.toggleFromParent}
-          selectedItem={selectedItem}
-          CheckCanceled={this.CheckCanceled}
-        />
+      <div className="manage-clinic-doctors-schedule">
         <div className="m-s-title">
           <FormattedMessage id="manage-schedule.title" />
         </div>
@@ -373,38 +200,8 @@ class ManageSchedule extends Component {
                 className="form-control picker-date"
                 onChange={this.handleOnChangeDataPicker}
                 value={this.state.currentDate}
-                minDate={yesterday}
+                // minDate={yesterday}
               />
-            </div>
-            <div className="col-12 pick-hour-container">
-              {rangeTime &&
-                rangeTime.length > 0 &&
-                rangeTime.map((item, index) => {
-                  return (
-                    <button
-                      key={index}
-                      className={
-                        item.isSelected === true
-                          ? "btn btn-schedule active"
-                          : item.isBooked === true
-                          ? "btn btn-schedule booked"
-                          : item.isFullAppointment === true
-                          ? "btn btn-schedule full"
-                          : "btn btn-schedule"
-                      }
-                      disabled={
-                        item.isBooked === true
-                          ? true
-                          : item.isFullAppointment === true
-                          ? true
-                          : false
-                      }
-                      onClick={() => this.handleClickBtnTime(item)}
-                    >
-                      {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
-                    </button>
-                  );
-                })}
             </div>
             <div className="color-description">
               <div className="color-active">
@@ -422,21 +219,6 @@ class ManageSchedule extends Component {
                   <i className="fas fa-circle"></i> Đã kín
                 </span>
               </div>
-            </div>
-            <div
-              className="col-12"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <button
-                onClick={() => this.handleSaveSchedule()}
-                className="btn btn-primary btn-save-schedule"
-              >
-                <FormattedMessage id="manage-schedule.save" />
-              </button>
             </div>
             <div className="col-12 ExtraCalendar">
               <table
@@ -644,7 +426,6 @@ class ManageSchedule extends Component {
                               {sat &&
                                 sat.length > 0 &&
                                 sat.map((element) => {
-                                  console.log(element.isBooked);
                                   if (element.timetype === item.keyMap) {
                                     return (
                                       <div
@@ -700,26 +481,28 @@ class ManageSchedule extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
-    systemMenuPath: state.app.systemMenuPath,
-    isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
-    allDoctors: state.admin.allDoctors,
+    userInfo: state.user.userInfo,
     allScheduleTime: state.admin.allScheduleTime,
-    permission: state.user.permission,
-    user: state.user.userInfo,
+    clinicDoctors: state.clinicAccountant.clinicDoctors,
     doctorWeekSchedules: state.doctor.doctorWeekSchedules,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
+    fetchAllDoctorsOfClinic: (data) =>
+      dispatch(actions.fetchAllDoctorsOfClinic(data)),
     fetchAllScheduleTime: () => dispatch(actions.fetchAllScheduleTime()),
     fetchAllScheduleForWeek: (doctorId, date) =>
       dispatch(actions.fetchAllScheduleForWeek(doctorId, date)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSchedule);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageClinicDoctorSchedules);

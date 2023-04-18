@@ -1,0 +1,386 @@
+.manage-specialty-container {
+  display: flex;
+  background-color: #eff1f5;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 64px;
+  gap: 48px;
+  isolation: isolate;
+  width: 100%;
+  height:fit-content;
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 1;
+  padding-top: 20px;
+  .add-new-specialty {
+    .clinic-basic-infor {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 64px;
+
+      width: 1504px;
+      height: 300px;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      z-index: 0;
+      .specialty-name {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 24px;
+
+        width: 720px;
+        height: 216px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 0;
+        flex-grow: 1;
+        .name-tilte {
+          width: 400px;
+          height: 32px;
+
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 32px;
+          /* identical to box height, or 133% */
+
+          //   text-align: center;
+          letter-spacing: 0.5px;
+
+          color: #00233c;
+
+          /* Inside auto layout */
+
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+        }
+        .nameVi {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 0px;
+          gap: 8px;
+
+          width: 720px;
+          height: 68px;
+
+          /* Inside auto layout */
+
+          flex: none;
+          order: 1;
+          align-self: stretch;
+          flex-grow: 0;
+          .nameVi-label {
+            width: 234px;
+            height: 20px;
+
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            /* identical to box height, or 125% */
+
+            // text-align: center;
+            letter-spacing: 0.5px;
+
+            color: #00233c;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+          }
+          .nameVi-input {
+            box-sizing: border-box;
+
+            width: 720px;
+            height: 40px;
+
+            border: 1px solid #465d6d;
+            border-radius: 8px;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+          }
+        }
+        .nameEn {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 0px;
+          gap: 8px;
+
+          width: 720px;
+          height: 68px;
+
+          /* Inside auto layout */
+
+          flex: none;
+          order: 2;
+          align-self: stretch;
+          flex-grow: 0;
+          .nameEn-label {
+            width: 233px;
+            height: 20px;
+
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            /* identical to box height, or 125% */
+
+            // text-align: center;
+            letter-spacing: 0.5px;
+
+            color: #00233c;
+          }
+          .nameEn-input {
+            box-sizing: border-box;
+
+            width: 720px;
+            height: 40px;
+
+            border: 1px solid #465d6d;
+            border-radius: 8px;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+          }
+        }
+      }
+      .specialty-image {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 16px;
+
+        width: 720px;
+        height: 288px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 1;
+        flex-grow: 1;
+        .image-tilte {
+          width: 400px;
+          height: 32px;
+
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 32px;
+          /* identical to box height, or 133% */
+
+          // text-align: center;
+          letter-spacing: 0.5px;
+
+          color: #00233c;
+
+          /* Inside auto layout */
+
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+        }
+        .preview-container {
+          // display: flex;
+          // justify-content: space-between;
+          // width: 700px;
+          width: 400px;
+          height: 200px;
+          background-color: #fff;
+
+          border-radius: 16px;
+          // :disabled
+          // background: transparent;
+          border: 1px solid #ddd;
+          // border-radius: 50%;
+          font-size: 0;
+          // background: center center;
+          // background-repeat: no-repeat;
+          // background-size: contain;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
+          .preview {
+            width: 400px;
+            height: 200px;
+            background: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            border-radius: 20px;
+          }
+        }
+      }
+    }
+    .extra-infor-specialty {
+      box-sizing: border-box;
+
+      /* Auto layout */
+
+      //   display: flex;
+      //   flex-direction: column;
+      //   align-items: flex-start;
+      padding: 0px;
+
+      width: 1504px;
+      height: 349.5px;
+
+      border: 0.5px solid #465d6d;
+      border-radius: 8px;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+    }
+    .btn{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 24px;
+      gap: 10px;
+
+      position: absolute;
+      width: 74px;
+      height: 40px;
+      right: 400px;
+      top: 75px;
+    }
+    .btn-edit-specialty {
+      
+      /* 1 */
+
+      background-color: #f1db17;
+      border-radius: 20px;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 2;
+      flex-grow: 0;
+      z-index: 2;
+      border: none;
+
+      /* material-theme/label/large */
+
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      /* identical to box height, or 143% */
+
+      letter-spacing: 0.1px;
+
+      color: #000;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+      // width: 200px;
+      // height: 60px;
+      // border: none;
+      // padding: 8px 5px;
+      // min-width: 75px;
+      // border-radius: 5px;
+      // margin: 15px 0;
+      // font-size: 25px;
+    }
+    .btn-add-specialty {
+      
+      /* 1 */
+
+      background: #60b4f0;
+      border-radius: 20px;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 2;
+      flex-grow: 0;
+      z-index: 2;
+      border: none;
+
+      /* material-theme/label/large */
+
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      /* identical to box height, or 143% */
+
+      letter-spacing: 0.1px;
+
+      color: #ffffff;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+      // width: 200px;
+      // height: 60px;
+      // border: none;
+      // padding: 8px 5px;
+      // min-width: 75px;
+      // border-radius: 5px;
+      // margin: 15px 0;
+      // font-size: 25px;
+      background-color: #60b4f0 !important;
+    }
+    // ma
+
+    .clinic-specialties {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      margin-top: 48px;
+      width: 1504px;
+      height: 168px;
+
+      /* Inside auto layout */
+
+      flex: none;
+      order: 3;
+      flex-grow: 0;
+      z-index: 3;
+    }
+  }
+}

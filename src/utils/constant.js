@@ -40,6 +40,7 @@ export const USER_ROLE = {
     ADMIN: 'R1',
     DOCTOR: 'R2',
     PATIENT: 'R3',
-    ACCOUNTANT: 'R4'
-
+    ACCOUNTANT: 'R4',
+    HOSPITAL_DOCTOR: 'R5',
+    HOSPITAL_ACCOUNTANT: 'R6',
 }

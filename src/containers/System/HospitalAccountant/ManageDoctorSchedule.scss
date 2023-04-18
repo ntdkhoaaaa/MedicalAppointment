@@ -1,0 +1,276 @@
+.schedule-container {
+  min-height: 1500px;
+  // background-color: #eff1f5;
+  width: 100%;
+  height: fit-content;
+  .doctors-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 64px;
+    width: 100%;
+    height: 325px;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    overflow-x: auto;
+    background-color: #fff;
+    .grid-item {
+      // text-align: center;
+      // display: flex;
+      // flex-direction: column;
+      // // align-items: center;
+      // // margin-right: 20px;
+      // // display: flex;
+      // // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
+      // padding: 0px;
+      // gap: 20px;
+
+      // width: 170px;
+      // height: 300px;
+
+      /* Inside auto layout */
+
+      // flex: none;
+      // order: 1;
+      // // flex-grow: 0;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
+      // padding: 0px;
+      // gap: 12px;
+
+      width: 160px;
+      height: 224px;
+      margin: 20px;
+      /* Inside auto layout */
+
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+      // overflow-y: auto;
+      .doctor-avatar {
+        width: 160px;
+        height: 160px;
+
+        /* 1 */
+
+        box-shadow: 0px 1px 3px 1px rgba(0, 48, 83, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 48, 83, 0.3));
+        // border-radius: 1000px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+        // margin-top: 35px;
+        // height: 160px;
+        // width: 160px;
+        border-radius: 50%;
+        font-size: 0;
+        background: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: #dff0f5;
+        border: 2px solid #f715e4;
+      }
+      .doctor-position {
+        border: 2px solid #35c861;
+      }
+      .professor-position {
+        border: 2px solid #3809e2;
+      }
+      .assi-position {
+        border: 2px solid #1dcbf7;
+      }
+      .master-position {
+        border: 2px solid #e0e407;
+      }
+      .extra-infor {
+        margin-top: 30px;
+        .doctor-name {
+          font-weight: 700;
+          font-size: 20px;
+          min-height: 60px;
+        }
+        .doctor-specialty {
+          font-weight: 200;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .schedules {
+    margin-top: 40px;
+    .right-container {
+      width: 100%;
+      .table-title {
+        font-size: 30px;
+        text-align: center;
+        color: #36ea36;
+        margin: 10px;
+      }
+      .day-title {
+        background-color: #1dcbf7;
+        font-size: 30px;
+        text-align: center;
+      }
+      .table-time-morning {
+        // background-color: #1dcbf7;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        .table-time-left {
+          display: block;
+          width: 10%;
+          height: inherit;
+          // background-color: #1dcbf7;
+          font-size: 30px;
+          text-align: center;
+          align-self: center !important;
+          // min-height: 300px;
+        }
+        .table-time-right {
+          width: 90%;
+          display: flex;
+          .day-container {
+            width: 13%;
+            .schedule-day {
+              width: 100%;
+              border: 1px solid #ccc;
+              min-height: 200px;
+              overflow-x: "auto";
+              // flex: 1;
+              .grid-item {
+                // border-right: 1px solid rgba(0, 0, 0, 0.8);
+                // border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .doctor-avatar {
+                  margin-top: 35px;
+                  height: 150px;
+                  width: 150px;
+                  border-radius: 50%;
+                  font-size: 0;
+                  background: center center;
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  border: 2px solid #f715e4;
+                }
+                .doctor-position {
+                  border: 2px solid #35c861;
+                }
+                .professor-position {
+                  border: 2px solid #3809e2;
+                }
+                .assi-position {
+                  border: 2px solid #1dcbf7;
+                }
+                .master-position {
+                  border: 2px solid #e0e407;
+                }
+                .extra-infor {
+                  margin-top: 30px;
+                  .doctor-name {
+                    min-height: 60px;
+
+                    font-weight: 700;
+                    font-size: 20px;
+                  }
+                  .doctor-specialty {
+                    font-weight: 200;
+                    font-size: 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .table-time-afternoon {
+        // background-color: #1dcbf7;
+        // margin-top: 100px;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        margin-top: 20px;
+        .table-time-left {
+          display: block;
+          width: 10%;
+          height: inherit;
+          // background-color: #1dcbf7;
+          font-size: 30px;
+          text-align: center;
+          align-self: center !important;
+          // min-height: 300px;
+        }
+        .table-time-right {
+          width: 90%;
+          display: flex;
+          .day-container {
+            width: 13%;
+
+            .schedule-day {
+              width: 100%;
+              border: 1px solid #ccc;
+              min-height: 200px;
+              overflow-x: "auto";
+              // flex: 1;
+              .grid-item {
+                // border-right: 1px solid rgba(0, 0, 0, 0.8);
+                // border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .doctor-avatar {
+                  margin-top: 35px;
+                  height: 140px;
+                  width: 150px;
+                  border-radius: 50%;
+                  font-size: 0;
+                  background: center center;
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                }
+                .doctor-position {
+                  border: 2px solid #35c861;
+                }
+                .professor-position {
+                  border: 2px solid #3809e2;
+                }
+                .assi-position {
+                  border: 2px solid #1dcbf7;
+                }
+                .master-position {
+                  border: 2px solid #e0e407;
+                }
+                .extra-infor {
+                  margin-top: 30px;
+                  .doctor-name {
+                    font-weight: 700;
+                    font-size: 20px;
+                    min-height: 60px;
+                  }
+                  .doctor-specialty {
+                    font-weight: 200;
+                    font-size: 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,6 +18,8 @@ import HomePage from './HomePage/HomePage.js'
 import DetailDoctor from './Patient/Doctor/DetailDoctor';
 import Doctor from '../routes/Doctor';
 import Accountant from '../routes/Accountant';
+import HospitalAccountant from '../routes/HospitalAccountant';
+import HospitalDoctor from '../routes/HospitalDoctor';
 import CustomScrollbars from '../components/CustomScrollbars';
 import VerifyEmail from './Patient/VerifyEmail';
 import DetailSpecialty from './Patient/Specialty/DetailSpecialty';
@@ -64,7 +66,9 @@ class App extends Component {
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
+                                    <Route path={'/doctorHospital/'} component={userIsAuthenticated(HospitalDoctor)} />
                                     <Route path={'/accountant/'} component={userIsAuthenticated(Accountant)} />
+                                    <Route path={'/accountantHospital/'} component={userIsAuthenticated(HospitalAccountant)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />

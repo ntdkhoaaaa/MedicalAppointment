@@ -1,0 +1,108 @@
+.manage-clinic-doctors-schedule {
+    .m-s-title {
+      text-transform: uppercase;
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 17px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .container{
+      max-width: 1400px !important;
+      .fc .fc-col-header-cell-cushion {
+        display: inline-block;
+        width: 60px !important;
+        padding: 10px 20px;
+      }
+      .fc .fc-col-header-cell-cushion { /* needs to be same precedence */
+        padding-top: 15px; /* an override! */
+        width: 60px !important;
+        padding-bottom: 15px; /* an override! */
+        text-decoration: none;
+        font-size: 20px;
+        color:rgb(4, 171, 255)
+      }
+      .fc .fc-scrollgrid-liquid{
+        width: 1400px;
+      }
+      .fc-theme-standard td, .fc-theme-standard th{
+        width: 200px;
+      }
+      .fc-event-title{
+        font-size: 20px;
+        font-weight: 600;
+        color:#87c4f3
+      }
+      .fc-event-time{
+        color:transparent;
+        width: 0px;
+      }
+      .picker-date {
+        height: 38px;
+      }
+      .pick-hour-container {
+        padding-top: 20px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+        button {
+          padding: 5px 15px;
+          min-width: 160px;
+          // background: rgb(38, 170, 26);
+          border: 1px solid #ccc;
+          &.active {
+            background: rgb(255, 150, 4);
+          }
+          &.full {
+            background: rgb(4, 171, 255);
+            cursor: not-allowed;
+          }
+          &.booked {
+            background: rgb(30, 218, 155);
+            cursor: not-allowed;
+          }
+        }
+      }
+      .color-description {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+        .summary-status-active {
+          color: #ffa800;
+          min-width: 150px;
+          font-size: 1.4rem;
+          font-weight: 500;
+          border: 1px solid #ffa800;
+          float: left;
+          text-align: center;
+    
+          border-radius: 10px;
+        }
+        .summary-status-booked {
+          color: rgb(4, 171, 255);
+          min-width: 150px;
+          font-size: 1.4rem;
+          font-weight: 500;
+          float: left;
+          text-align: center;
+          border: 1px solid rgb(4, 171, 255);
+          border-radius: 10px;
+        }
+        .summary-status-full {
+          color: rgb(30, 218, 155);
+          min-width: 150px;
+          font-size: 1.4rem;
+          float: left;
+          text-align: center;
+    
+          font-weight: 500;
+          border: 1px solid rgb(30, 218, 155);
+          border-radius: 10px;
+        }
+      }
+    }
+  
+  }
+  

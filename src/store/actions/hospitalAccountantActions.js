@@ -5,16 +5,12 @@ import {
   getAllDoctorOfClinic,
   saveBulkScheduleForClinic,
   getClinicWeekSchedules,
-  
-  createNewClinicDoctorService,
+  createNewDoctorService,
   getAllDoctorOfHospital,
   editDoctorHospitalService,
   deleteDoctorService,
-  editDoctorClinicService,
-  deleteDoctorClinicService
 } from "../../services/userServices";
 import { toast } from "react-toastify";
-
 export const fetchDetailedClinic = (clinicId) => {
   return async (dispatch, getState) => {
     try {
@@ -77,11 +73,14 @@ export const fetchAllSpecialtiesOfClinicSuccess = (data) => ({
 export const fetchAllSpecialtiesOfClinicFailed = () => ({
   type: actionTypes.FETCH_ALL_SPECIALTIES_OF_CLINIC_FAIL,
 });
-
-export const fetchAllDoctorsOfClinic = (data) => {
+export const fetchAllDoctorsOfClinic = (clinicId, specialtyId, positionId) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getAllDoctorOfClinic(data);
+      let res = await getAllDoctorOfClinic({
+        clinicId: clinicId,
+        specialtyCode: specialtyId,
+        positionCode: positionId,
+      });
       console.log("check res", res);
       if (res && res.errCode === 0) {
         dispatch({
@@ -142,7 +141,6 @@ export const SaveBulkScheduleForClinicSuccess = (data) => ({
 export const SaveBulkScheduleForClinicFailed = () => ({
   type: actionTypes.SAVE_BULK_SCHEDULES_FOR_CLINIC_FAIL,
 });
-
 export const fetchClinicWeekSchedules = (clinicId, date) => {
   return async (dispatch, getState) => {
     try {
@@ -177,11 +175,10 @@ export const fetchClinicWeekSchedulesSuccess = (data) => ({
 export const fetchClinicWeekSchedulesFailed = () => ({
   type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_FAILED,
 });
-
-export const SaveNewClinicDoctor = (data) => {
+export const SaveNewDoctor = (data) => {
   return async (dispatch, getState) => {
     try {
-      let res = await createNewClinicDoctorService(data);
+      let res = await createNewDoctorService(data);
       console.log(data);
       if (res && res.errCode === 0) {
         toast.success("Save New Doctor  successfully");
@@ -189,11 +186,13 @@ export const SaveNewClinicDoctor = (data) => {
           type: actionTypes.SAVE_NEW_DOCTOR_SUCCESS,
           data: res,
         });
-        dispatch(fetchAllDoctorsOfClinic({
-          clinicId: data.clinicId,
-          specialtyCode:'All',
-          positionCode:'All'
-        }))
+        dispatch(
+          fetchAllDoctorsOfHospital({
+            clinicId: data.clinicId,
+            specialtyCode: "All",
+            positionCode: "All",
+          })
+        );
       } else {
         toast.error("Save Schedules for clinic fail");
         console.log("SAVE_BULK_SCHEDULES_FOR_CLINIC_SUCCESS", res.errMessage);
@@ -220,7 +219,7 @@ export const SaveNewDoctorFailed = () => ({
 export const fetchAllDoctorsOfHospital = (data) => {
   return async (dispatch, getState) => {
     try {
-      console.log('checkdata', data);
+      console.log("checkdata", data);
       let res = await getAllDoctorOfHospital(data);
       console.log("check specialty", res);
       if (res && res.errCode === 0) {
@@ -241,10 +240,10 @@ export const fetchAllDoctorsOfHospital = (data) => {
     }
   };
 };
-export const EditInforDoctor = (data) => {
+export const EditInforDoctorHospital = (data) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editDoctorClinicService(data);
+      let res = await editDoctorHospitalService(data);
       console.log(data);
       if (res && res.errCode === 0) {
         toast.success("Edit infor doctor  successfully");
@@ -252,11 +251,13 @@ export const EditInforDoctor = (data) => {
           type: actionTypes.EDIT_INFOR_DOCTOR_SUCCESS,
           data: res,
         });
-        dispatch(fetchAllDoctorsOfClinic({
-          clinicId: data.clinicId,
-          specialtyCode:'All',
-          positionCode:'All'
-        }))
+        dispatch(
+          fetchAllDoctorsOfHospital({
+            clinicId: data.clinicId,
+            specialtyCode: "All",
+            positionCode: "All",
+          })
+        );
       } else {
         toast.error("Edit infor doctor fail");
         console.log("Edit infor doctor", res.errMessage);
@@ -280,10 +281,10 @@ export const EditInforDoctorSuccess = (data) => ({
 export const EditInforDoctorFailed = () => ({
   type: actionTypes.EDIT_INFOR_DOCTOR_FAIL,
 });
-export const DeleteDoctor = (userId,clinicId) => {
+export const DeleteDoctorHospital = (userId, clinicId) => {
   return async (dispatch, getState) => {
     try {
-      let res = await deleteDoctorClinicService({userId:userId});
+      let res = await deleteDoctorService({ userId: userId });
       // console.log(data);
       if (res && res.errCode === 0) {
         toast.success("delete doctor  successfully");
@@ -291,11 +292,13 @@ export const DeleteDoctor = (userId,clinicId) => {
           type: actionTypes.DELETE_DOCTOR_SUCCESS,
           data: res,
         });
-        dispatch(fetchAllDoctorsOfClinic({
-          clinicId: clinicId,
-          specialtyCode:'All',
-          positionCode:'All'
-        }))
+        dispatch(
+          fetchAllDoctorsOfHospital({
+            clinicId: clinicId,
+            specialtyCode: "All",
+            positionCode: "All",
+          })
+        );
       } else {
         toast.error("delete doctor fail");
         console.log("delete doctor", res.errMessage);

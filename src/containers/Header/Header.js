@@ -65,7 +65,7 @@ class Header extends Component {
             <div className="header-container">
                 {/* thanh navigator */}
                 <div className="header-tabs-container">
-                    <Navigator menus={this.state.menuApp} />
+                    
                 </div>
                 <div className='languages'>
                     <span className='welcome'><FormattedMessage id={"homeheader.welcome"} />
@@ -77,7 +77,6 @@ class Header extends Component {
                     </div>
                 </div>
                 {/* nút logout */}
-
             </div>
         );
     }

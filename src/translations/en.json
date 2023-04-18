@@ -9,7 +9,7 @@
         "Medical-package": "Medical Packages",
         "General-health-check": "General Health Check",
         "Support": "Support",
-        "welcome": "Welcome Administrator, ",
+        "welcome": "Welcome to KMP Appointment, ",
         "hello": "Welcome, ",
         "login": "Sign in "
     },
@@ -60,8 +60,21 @@
             "general":"Manage General",
             "manage-clinic":"Manage clinics",
             "manage-clinic-specialties":"Manage clinics speicalties",
-            "manage-clinic-doctors": "Manage Doctors",
+            "manage-clinic-doctors": "Manage Doctors' Account",
+            "manage-doctors-extra-infor": "Manage Doctors' Extra Information",
             "manage-doctors-schedule":"Manage Doctors's schedule"
+        },
+        "accountantHospital": {
+            "general":"Manage General",
+            "manage-hospital":"Manage hospital",
+            "manage-hospital-specialties":"Manage hospital speicalties",
+            "manage-hospital-doctors": "Manage Doctors",
+            "manage-doctors-schedule":"Manage Doctors's schedule"
+        },
+        "doctorHospital": {
+            "general":"Manage General",
+            "schedule": "Manage Doctor's schedule",
+            "patient": "Manage Patient's"
         }
     },
     "manage-user": {

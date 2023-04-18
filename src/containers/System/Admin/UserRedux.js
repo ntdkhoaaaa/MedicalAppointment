@@ -47,7 +47,6 @@ class UserRedux extends Component {
         if (prevProps.genderRedux !== this.props.genderRedux) {
             let arrGenders = this.props.genderRedux;
             
-            console.log(arrGenders);
             this.setState({
                 genderArr: arrGenders,
                 gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].name : ''
@@ -55,11 +54,10 @@ class UserRedux extends Component {
         }
         if (prevProps.allClinics !== this.props.allClinics) {
             let clinicArr = this.props.allClinics;
-            console.log(clinicArr);
             
             this.setState({
                 clinicArr: clinicArr,
-                clinicId: clinicArr && clinicArr.length > 0 ? clinicArr[0].keyMap : ''
+                clinicId: clinicArr && clinicArr.length > 0 ? clinicArr[0].id : ''
             })
         }
         if (prevProps.rolesRedux !== this.props.rolesRedux) {
@@ -118,9 +116,7 @@ class UserRedux extends Component {
     }
     onChangeInput = (event, id) => {
         let copyState = { ...this.state }
-        console.log(id,event.target.value)
         copyState[id] = event.target.value;
-        console.log(copyState)
         
         this.setState({
             ...copyState
@@ -157,7 +153,7 @@ class UserRedux extends Component {
                     roleId: this.state.role,
                 })
             }
-            if(this.state.role==='R2')
+            if(this.state.role==='R2' || this.state.role==='R5')
             {
                 this.props.createNewUser({
                     email: this.state.email,
@@ -187,7 +183,7 @@ class UserRedux extends Component {
                     avatar: this.state.avatar
                 })
             }
-            if(this.state.role==='R4')
+            if(this.state.role==='R4' || this.state.role==='R6')
             {
                 this.props.createNewUser({
                     email: this.state.email,
@@ -288,7 +284,7 @@ class UserRedux extends Component {
             gender: user.gender,
             position: user.positionId,
             role: user.roleId,
-            avatar: '',
+            avatar: user.image,
             previewImgURL: user.image,
             action: CRUD_ACTIONS.EDIT,
             idUser: user.id,
@@ -357,7 +353,7 @@ class UserRedux extends Component {
                             </div>
                             <div className='col-3'>
                                 <label><FormattedMessage id={"manage-user.phonenumber"} /></label>
-                                <input type="text" className='form-control'
+                                <input type="number" className='form-control'
                                     value={phoneNumber}
                                     onChange={(event) => { this.onChangeInput(event, 'phoneNumber') }} />
                             </div>
@@ -385,7 +381,8 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id={"manage-user.clinic"} /></label>
                                 <select className='form-control'
                                     value={clinicId}
-                                    disabled={this.state.role !== 'R2' && this.state.role !=='R4' ? true : false}
+                                    disabled={this.state.role !== 'R2' && this.state.role !=='R4' &&this.state.role !=='R5' &&
+                                    this.state.role !=='R6'  ? true : false}
                                     onChange={(event) => { this.onChangeInput(event, 'clinicId') }} >
                                     {clinics && clinics.length > 0 && clinics.map((item, index) => {
                                         return (

@@ -5,6 +5,8 @@ const initialState = {
   clinicSpecialties: [],
   clinicDoctors: [],
   clinicWeekSchedules: [],
+  saveNewUserSuccess: {},
+  hospitalDoctors: [],
 };
 const clinicAccountantReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -29,6 +31,18 @@ const clinicAccountantReducer = (state = initialState, action) => {
       };
     case actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_SUCCESS:
       state.clinicWeekSchedules = action.data;
+      console.log(action.data);
+      return {
+        ...state,
+      };
+    case actionTypes.SAVE_NEW_DOCTOR_SUCCESS:
+      state.saveNewUserSuccess = action.data;
+      console.log(action.data);
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_ALL_DOCTORS_HOSPITAL_SUCCESS:
+      state.hospitalDoctors = action.data;
       console.log(action.data);
       return {
         ...state,

@@ -39,12 +39,27 @@ class BookingModal extends Component {
     componentDidMount() {
         this.props.getGendersStart();
         if (this.props.isLoggedIn) {
+            console.log(this.props.userInfo)
             this.setState({
                 email: this.props.userInfo?.email,
                 lastName: this.props.userInfo?.lastName,
                 firstName: this.props.userInfo?.firstName,
                 address: this.props.userInfo?.address,
-                phoneNumber: this.props.userInfo?.phoneNumber
+                phoneNumber: this.props.userInfo?.phoneNumber,
+                genderIdentity: this.props.userInfo?.gender==='M' ? {
+                    label:this.props.language ===LANGUAGES.VI ?'Nam':'Male',
+                    value:'M'
+                }: 
+                this.props.userInfo?.gender==='F'?
+                {
+                    label:this.props.language ===LANGUAGES.VI ?'Nữ':'Female',
+                    value:'F'
+                }
+                :
+                {
+                    label:this.props.language ===LANGUAGES.VI ?'Khác':'Other',
+                    value:'O'
+                }
             })
         }
     }
@@ -91,7 +106,21 @@ class BookingModal extends Component {
                 lastName: this.props.userInfo?.lastName,
                 firstName: this.props.userInfo?.firstName,
                 address: this.props.userInfo?.address,
-                phoneNumber: this.props.userInfo?.phoneNumber
+                phoneNumber: this.props.userInfo?.phoneNumber,
+                genderIdentity: this.props.userInfo?.gender==='M' ? {
+                    label:this.props.language !==LANGUAGES.VI ?'Nam':'Male',
+                    value:'M'
+                }: 
+                this.props.userInfo?.gender==='F'?
+                {
+                    label:this.props.language !==LANGUAGES.VI ?'Nữ':'Female',
+                    value:'F'
+                }
+                :
+                {
+                    label:this.props.language !==LANGUAGES.VI ?'Khác':'Other',
+                    value:'O'
+                }
             })
         }
     }
@@ -110,7 +139,7 @@ class BookingModal extends Component {
     }
     handleOnChangeGender = (gender) => {
         console.log('onChangeGender ', gender)
-        let genderSelected = gender.label
+        let genderSelected = gender
         this.setState({
             genderIdentity: genderSelected
         })
@@ -153,7 +182,7 @@ class BookingModal extends Component {
             email: this.state.email,
             address: this.state.address,
             reason: this.state.reason,
-            genderIdentity: this.state.genderIdentity,
+            genderIdentity: this.state.genderIdentity.label,
             doctorId: this.state.doctorId,
             forwho: this.state.forwho,
             timetype: this.state.timetype,
@@ -192,9 +221,9 @@ class BookingModal extends Component {
         this.props.closeBookingModal()
     }
     render() {
-        let { gender, isOpenModalWaiting } = this.state;
+        let { genderIdentity, isOpenModalWaiting } = this.state;
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
-        console.log('render', this.props.userInfo)
+        console.log('render', genderIdentity)
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : ''
         return (
             <Modal
@@ -277,7 +306,7 @@ class BookingModal extends Component {
                             <div className='col-3 form-group'>
                                 <label><FormattedMessage id="patient.modal-booking.genderIdentity" /></label>
                                 <Select
-                                    value={gender}
+                                    value={genderIdentity}
                                     onChange={this.handleOnChangeGender}
                                     options={this.state.genders}>
                                 </Select>

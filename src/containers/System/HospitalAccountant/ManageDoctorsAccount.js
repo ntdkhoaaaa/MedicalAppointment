@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES, CommonUtils, CRUD_ACTIONS } from "../../../utils";
-import "./ManageAndRegisterDoctorForHospital.scss";
+import "./ManageDoctorsAccount.scss";
 import Select from "react-select";
 import * as actions from "../../../store/actions";
 import _, { upperCase } from "lodash";
 import { toast } from "react-toastify";
 import PhoneInput from "react-phone-number-input";
-class ManageAndRegisterDoctorForHospital extends Component {
+class ManageDoctorsAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,18 +44,12 @@ class ManageAndRegisterDoctorForHospital extends Component {
       id: "",
       tableFilter: [],
       search: "",
-      note: "",
-      listPrices: [],
-      selectedPrice: {},
     };
   }
   async componentDidMount() {
-    await this.props.getPositionStart();
-    await this.props.getAllRequiredInfor();
-    // this.props.saveNewUserSuccess()
-    await this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
-    await this.props.loadAllSpecialties();
-    await this.props.fetchAllDoctorsOfClinic({
+    this.props.getPositionStart();
+    this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
+    this.props.fetchAllDoctorsOfHospital({
       clinicId: this.props.userInfo.clinicId,
       specialtyCode: "All",
       positionCode: "All",
@@ -65,22 +59,10 @@ class ManageAndRegisterDoctorForHospital extends Component {
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
     }
-    if (prevProps.allRequiredInfor !== this.props.allRequiredInfor) {
-      let { resPrice, resPayment, resProvince } = this.props.allRequiredInfor;
-      let dataSelectPrice = this.buildDataInputSelect(resPrice, "PRICE");
-      dataSelectPrice.unshift({
-        value:'choose',
-        label: this.props.language ===LANGUAGES.VI ? 'Chọn giá tiền' : 'Choose price'
-      })
-      this.setState({
-        listPrices: dataSelectPrice,
-        selectedPrice:dataSelectPrice[0]
-      });
-    }
-    if (prevProps.allSpecialties !== this.props.allSpecialties) {
+    if (prevProps.clinicSpecialties !== this.props.clinicSpecialties) {
       let listSpecialty = this.buildDataInputSelect(
-        this.props.allSpecialties,
-        "SPECIALTIES"
+        this.props.clinicSpecialties,
+        ""
       );
       listSpecialty.unshift({
         value: "All",
@@ -91,18 +73,15 @@ class ManageAndRegisterDoctorForHospital extends Component {
         selectedSpecialty: listSpecialty[0],
       });
     }
-    if (prevProps.clinicDoctors !== this.props.clinicDoctors) {
-      console.log("fqfbqubqs");
-      let { clinicDoctors } = this.props;
-      console.log(clinicDoctors);
+    if (prevProps.hospitalDoctors !== this.props.hospitalDoctors) {
       this.setState({
-        DoctorsArr: clinicDoctors,
+        DoctorsArr: this.props.hospitalDoctors,
       });
     }
     if (prevProps.positionRedux !== this.props.positionRedux) {
       let arrPositions = this.buildDataInputSelect(
         this.props.positionRedux,
-        "POSITION"
+        "allcode"
       );
       arrPositions.unshift({
         value: "All",
@@ -115,11 +94,11 @@ class ManageAndRegisterDoctorForHospital extends Component {
     }
   }
 
-  buildDataInputSelect = (inputData, type) => {
+  buildDataInputSelect = (inputData, text) => {
     let { language } = this.props;
     let result = [];
-    if (inputData && inputData.length > 0) {
-      if (type === "POSITION") {
+    if (text === "allcode") {
+      if (inputData && inputData.length > 0) {
         inputData.map((item, index) => {
           let object = {};
           object.label =
@@ -128,7 +107,8 @@ class ManageAndRegisterDoctorForHospital extends Component {
           result.push(object);
         });
       }
-      if (type === "SPECIALTIES") {
+    } else {
+      if (inputData && inputData.length > 0) {
         inputData.map((item, index) => {
           let object = {};
           object.label = language === LANGUAGES.VI ? item.name : item.nameEn;
@@ -136,18 +116,7 @@ class ManageAndRegisterDoctorForHospital extends Component {
           result.push(object);
         });
       }
-      if (type === "PRICE") {
-        inputData.map((item, index) => {
-          let object = {};
-          let labelVi = `${item.valueVi} VND`;
-          let labelEn = `${item.valueEn} USD`;
-          object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-          object.value = item.keyMap;
-          result.push(object);
-        });
-      }
     }
-
     return result;
   };
 
@@ -172,10 +141,11 @@ class ManageAndRegisterDoctorForHospital extends Component {
       avatar,
       action,
       id,
-      note,
-      selectedPrice,
+      previewImgURL,
     } = this.state;
     if (action === CRUD_ACTIONS.CREATE) {
+      console.log("checkkk", avatar);
+
       await this.props.SaveNewDoctor({
         email: email,
         password: password,
@@ -190,9 +160,6 @@ class ManageAndRegisterDoctorForHospital extends Component {
         positionId: selectedDegree.value,
         count: count,
         avatar: avatar,
-        note: note,
-        selectedPrice: selectedPrice.value,
-        nameSpecialty: selectedSpecialty.label,
       });
       if (this.props.saveNewUserSuccess.errCode === 0) {
         this.setState({
@@ -211,12 +178,11 @@ class ManageAndRegisterDoctorForHospital extends Component {
           id: "",
           previewImgURL: "",
           action: CRUD_ACTIONS.CREATE,
-          note: "",
-          selectedPrice: {},
         });
       }
     }
     if (action === CRUD_ACTIONS.EDIT) {
+      console.log("checkkk", avatar);
       await this.props.EditInforDoctor({
         email: email,
         password: password,
@@ -282,18 +248,12 @@ class ManageAndRegisterDoctorForHospital extends Component {
     }
   };
   handleEditUser = async (user) => {
-    console.log("Edit User", user);
-    let { resPrice } = this.props.allRequiredInfor;
-
-    let { language, positionRedux, allSpecialties } = this.props;
+    let { language, positionRedux, clinicSpecialties } = this.props;
     let tempselectedDegree = {
       value: user.positionId,
     };
     let tempselectedSpecialty = {
-      value: user.specialtyId,
-    };
-    let tempSelectedPrice = {
-      value: user.priceId,
+      value: user.selectedSpecialty,
     };
     positionRedux.forEach((item) => {
       if (item.keyMap === user.positionId) {
@@ -301,19 +261,12 @@ class ManageAndRegisterDoctorForHospital extends Component {
           language === LANGUAGES.VI ? item.valueVi : item.valueEn;
       }
     });
-    allSpecialties.forEach((item) => {
+    clinicSpecialties.forEach((item) => {
       if (item.keyMap === user.selectedSpecialty) {
         tempselectedSpecialty.label =
           language === LANGUAGES.VI ? user.nameSpecialty : user.nameSpecialtyEn;
       }
     });
-    resPrice.forEach((item) => {
-      if (item.keyMap === user.priceId) {
-        tempSelectedPrice.label =
-          language === LANGUAGES.VI ? item.valueVi : item.valueEn;
-      }
-    });
-    // console.log(temp
     this.setState({
       email: user.UserEmail,
       password: "hardcode",
@@ -331,8 +284,6 @@ class ManageAndRegisterDoctorForHospital extends Component {
       id: user.id,
       previewImgURL: user.image,
       action: CRUD_ACTIONS.EDIT,
-      note: user.note,
-      selectedPrice: tempSelectedPrice,
     });
   };
   handleDeleteUser = async (userId) => {
@@ -359,34 +310,36 @@ class ManageAndRegisterDoctorForHospital extends Component {
     }
   };
   handleChange = async (selectedInfor, name) => {
+    console.log("cos vo day k ?", selectedInfor, name);
     let { filterDegree, filterSpecialty } = this.state;
     let stateName = name.name;
     let stateCopy = { ...this.state };
     stateCopy[stateName] = selectedInfor;
+    console.log("cos vo day k ?");
+    console.log(selectedInfor);
     this.setState({
       ...stateCopy,
     });
+    {
+      /* filterSpecialty:{},
+      filterDegree:{}, */
+    }
     if (name.name === "filterSpecialty") {
-      await this.props.fetchAllDoctorsOfClinic({
+      console.log("ewwe", selectedInfor);
+      await this.props.fetchAllDoctorsOfHospital({
         clinicId: this.props.userInfo.clinicId,
         specialtyCode: selectedInfor.value,
         positionCode: filterDegree.value,
       });
     }
     if (name.name === "filterDegree") {
-      await this.props.fetchAllDoctorsOfClinic({
+      console.log("ewwe");
+      await this.props.fetchAllDoctorsOfHospital({
         clinicId: this.props.userInfo.clinicId,
         specialtyCode: filterSpecialty.value,
         positionCode: selectedInfor.value,
       });
     }
-  };
-  handleOnChangeText = (event, id) => {
-    let stateCopy = { ...this.state };
-    stateCopy[id] = event.target.value;
-    this.setState({
-      ...stateCopy,
-    });
   };
   render() {
     let {
@@ -432,7 +385,7 @@ class ManageAndRegisterDoctorForHospital extends Component {
     ];
 
     return (
-      <div className="manage-container">
+      <div className="manage-container-hospital-doctor">
         <div className="title-manage">Quản lý thông tin bác sĩ bệnh viện</div>
         <div className="register-form">
           <div className="left">
@@ -556,71 +509,38 @@ class ManageAndRegisterDoctorForHospital extends Component {
               <div className="doctor-infor">
                 <div className="infor-container">
                   <span>Thông tin chuyên môn</span>
-                  <div className="selection-infor">
-                    <div className="degree">
-                      <label>Học vị</label>
-                      <Select
-                        style={{ border: "1px solid #000 !important" }}
-                        className="degree-select"
-                        value={this.state.selectedDegree}
-                        onChange={this.handleChange}
-                        name="selectedDegree"
-                        options={this.state.DegreeArr}
-                      />
-                    </div>
-                    <div className="specialty">
-                      <label>Chuyên khoa</label>
-                      <Select
-                        className="specialty-select"
-                        name="selectedSpecialty"
-                        value={this.state.selectedSpecialty}
-                        onChange={this.handleChange}
-                        options={this.state.listSpecialty}
-                      />
-                    </div>
-                    <div className="price">
-                      <label>
-                        <FormattedMessage id="admin.manage-doctor.choose-price" />
-                      </label>
-
-                      <Select
-                        placeholder={
-                          <FormattedMessage id="admin.manage-doctor.choose-price" />
-                        }
-                        className="price-select"
-                        value={this.state.selectedPrice}
-                        onChange={this.handleChange}
-                        name="selectedPrice"
-                        options={this.state.listPrices}
-                      />
-                    </div>
+                  <div className="degree">
+                    <label>Học vị</label>
+                    <Select
+                      className="degree-select"
+                      value={this.state.selectedDegree}
+                      onChange={this.handleChange}
+                      name="selectedDegree"
+                      options={this.state.DegreeArr}
+                    />
                   </div>
-                  <div className="type-infor">
-                    <div className="count">
-                      <label>Maximum per time</label>
-                      <input
-                        onChange={(event) => this.onChangeInput(event, "count")}
-                        value={this.state.count}
-                        type="number"
-                        min="0"
-                        max="9999"
-                        maxlength="4"
-                        onKeyPress={(event) => this.keyPress(event)}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="note">
-                      <label>
-                        <FormattedMessage id="admin.manage-doctor.clinic-Note" />
-                      </label>
-                      <textarea
-                        onChange={(event) =>
-                          this.handleOnChangeText(event, "note")
-                        }
-                        value={this.state.note}
-                        className="note-text"
-                      />
-                    </div>
+                  <div className="specialty">
+                    <label>Chuyên khoa</label>
+                    <Select
+                      className="specialty-select"
+                      name="selectedSpecialty"
+                      value={this.state.selectedSpecialty}
+                      onChange={this.handleChange}
+                      options={this.state.listSpecialty}
+                    />
+                  </div>
+                  <div className="count">
+                    <label>Maximum per time</label>
+                    <input
+                      onChange={(event) => this.onChangeInput(event, "count")}
+                      value={this.state.count}
+                      type="number"
+                      min="0"
+                      max="9999"
+                      maxlength="4"
+                      onKeyPress={(event) => this.keyPress(event)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
               </div>
@@ -788,9 +708,7 @@ const mapStateToProps = (state) => {
     positionRedux: state.admin.position,
     userInfo: state.user.userInfo,
     saveNewUserSuccess: state.clinicAccountant.saveNewUserSuccess,
-    allSpecialties: state.admin.allSpecialties,
-    clinicDoctors: state.clinicAccountant.clinicDoctors,
-    allRequiredInfor: state.admin.allRequiredInfor,
+    hospitalDoctors: state.clinicAccountant.hospitalDoctors,
   };
 };
 
@@ -799,18 +717,16 @@ const mapDispatchToProps = (dispatch) => {
     fetchAllSpecialtiesOfClinic: (data) =>
       dispatch(actions.fetchAllSpecialtiesOfClinic(data)),
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
-    SaveNewDoctor: (data) => dispatch(actions.SaveNewClinicDoctor(data)),
-    EditInforDoctor: (data) => dispatch(actions.EditInforDoctor(data)),
-    fetchAllDoctorsOfClinic: (data) =>
-      dispatch(actions.fetchAllDoctorsOfClinic(data)),
+    SaveNewDoctor: (data) => dispatch(actions.SaveNewDoctor(data)),
+    EditInforDoctor: (data) => dispatch(actions.EditInforDoctorHospital(data)),
+    fetchAllDoctorsOfHospital: (data) =>
+      dispatch(actions.fetchAllDoctorsOfHospital(data)),
     DeleteDoctor: (userId, clinicId) =>
-      dispatch(actions.DeleteDoctor(userId, clinicId)),
-    loadAllSpecialties: () => dispatch(actions.fetchAllSpecialties()),
-    getAllRequiredInfor: () => dispatch(actions.getAllRequiredInfor()),
+      dispatch(actions.DeleteDoctorHospital(userId, clinicId)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ManageAndRegisterDoctorForHospital);
+)(ManageDoctorsAccount);

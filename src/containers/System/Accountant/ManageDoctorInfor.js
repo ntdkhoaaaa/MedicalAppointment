@@ -119,7 +119,6 @@ class ManageDoctorInfor extends Component {
     }
   };
   handleChange = async (selectedInfor, name) => {
-    console.log("handleChange", selectedInfor, name);
     let {selectedDegree,selectedSpecialty}=this.state
     let stateName = name.name;
     let stateCopy = { ...this.state };
@@ -128,7 +127,6 @@ class ManageDoctorInfor extends Component {
       ...stateCopy,
     });
     if (name.name === "selectedSpecialty") {
-      console.log("ewwe",selectedDegree);
       await this.props.fetchAllDoctorsOfClinic(
         this.props.userInfo.clinicId,
         selectedInfor.value,
@@ -136,17 +134,16 @@ class ManageDoctorInfor extends Component {
       );
     }
     if (name.name === "selectedDegree") {
-      console.log("ewwe");
       await this.props.fetchAllDoctorsOfClinic(
         this.props.userInfo.clinicId,
         selectedSpecialty.value,
         selectedInfor.value,
-        
       );
     }
   };
   render() {
     let { doctorArr, search, tableFilter } = this.state;
+    console(doctorArr)
     return (
       <div>
         {doctorArr && doctorArr.length > 0 ? (

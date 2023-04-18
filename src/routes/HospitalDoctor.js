@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
-// import ManageSchedule from '../containers/System/Accountant/ManageSchedule';
-// import ManagePatient from '../containers/System/Accountant/ManagePatient';
-// import ManageMedicine from '../containers/System/Accountant/ManageMedicine';
-import ManageClinicByAccountant from "../containers/System/Accountant/ManageClinicByAccountant";
-// import ManageClinicSpecialties from "../containers/System/Accountant/ManageClinicSpecialties";
-import ManageDoctorInfor from "../containers/System/Accountant/ManageDoctorInfor";
-import DoctorExtraInfor from "../containers/System/Accountant/DoctorExtraInfor";
-import ManageClinicDoctorSchedules from "../containers/System/Accountant/ManageClinicDoctorSchedules";
-import ManageAndRegisterDoctorForHospital from "../containers/System/Accountant/ManageAndRegisterDoctorForHospital";
+import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
+import ManagePatient from "../containers/System/Doctor/ManagePatient";
+import ManageMedicine from "../containers/System/Doctor/ManageMedicine";
 import Header from "../containers/Header/Header";
 import { Link, withRouter } from "react-router-dom";
 import { LANGUAGES, USER_ROLE } from "../utils";
@@ -25,7 +19,8 @@ import {
   accountantHospitalMenu,
 } from "../containers/Header/menuApp";
 import "./System.scss";
-class Accountant extends Component {
+
+class HospitalDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,20 +81,13 @@ class Accountant extends Component {
         menuApp: menu,
       });
     }
-    // if(prevProps.location.pathname !== this.props.location.pathname){
-    //   let {path} = this.state
-    //   path= this.props.location.pathname
-    // }
   }
   render() {
-    const { isLoggedIn } = this.props;
     let menuApp = this.state.menuApp;
-
     let menu = menuApp[0];
-
-    console.log(this.props.permission);
-    if (this.props.permission === "R2") {
-      return <Redirect to={"/doctor/manage-schedule"} />;
+    const { isLoggedIn } = this.props;
+    if (this.props.permission === "R4") {
+      return <Redirect to={"/accountant/manage-clinic"} />;
     }
     if (this.props.permission === "R3") {
       return <Redirect to={"/home"} />;
@@ -107,8 +95,8 @@ class Accountant extends Component {
     if (this.props.permission === "R1") {
       return <Redirect to={"/system/user-redux"} />;
     }
-    if (this.props.permission === "R5") {
-      return <Redirect to={"/doctorHospital/manage-schedule"} />;
+    if (this.props.permission === "R2") {
+      return <Redirect to={"/doctor/manage-schedule"} />;
     }
     if (this.props.permission === "R6") {
       return <Redirect to={"/accountantHospital/manage-hospital"} />;
@@ -117,7 +105,7 @@ class Accountant extends Component {
 
     return (
       <React.Fragment>
-        {this.props.permission === "R4" ? (
+        {this.props.permission === "R5" ? (
           <>
             <Header />
             <div className="system-container">
@@ -133,12 +121,13 @@ class Accountant extends Component {
                               : "icon-container"
                           }
                         >
-                          {item.stt === 1 && <i className="fas fa-hospital"></i>}
-                          {item.stt === 2 && <i className="fas fa-user"></i>}
-                          {item.stt === 3 && 
-                            <i className="fas fa-calendar-alt"></i>
-                          }
-                          {item.stt === 4 && <i className="fas fa-user-md"></i>}
+                          {item.stt === 1 && (
+                            <i class="fas fa-calendar-alt"></i>
+                          )}
+                          {item.stt === 2 && (
+                            <i class="fas fa-calendar-alt"></i>
+                          )}
+                          {item.stt === 3 && <i class="fas fa-capsules"></i>}
                         </div>
                         <span className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>
@@ -151,24 +140,16 @@ class Accountant extends Component {
               <div className="system-list">
                 <Switch>
                   <Route
-                    path="/accountant/manage-clinic"
-                    component={ManageClinicByAccountant}
+                    path="/doctorHospital/manage-schedule"
+                    component={ManageSchedule}
                   />
                   <Route
-                    path="/accountant/manage-clinic-doctors"
-                    component={ManageDoctorInfor}
+                    path="/doctorHospital/manage-patient"
+                    component={ManagePatient}
                   />
                   <Route
-                    path="/accountant/edit-clinic-doctor-extra-infor"
-                    component={DoctorExtraInfor}
-                  />
-                  <Route
-                    path="/accountant/manage-clinic-doctors-schedule"
-                    component={ManageClinicDoctorSchedules}
-                  />
-                  <Route
-                    path="/accountant/manage-clinic-doctors-account"
-                    component={ManageAndRegisterDoctorForHospital}
+                    path="/doctorHospital/manage-medicine"
+                    component={ManageMedicine}
                   />
                 </Switch>
               </div>
@@ -194,4 +175,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Accountant);
+export default connect(mapStateToProps, mapDispatchToProps)(HospitalDoctor);
