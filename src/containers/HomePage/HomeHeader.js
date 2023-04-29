@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import * as actions from "../../store/actions";
 
 import { LANGUAGES } from "../../utils"
-import { UserProfile } from "../Patient/Profile/UserProfile"
+// import { UserProfile } from "../Patient/Profile/UserProfile"
 import { changeLanguageApp } from '../../store/actions/';
 import _, { upperCase } from 'lodash'
 import { getListSearch } from '../../services/userServices'
@@ -43,7 +43,7 @@ class HomeHeader extends Component {
     }
     MoveToProfile = () => {
         if (this.props.history) {
-            this.props.history.push(`/profile`)
+            this.props.history.push(`/patient`)
         }
     }
     MoveToHome = () => {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import './ModalRatingAppointment.scss';
-import Lightbox from 'react-image-lightbox';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal } from 'reactstrap';
 // import DatePicker from '../../../components/Input/DatePicker';
 import ProfileDoctor from '../Doctor/ProfileDoctor';
 import { Rating } from 'react-simple-star-rating'
@@ -51,15 +50,15 @@ class ModalRatingAppointment extends Component {
             toast.success('Đánh giá buổi khám bệnh thành công')
         }
     }
-    onChange = (event, id) => {
-        let stateCopy = { ... this.state };
+    onChange=(event, id) => {
+        let stateCopy={...this.state};
         stateCopy[id] = event.target.value;
         this.setState({
             ...stateCopy,
         })
     }
     render() {
-        let { isOpenModalRating, closeRatingModal, RatingInfor, id, bookingId } = this.props;
+        let { isOpenModalRating, closeRatingModal, id, bookingId } = this.props;
         let { rating, disableMove, comment, doctorId } = this.state
         const handleRating = (rate: number) => {
             this.setState({
@@ -68,8 +67,7 @@ class ModalRatingAppointment extends Component {
             })
         }
         const onPointerMove = (value: number, index: number) => {
-            { this.state.disableMove === false && this.setState({ rating: value }) }
-            console.log(value, index)
+             this.state.disableMove === false && this.setState({ rating: value }) 
         }
         const onPointerEnter = () => console.log('Enter', rating)
         const onPointerLeave = () => console.log('Leave', rating)
@@ -102,11 +100,16 @@ class ModalRatingAppointment extends Component {
                         <div className='rating'>
                             <span className='title-rating'>
                                 {rating === 0 && 'Vui lòng đánh giá'}
-                                {rating === 1 && <img src='https://i.pinimg.com/564x/37/28/23/372823883a153a5268c87e2a5616a5be.jpg' />}
-                                {rating === 2 && <img src='https://i.pinimg.com/474x/da/66/70/da667011741cc504c274f96791f27f43.jpg' />}
-                                {rating === 3 && <img src='https://i.pinimg.com/474x/c5/e0/25/c5e0255b377201ccebe1c987cc7ab492.jpg' />}
-                                {rating === 4 && <img src='https://i.pinimg.com/474x/e0/44/09/e0440944dfaa00da9c9ce2c724c72337.jpg' />}
-                                {rating === 5 && <img src='https://i.pinimg.com/474x/42/1c/dc/421cdcb451843c7fb6b5909003a4ef60.jpg' />}
+                                {rating === 1 && <img src='https://i.pinimg.com/564x/37/28/23/372823883a153a5268c87e2a5616a5be.jpg' 
+                                alt="Rate status"/>}
+                                {rating === 2 && <img src='https://i.pinimg.com/474x/da/66/70/da667011741cc504c274f96791f27f43.jpg' 
+                                alt="Rate status"/>}
+                                {rating === 3 && <img src='https://i.pinimg.com/474x/c5/e0/25/c5e0255b377201ccebe1c987cc7ab492.jpg' 
+                                alt="Rate status"/>}
+                                {rating === 4 && <img src='https://i.pinimg.com/474x/e0/44/09/e0440944dfaa00da9c9ce2c724c72337.jpg' 
+                                alt="Rate status"/>}
+                                {rating === 5 && <img src='https://i.pinimg.com/474x/42/1c/dc/421cdcb451843c7fb6b5909003a4ef60.jpg' 
+                                alt="Rate status"/>}
                             </span>
                             <div className="comment-rate">
                                 <Rating

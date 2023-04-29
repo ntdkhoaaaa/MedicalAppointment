@@ -49,14 +49,13 @@ class ProfileDoctor extends Component {
     renderBookingTime = (bookingTime) => {
         if (bookingTime) {
             let { language } = this.props;
-            // console.log(bookingTime);
+            console.log(bookingTime);
             let time = language === LANGUAGES.VI ? bookingTime.timetypeData.valueVi : bookingTime.timetypeData.valueEn
             if (bookingTime && !_.isEmpty(bookingTime)) {
                 let date = language === LANGUAGES.VI ?
                     this.capitalizeFirstLetter(moment.unix(+bookingTime.date / 1000).format('dddd - DD/MM/YYYY'))
                     :
                     moment.unix(+bookingTime.date / 1000).locale('en').format('ddd - DD/MM/YYYY')
-
                 return (
                     <>
                         <div>{time}  -  {date}</div>
@@ -98,9 +97,7 @@ class ProfileDoctor extends Component {
                                 :
                                 <>
                                     {this.renderBookingTime(dataTime)}
-
                                 </>
-
                             }
                         </div>
                     </div>

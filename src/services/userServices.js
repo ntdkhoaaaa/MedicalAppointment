@@ -88,6 +88,9 @@ const getScheduleDoctorByDate = (doctorId, date) => {
 const getScheduleDoctorByDateContainUserId = (doctorId, date,userId) => {
     return axios.get(`/api/get-schedule-byDate-contain-userId?doctorId=${doctorId}&date=${date}&userId=${userId}`)
 }
+const getSpecialtyScheduleByWeek = (clinicId,specialtyId) => {
+    return axios.get(`/api/get-hospital-specialty-schedule-byDate?clinicId=${clinicId}&specialtyId=${specialtyId}`)
+}
 const deleteSelectedSchedule = (data) => {
     return axios.delete('/api/delete-selected-schedule', {
         data: {
@@ -104,6 +107,7 @@ const getProfileDoctorById = (doctorId) => {
 
 
 const postPatientAppointment = (data) => {
+    console.log('postPatientAppointment',data)
     return axios.post(`/api/patient-booking-appointment`, data)
 }
 const postVerifyBooking = (data) => {
@@ -167,6 +171,9 @@ const addNewMedicine=async(data)=>{
 }
 const getMedicineByClinicId=async(data)=>{
     return axios.get(`/api/get-medicine-by-clinicId?clinicId=${data}`)
+}
+const getExtraSpecialtyInforClinic=async(data)=>{
+    return axios.get(`/api/get-extra-specialty-infor-clinic?id=${data}`)
 }
 const deleteMedicineById=async(data)=>{
     return axios.delete(`/api/delete-medicine-by-id?id=${data}`)
@@ -241,8 +248,8 @@ export {
     getAllCodeService,getAllDoctorOfClinic,getClinicWeekSchedules,
     getTopDoctorHomeService,editDoctorHospitalService,getDoctorWeekSchedules,
     getAllDoctors, cancelBookingFromPatient,getScheduleDoctorByDateContainUserId,
-    saveDetailDoctorService, getAllMarkdown,
-    getDetailInforDoctor, saveBulkScheduleDoctor,
+    saveDetailDoctorService, getAllMarkdown,getSpecialtyScheduleByWeek,
+    getDetailInforDoctor, saveBulkScheduleDoctor,getExtraSpecialtyInforClinic,
     getSelectedSchedule, getScheduleDoctorByDate,
     deleteSelectedSchedule, getExtraInforDoctorById,
     getProfileDoctorById, postPatientAppointment,deleteDoctorClinicService,

@@ -143,12 +143,13 @@ export const SaveBulkScheduleForClinicFailed = () => ({
   type: actionTypes.SAVE_BULK_SCHEDULES_FOR_CLINIC_FAIL,
 });
 
-export const fetchClinicWeekSchedules = (clinicId, date) => {
+export const fetchClinicWeekSchedules = (clinicId, date,type) => {
   return async (dispatch, getState) => {
     try {
       let res = await getClinicWeekSchedules({
         clinicId: clinicId,
         currentDate: date,
+        timetype: type
       });
       console.log("check res", res);
       if (res && res.errCode === 0) {

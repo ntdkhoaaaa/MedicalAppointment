@@ -18,7 +18,7 @@ import {
 } from "../../../services/userServices";
 import { toast } from "react-toastify";
 import moment from "moment/moment";
-import UserProfile from "../../Patient/Profile/UserProfile";
+// import UserProfile from "../../Patient/Profile/UserProfile";
 import ProfileUser from "./ProfileUser";
 
 class ConfirmtoPatientModal extends Component {

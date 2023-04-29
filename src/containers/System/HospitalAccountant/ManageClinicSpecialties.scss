@@ -15,7 +15,7 @@
   flex-grow: 1;
   padding-top: 20px;
   .add-new-specialty {
-    .clinic-basic-infor {
+    .specialty-basic-infor {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -23,7 +23,7 @@
       gap: 64px;
 
       width: 1504px;
-      height: 300px;
+      height: 650px;
 
       /* Inside auto layout */
 
@@ -32,74 +32,177 @@
       align-self: stretch;
       flex-grow: 0;
       z-index: 0;
-      .specialty-name {
+      .specialty-infor{
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        padding: 0px;
-        gap: 24px;
-
-        width: 720px;
-        height: 216px;
-
-        /* Inside auto layout */
-
-        flex: none;
-        order: 0;
-        flex-grow: 1;
-        .name-tilte {
-          width: 400px;
-          height: 32px;
-
-          font-family: "Inter";
-          font-style: normal;
-          font-weight: 500;
-          font-size: 24px;
-          line-height: 32px;
-          /* identical to box height, or 133% */
-
-          //   text-align: center;
-          letter-spacing: 0.5px;
-
-          color: #00233c;
-
-          /* Inside auto layout */
-
-          flex: none;
-          order: 0;
-          flex-grow: 0;
-        }
-        .nameVi {
+        height: 550px;
+        .specialty-name {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           padding: 0px;
-          gap: 8px;
+          gap: 24px;
 
           width: 720px;
-          height: 68px;
-
+          height: 216px;
           /* Inside auto layout */
-
           flex: none;
-          order: 1;
-          align-self: stretch;
-          flex-grow: 0;
-          .nameVi-label {
-            width: 234px;
-            height: 20px;
+          order: 0;
+          flex-grow: 1;
+          .name-tilte {
+            width: 400px;
+            height: 32px;
+  
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 32px;
+            /* identical to box height, or 133% */
+  
+            //   text-align: center;
+            letter-spacing: 0.5px;
+  
+            color: #00233c;
+  
+            /* Inside auto layout */
+  
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+          }
+          .nameVi {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 8px;
+  
+            width: 720px;
+            height: 68px;
+  
+            /* Inside auto layout */
+  
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+            .nameVi-label {
+              width: 234px;
+              height: 20px;
+  
+              font-family: "Inter";
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 20px;
+              /* identical to box height, or 125% */
+  
+              // text-align: center;
+              letter-spacing: 0.5px;
+  
+              color: #00233c;
+  
+              /* Inside auto layout */
+  
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+            }
+            .nameVi-input {
+              box-sizing: border-box;
+  
+              width: 720px;
+              height: 40px;
+  
+              border: 1px solid #465d6d;
+              border-radius: 8px;
+  
+              /* Inside auto layout */
+  
+              flex: none;
+              order: 1;
+              align-self: stretch;
+              flex-grow: 0;
+            }
+          }
+          .nameEn {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 8px;
+  
+            width: 720px;
+            height: 68px;
+  
+            /* Inside auto layout */
+  
+            flex: none;
+            order: 2;
+            align-self: stretch;
+            flex-grow: 0;
+            .nameEn-label {
+              width: 233px;
+              height: 20px;
+  
+              font-family: "Inter";
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 20px;
+              /* identical to box height, or 125% */
+  
+              // text-align: center;
+              letter-spacing: 0.5px;
+  
+              color: #00233c;
+            }
+            .nameEn-input {
+              box-sizing: border-box;
+  
+              width: 720px;
+              height: 40px;
+  
+              border: 1px solid #465d6d;
+              border-radius: 8px;
+  
+              /* Inside auto layout */
+  
+              flex: none;
+              order: 1;
+              align-self: stretch;
+              flex-grow: 0;
+            }
+          }
+        }
+        .specialty-location {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 0px;
+          gap: 24px;
+          width: 720px;
+          height: 216px;
+          /* Inside auto layout */
+          flex: none;
+          order: 0;
+          flex-grow: 1;
+          .specialty-location-tilte {
+            width: 300px;
+            height: 32px;
 
             font-family: "Inter";
             font-style: normal;
             font-weight: 500;
-            font-size: 16px;
-            line-height: 20px;
-            /* identical to box height, or 125% */
+            font-size: 24px;
+            line-height: 32px;
+            /* identical to box height, or 133% */
 
             // text-align: center;
             letter-spacing: 0.5px;
 
-            color: #00233c;
+            color: #1f1f1f;
 
             /* Inside auto layout */
 
@@ -107,14 +210,15 @@
             order: 0;
             flex-grow: 0;
           }
-          .nameVi-input {
-            box-sizing: border-box;
+          .locationVi {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 8px;
 
             width: 720px;
-            height: 40px;
-
-            border: 1px solid #465d6d;
-            border-radius: 8px;
+            height: 68px;
 
             /* Inside auto layout */
 
@@ -122,58 +226,108 @@
             order: 1;
             align-self: stretch;
             flex-grow: 0;
+            .locationVi-tilte {
+              width: 230px;
+              height: 20px;
+
+              font-family: "Inter";
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 20px;
+              /* identical to box height, or 125% */
+
+              // text-align: center;
+              letter-spacing: 0.5px;
+
+              color: #1f1f1f;
+
+              /* Inside auto layout */
+
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+            }
+            .locationVi-input {
+              box-sizing: border-box;
+
+              width: 720px;
+              height: 40px;
+
+              border: 1px solid #465d6d;
+              border-radius: 8px;
+
+              /* Inside auto layout */
+
+              flex: none;
+              order: 1;
+              align-self: stretch;
+              flex-grow: 0;
+            }
+          }
+          .locationEn {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 8px;
+
+            width: 720px;
+            height: 68px;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+            .locationEn-tilte {
+              width: 230px;
+              height: 20px;
+
+              font-family: "Inter";
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 20px;
+              /* identical to box height, or 125% */
+
+              //   text-align: center;
+              letter-spacing: 0.5px;
+
+              color: #1f1f1f;
+
+              /* Inside auto layout */
+
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+            }
+            .locationEn-input {
+              box-sizing: border-box;
+
+              width: 720px;
+              height: 40px;
+
+              border: 1px solid #465d6d;
+              border-radius: 8px;
+
+              /* Inside auto layout */
+
+              flex: none;
+              order: 1;
+              align-self: stretch;
+              flex-grow: 0;
+            }
           }
         }
-        .nameEn {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 0px;
-          gap: 8px;
-
-          width: 720px;
-          height: 68px;
-
-          /* Inside auto layout */
-
-          flex: none;
-          order: 2;
-          align-self: stretch;
-          flex-grow: 0;
-          .nameEn-label {
-            width: 233px;
-            height: 20px;
-
-            font-family: "Inter";
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 20px;
-            /* identical to box height, or 125% */
-
-            // text-align: center;
-            letter-spacing: 0.5px;
-
-            color: #00233c;
-          }
-          .nameEn-input {
-            box-sizing: border-box;
-
-            width: 720px;
-            height: 40px;
-
-            border: 1px solid #465d6d;
-            border-radius: 8px;
-
-            /* Inside auto layout */
-
-            flex: none;
-            order: 1;
-            align-self: stretch;
-            flex-grow: 0;
+        .specialty-price{
+          .specialty-price{
+            width: 500px;
           }
         }
       }
+
       .specialty-image {
         display: flex;
         flex-direction: column;
@@ -181,9 +335,8 @@
         padding: 0px;
         gap: 16px;
 
-        width: 720px;
-        height: 288px;
-
+        width: 500px;
+        height: 600px;
         /* Inside auto layout */
 
         flex: none;
@@ -212,33 +365,28 @@
           flex-grow: 0;
         }
         .preview-container {
-          // display: flex;
-          // justify-content: space-between;
-          // width: 700px;
           width: 400px;
-          height: 200px;
+          height: 400px;
           background-color: #fff;
-
-          border-radius: 16px;
-          // :disabled
-          // background: transparent;
+          border-radius: 50%;
           border: 1px solid #ddd;
-          // border-radius: 50%;
           font-size: 0;
-          // background: center center;
-          // background-repeat: no-repeat;
-          // background-size: contain;
+          background: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
           cursor: pointer;
           &:hover {
             opacity: 0.7;
           }
           .preview {
             width: 400px;
-            height: 200px;
+            height: 400px;
+          border-radius: 50%;
+
             background: center center;
             background-repeat: no-repeat;
             background-size: contain;
-            border-radius: 20px;
+            // border-radius: 20px;
           }
         }
       }
@@ -366,7 +514,7 @@
     }
     // ma
 
-    .clinic-specialties {
+    .specialty-specialties {
       display: flex;
       flex-direction: column;
       align-items: flex-start;

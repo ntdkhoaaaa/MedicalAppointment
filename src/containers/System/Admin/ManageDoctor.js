@@ -230,7 +230,6 @@ class ManageDoctor extends Component {
       note: this.state.note,
       count: this.state.maximum,
     });
-    // console.log('check save ?', res)
     this.props.fetchAllMarkdown();
   };
   handleChange = async (selectedDoctor) => {

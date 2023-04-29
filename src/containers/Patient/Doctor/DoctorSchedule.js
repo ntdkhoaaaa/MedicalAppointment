@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./DoctorSchedule.scss";
 import moment from "moment";
-import localization from "moment/locale/vi";
 import { LANGUAGES } from "../../../utils";
 import {
   getScheduleDoctorByDate,
@@ -10,7 +9,7 @@ import {
 } from "../../../services/userServices";
 import { FormattedMessage } from "react-intl";
 import BookingModal from "./Modal/BookingModal";
-import { Redirect, withRouter } from "react-router-dom";
+import {  withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import NotifyBookedModal from "./Modal/NotifyBookedModal";
 class DoctorSchedule extends Component {
@@ -21,7 +20,6 @@ class DoctorSchedule extends Component {
       allAvailableTime: [],
       isOpenModalBooking: false,
       dataScheduleTimeModal: {},
-      isOpenModalWaiting: false,
       isNotifyBooked: false,
     };
   }
@@ -149,7 +147,6 @@ class DoctorSchedule extends Component {
   };
   handleClickScheduleTime = (time) => {
     if (this.props.isLoggedIn) {
-      console.log("time", time);
       if (time.bookedByThisUser) {
         toast.warning("Bạn đã đăng ký 1 lịch hẹn ở khung giờ này");
         this.setState({
@@ -189,7 +186,6 @@ class DoctorSchedule extends Component {
       allAvailableTime,
       isOpenModalBooking,
       dataScheduleTimeModal,
-      isOpenModalWaiting,
       isNotifyBooked,
     } = this.state;
     let { language } = this.props;

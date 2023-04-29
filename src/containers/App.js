@@ -25,10 +25,12 @@ import VerifyEmail from './Patient/VerifyEmail';
 import DetailSpecialty from './Patient/Specialty/DetailSpecialty';
 import { fetchPermission } from '../store/actions';
 import DetailClinic from './Patient/Clinics/DetailClinic';
-import UserProfile from './Patient/Profile/UserProfile';
+// import UserProfile from './Patient/Profile/UserProfile';
 import ForgetPassword from './Auth/ForgetPassword';
 import ResetPassword from './Auth/ResetPassword';
-
+import DetailClinicSpecialties from './Patient/Clinics/DetailClinicSpecialties';
+import HospitalSpecialtySchedules from './Patient/Clinics/HospitalSpecialtySchedules';
+import Patient from '../routes/Patient';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -76,9 +78,11 @@ class App extends Component {
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                     <Route path={path.VERIFY_REGISTER} component={VerifyRegister} />
-                                    <Route path={path.USER_PROFILE} component={userIsAuthenticated(UserProfile)} />
+                                    <Route path={path.USER_PROFILE} component={userIsAuthenticated(Patient)} />
                                     <Route path={path.FORGOT_PASSWORD} component={userIsNotAuthenticated(ForgetPassword)} />
                                     <Route path={path.RESET_PASSWORD} component={userIsNotAuthenticated(ResetPassword)} />
+                                    <Route path={path.DETAIL_CLINIC_SPECIALTY} component={DetailClinicSpecialties} />
+                                    <Route path={path.HOSPITAL_SPECIALTY_SCHEDULE} component={HospitalSpecialtySchedules} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

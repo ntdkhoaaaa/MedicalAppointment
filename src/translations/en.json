@@ -75,6 +75,10 @@
             "general":"Manage General",
             "schedule": "Manage Doctor's schedule",
             "patient": "Manage Patient's"
+        },
+        "patient":{
+            "patient-basic-information":"Medical Information",
+            "patient-booking-history":"Booking History"
         }
     },
     "manage-user": {

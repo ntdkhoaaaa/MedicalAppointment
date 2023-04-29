@@ -16,6 +16,8 @@ import * as actions from "../../../store/actions";
 import "react-image-lightbox/style.css";
 import Lightbox from "react-image-lightbox";
 import "./ManageClinicSpecialties.scss";
+import Select from "react-select";
+
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 class ManageClinicSpecialties extends Component {
@@ -32,31 +34,50 @@ class ManageClinicSpecialties extends Component {
       action: CRUD_ACTIONS.CREATE,
       isOpen: "",
       previewImgURL: "",
+      location: "",
+      locationEn: "",
+      selectedPrice: "",
+      listPrices: [],
     };
   }
   async componentDidMount() {
     this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
+    this.props.getAllRequiredInfor();
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
     }
-    // if(this.props.clinicSpecialties!== prevProps.clinicSpecialties){
-    //     let {clinicSpecialties} = this.props
-    //     let {listSpecialty}=this.state
-    //     listSpecialty=clinicSpecialties
-    //     console.log(listSpecialty)
-    //     this.setState({
-    //         ...listSpecialty
-    //     })
-    //     console.log(this.state.listSpecialty)
-    // }
     if (prevProps.clinicSpecialties !== this.props.clinicSpecialties) {
       this.setState({
         listSpecialty: this.props.clinicSpecialties,
       });
     }
+    if (prevProps.allRequiredInfor !== this.props.allRequiredInfor) {
+      let { resPrice } = this.props.allRequiredInfor;
+      let dataSelectPrice = this.buildDataInputSelect(resPrice, "PRICE");
+      this.setState({
+        listPrices: dataSelectPrice,
+      });
+    }
   }
+  buildDataInputSelect = (inputData, type) => {
+    let result = [];
+    let { language } = this.props;
+    if (inputData && inputData.length > 0) {
+      if (type === "PRICE") {
+        inputData.map((item, index) => {
+          let object = {};
+          let labelVi = `${item.valueVi} VND`;
+          let labelEn = `${item.valueEn} USD`;
+          object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+          object.value = item.keyMap;
+          result.push(object);
+        });
+      }
+      return result;
+    }
+  };
   handleOnChangeInput = (event, id) => {
     let copyState = { ...this.state };
     copyState[id] = event.target.value;
@@ -93,6 +114,9 @@ class ManageClinicSpecialties extends Component {
         imageBase64: this.state.imageBase64,
         descriptionHTML: this.state.descriptionHTML,
         descriptionMarkdown: this.state.descriptionMarkdown,
+        location: this.state.location,
+        locationEn: this.state.locationEn,
+        priceId:this.state.selectedPrice.value,
       });
       await this.props.fetchAllSpecialtiesOfClinic(
         this.props.userInfo.clinicId
@@ -107,6 +131,9 @@ class ManageClinicSpecialties extends Component {
           descriptionMarkdown: "",
           descriptionHTML: "",
           previewImgURL: "",
+          location: "",
+          locationEn: "",
+          selectedPrice:{}
         });
       } else {
         toast.error("Create a new Specialty fail");
@@ -119,6 +146,9 @@ class ManageClinicSpecialties extends Component {
         descriptionHTML: this.state.descriptionHTML,
         descriptionMarkdown: this.state.descriptionMarkdown,
         id: this.state.idSpecialty,
+        location: this.state.location,
+        locationEn: this.state.locationEn,
+        priceId:this.state.selectedPrice.value
       });
       await this.props.fetchAllSpecialtiesOfClinic(
         this.props.userInfo.clinicId
@@ -133,6 +163,9 @@ class ManageClinicSpecialties extends Component {
           descriptionHTML: "",
           action: CRUD_ACTIONS.CREATE,
           previewImgURL: "",
+          location: "",
+          locationEn: "",
+          selectedPrice:{}
         });
       } else {
         toast.error("Update Specialty fail");
@@ -158,12 +191,26 @@ class ManageClinicSpecialties extends Component {
         descriptionHTML: "",
         action: CRUD_ACTIONS.CREATE,
         previewImgURL: "",
+        location: "",
+        locationEn: "",
       });
     } else {
       toast.error("Xóa không thành công kiểm tra lại");
     }
   };
   handleEditSpecialtyFromParent = async (specialty) => {
+    console.log("check specialty", specialty);
+    let { resPrice } = this.props.allRequiredInfor;
+    
+    let tempPrice = {
+      value: specialty.priceId,
+    };
+    resPrice.forEach((item) => {
+      if (item.keyMap === specialty.priceId) {
+        tempPrice.label =
+          this.props.language === LANGUAGES.VI ? item.valueVi : item.valueEn;
+      }
+    });
     this.setState({
       imageBase64: specialty.image,
       name: specialty.name,
@@ -173,6 +220,17 @@ class ManageClinicSpecialties extends Component {
       descriptionMarkdown: specialty.descriptionMarkdown,
       action: CRUD_ACTIONS.EDIT,
       idSpecialty: specialty.id,
+      location: specialty.location,
+      locationEn: specialty.locationEn,
+      selectedPrice:tempPrice
+    });
+  };
+  handleChangeSelectInfor = (selectedInfor, name) => {
+    let stateName = name.name;
+    let stateCopy = { ...this.state };
+    stateCopy[stateName] = selectedInfor;
+    this.setState({
+      ...stateCopy,
     });
   };
   render() {
@@ -181,31 +239,80 @@ class ManageClinicSpecialties extends Component {
     return (
       <div className="manage-specialty-container">
         <div className="add-new-specialty">
-          <div className="clinic-basic-infor">
-            <div className="specialty-name">
-              <label className="name-tilte">Tên Chuyên Khoa</label>
+          <div className="specialty-basic-infor">
+            <div className="specialty-infor">
+              <div className="specialty-name">
+                <label className="name-tilte">Tên Chuyên Khoa</label>
+                <div className="nameVi">
+                  <label className="nameVi-label">Tên chuyên khoa</label>
+                  <input
+                    value={this.state.name}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "name")
+                    }
+                    className="nameVi-input"
+                    type="text"
+                  />
+                </div>
+                <div className="nameEn">
+                  <label className="nameEn-label">Tên tiếng anh</label>
+                  <input
+                    value={this.state.nameEn}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "nameEn")
+                    }
+                    className="nameEn-input"
+                    type="text"
+                  />
+                </div>
+              </div>
 
-              <div className="nameVi">
-                <label className="nameVi-label">Tên chuyên khoa</label>
-                <input
-                  value={this.state.name}
-                  onChange={(event) => this.handleOnChangeInput(event, "name")}
-                  className="nameVi-input"
-                  type="text"
-                />
+              <div className="specialty-location">
+                <label className="specialty-location-tilte">
+                  Địa chỉ phòng khám
+                </label>
+                <div className="locationVi">
+                  <label className="locationVi-tilte">Địa chỉ tiếng việt</label>
+                  <input
+                    value={this.state.location}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "location")
+                    }
+                    className="locationVi-input"
+                    type="text"
+                  />
+                </div>
+                <div className="locationEn">
+                  <label className="locationEn-tilte">Địa chỉ tiếng anh</label>
+                  <input
+                    value={this.state.locationEn}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "locationEn")
+                    }
+                    className="locationEn-input"
+                    type="text"
+                  />
+                </div>
               </div>
-              <div className="nameEn">
-                <label className="nameEn-label">Tên tiếng anh</label>
-                <input
-                  value={this.state.nameEn}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "nameEn")
-                  }
-                  className="nameEn-input"
-                  type="text"
-                />
-              </div>
+              <div className="specialty-price">
+              <label className="specialty-price-title">
+                <FormattedMessage id="admin.manage-doctor.choose-price" />
+              </label>
+
+              <Select
+                placeholder={
+                  <FormattedMessage id="admin.manage-doctor.choose-price" />
+                }
+                value={this.state.selectedPrice}
+                onChange={this.handleChangeSelectInfor}
+                name="selectedPrice"
+                className="specialty-price"
+                options={this.state.listPrices}
+              />
             </div>
+            </div>
+
+
             <div className="specialty-image">
               <label className="image-tilte">Ảnh Chuyên Khoa</label>
               <div className="preview-container">
@@ -213,7 +320,6 @@ class ManageClinicSpecialties extends Component {
                   className="preview"
                   id="preview-img"
                   type="file"
-                  
                   style={{
                     backgroundImage: `url(${this.state.previewImgURL})`,
                   }}
@@ -270,11 +376,13 @@ const mapStateToProps = (state) => {
     language: state.app.language,
     userInfo: state.user.userInfo,
     clinicSpecialties: state.clinicAccountant.clinicSpecialties,
+    allRequiredInfor: state.admin.allRequiredInfor,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getAllRequiredInfor: () => dispatch(actions.getAllRequiredInfor()),
     fetchAllSpecialtiesOfClinic: (data) =>
       dispatch(actions.fetchAllSpecialtiesOfClinic(data)),
   };

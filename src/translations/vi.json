@@ -75,6 +75,10 @@
             "general":"Quản lý chung",
             "schedule": "Quản lý kế hoạch khám bệnh",
             "patient": "Quản lý bệnh nhân"
+        },
+        "patient":{
+            "patient-basic-information":"Thông tin y tế",
+            "patient-booking-history":"Lịch sử khám bệnh"
         }
 
     },

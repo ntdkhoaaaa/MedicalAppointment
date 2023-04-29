@@ -9,11 +9,12 @@ export const path = {
     DETAIL_CLINIC: '/detail-clinic/:id',
     VERIFY_EMAIL_BOOKING: '/verify-booking',
     REGISTER: '/register',
-    USER_PROFILE: '/profile',
+    USER_PROFILE: '/patient',
     VERIFY_REGISTER: '/verify-register',
     FORGOT_PASSWORD: '/forgot-password',
     RESET_PASSWORD: '/reset-password',
-
+    DETAIL_CLINIC_SPECIALTY: '/hospital-specialties/:id',
+    HOSPITAL_SPECIALTY_SCHEDULE:'/hospital-specialty/:id/:specialtyId'
 };
 
 export const LANGUAGES = {

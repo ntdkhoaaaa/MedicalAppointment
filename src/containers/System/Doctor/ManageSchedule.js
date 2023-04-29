@@ -186,6 +186,7 @@ class ManageSchedule extends Component {
     }
   };
   handleOnChangeDataPicker = async (date) => {
+    console.log('onChangeDataPicker', date);
     this.setState({
       currentDate: date[0],
     });
@@ -250,7 +251,9 @@ class ManageSchedule extends Component {
       toast.error("Invalid selected doctor!");
       return;
     }
+    console.log('currentDate from save schedule',currentDate)
     let formatedDate = new Date(currentDate).getTime();
+    console.log('formatedDate from save schedule',formatedDate)
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
       if (selectedTime && selectedTime.length > 0) {

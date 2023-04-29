@@ -150,3 +150,20 @@ export const accountantMenu = [
         ]
     }
 ]
+export const patientMenu=[
+    {
+        name:'Patient',
+        menus:[
+            { //Quản lý thông tin phòng khám
+                name: 'menu.patient.patient-basic-information',
+                link: '/patient/patient-basic-information',
+                stt:1
+            },
+            { //Quản lý quản lý thông tin bác sĩ
+                name: 'menu.patient.patient-booking-history',
+                link: '/patient/patient-booking-history',
+                stt:2
+            },
+        ]
+    }
+]

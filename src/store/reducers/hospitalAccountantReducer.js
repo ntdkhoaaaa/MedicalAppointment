@@ -1,17 +1,24 @@
 import actionTypes from "../actions/actionTypes";
 const initialState = {
-    clinicDetailed: {},
-    clinicSpecialties: [],
-    clinicDoctors: [],
-    clinicWeekSchedules: [],
-    saveNewUserSuccess: {},
-    hospitalDoctors: [],
-  };
-  const hospitalAccountantReducer = (state = initialState, action) => {
-    switch (action.type) {
+  specialtyWeekSchedules: [],
+  extraSpecialtyInfor: {},
+};
+const hospitalAccountantReducer = (state = initialState, action) => {
+  let copyState = { ...state };
 
-      default:
-        return state;
-    }
-  };
-  export default hospitalAccountantReducer;
+  switch (action.type) {
+    case actionTypes.FETCH_SPECIALTY_WEEK_SCHEDULE_SUCCESS:
+      copyState.specialtyWeekSchedules = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_EXTRA_SPECIALTY_INFOR_SUCCESS:
+      copyState.extraSpecialtyInfor = action.data;
+      return {
+        ...copyState,
+      };
+    default:
+      return state;
+  }
+};
+export default hospitalAccountantReducer;

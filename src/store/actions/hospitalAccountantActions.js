@@ -9,6 +9,8 @@ import {
   getAllDoctorOfHospital,
   editDoctorHospitalService,
   deleteDoctorService,
+  getSpecialtyScheduleByWeek,
+  getExtraSpecialtyInforClinic
 } from "../../services/userServices";
 import { toast } from "react-toastify";
 export const fetchDetailedClinic = (clinicId) => {
@@ -322,3 +324,54 @@ export const DeleteDoctorSuccess = (data) => ({
 export const DeleteDoctorFailed = () => ({
   type: actionTypes.EDIT_INFOR_DOCTOR_FAIL,
 });
+
+
+
+
+
+export const fetchWeekSpecialtyScheduleClinic = (clinicId,specialtyId) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getSpecialtyScheduleByWeek(clinicId,specialtyId);
+
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_SPECIALTY_WEEK_SCHEDULE_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_SPECIALTY_WEEK_SCHEDULE_FAIL,
+        });
+      }
+    } catch (e) {
+      console.log("fetch week specialty schedules", e);
+      dispatch({
+        type: actionTypes.FETCH_SPECIALTY_WEEK_SCHEDULE_FAIL,
+      });
+    }
+  };
+};
+export const fetchExtraSpecialtyInforClinic = (specialtyId) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getExtraSpecialtyInforClinic(specialtyId);
+
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_EXTRA_SPECIALTY_INFOR_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_EXTRA_SPECIALTY_INFOR_FAIL,
+        });
+      }
+    } catch (e) {
+      console.log("fetch extra specialty infor", e);
+      dispatch({
+        type: actionTypes.FETCH_EXTRA_SPECIALTY_INFOR_FAIL,
+      });
+    }
+  };
+};

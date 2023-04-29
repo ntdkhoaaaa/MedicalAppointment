@@ -325,7 +325,6 @@ class ManageDoctorsAccount extends Component {
       filterDegree:{}, */
     }
     if (name.name === "filterSpecialty") {
-      console.log("ewwe", selectedInfor);
       await this.props.fetchAllDoctorsOfHospital({
         clinicId: this.props.userInfo.clinicId,
         specialtyCode: selectedInfor.value,
@@ -333,7 +332,6 @@ class ManageDoctorsAccount extends Component {
       });
     }
     if (name.name === "filterDegree") {
-      console.log("ewwe");
       await this.props.fetchAllDoctorsOfHospital({
         clinicId: this.props.userInfo.clinicId,
         specialtyCode: filterSpecialty.value,
@@ -672,7 +670,7 @@ class ManageDoctorsAccount extends Component {
                           <div className="doctor-specialty">
                             {item.nameSpecialty}
                           </div>
-                          <div className="doctor-specialty">
+                          <div className="doctor-phoneNumber">
                             {item.phoneNumber}
                           </div>
                           <div className="btn-group">

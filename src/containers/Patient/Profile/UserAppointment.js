@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../../utils';
+// import { FormattedMessage } from 'react-intl';
+// import { LANGUAGES } from '../../../utils';
 import './UserAppointment.scss'
-import { data } from './data'
-import { getAllAppointmentOfPatient, cancelBookingFromPatient, getMedicalRecordByBookingId } from '../../../services/userServices';
+// import { data } from './data'
+import { getAllAppointmentOfPatient, cancelBookingFromPatient } from '../../../services/userServices';
 import * as actions from '../../../store/actions'
 import ModalRatingAppointment from './ModalRatingAppointment';
-import TempModal from './TempModal';
 import ModalViewMedicalRecord from './ModalViewMedicalRecord';
 import ModalAnnounceCancel from './ModalAnnounceCancel';
 import ModalWaiting from './ModalWaiting';
@@ -134,7 +133,7 @@ class UserAppointment extends Component {
         PatientAppointment = this.props.PatientAppointment
     }
     render() {
-        let { isOpenModalRating, PatientAppointment, ratingBookingId, isOpenViewMedicalRecord, isOpenModalWaiting, viewingBookingId, doctorId, bookingDate, isOpenModalAnnounce, CancelSuccess } = this.state
+        let { isOpenModalRating, PatientAppointment, ratingBookingId, isOpenViewMedicalRecord, isOpenModalWaiting, viewingBookingId, doctorId, bookingDate, isOpenModalAnnounce } = this.state
         let { userInfo } = this.props
 
         return (

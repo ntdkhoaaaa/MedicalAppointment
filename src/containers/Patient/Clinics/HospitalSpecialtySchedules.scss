@@ -1,0 +1,29 @@
+.hospital-specialty-schedules{
+    width: 100%;
+    background-color: #eff1f5;
+    display: flex;
+    flex-direction: column;
+    height: 2000px;
+    .each-doctor-specialty{
+        width: 95%;
+        padding: 40px;
+        display: flex;
+        background-color: #fff;
+        min-height: 450px;
+        margin: 15px 40px;
+        border-radius: 30px;
+        box-shadow: 0 1px 6px #20212447;
+        padding: 30px;
+        .left{
+            width: 50%;
+            border-right: 1px solid #ccc ;
+            border-right: opacity($color: #ccc);
+        }
+        .right{
+            padding-left: 20px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
