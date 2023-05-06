@@ -43,40 +43,19 @@ class ConfirmtoPatientModal extends Component {
     };
   }
   componentDidMount() {
-    let { userInfo } = this.props;
-    this.props.fetchAllMedicine(userInfo.Doctor_Infor.clinicId);
+    console.log(this.props);
+    let dataSelectMedicine = this.buildDataInputSelect(
+      this.props.dataMedicineByClinicId,
+      "MEDICINE"
+    );
+    this.setState({
+      listMedicineByClinicId: dataSelectMedicine,
+    });
   }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.medicineByClinicId !== this.props.medicineByClinicId) {
-      let dataSelectMedicine = this.buildDataInputSelect(
-        this.props.medicineByClinicId,
-        "MEDICINE"
-      );
-      this.setState({
-        listMedicineByClinicId: dataSelectMedicine,
-      });
-      console.log("check did mount ", this.state.listMedicineByClinicId);
-    }
-  }
-  buildDataInputSelect = (inputData, type) => {
-    let result = [];
-    if (inputData && inputData.length > 0) {
-      if (type === "MEDICINE") {
-        inputData.map((item, index) => {
-          let object = {};
-          let medicineName = item.nameMedicine;
-          object.label = medicineName;
-          object.value = item.id;
-          result.push(object);
-        });
-      }
-    }
-    return result;
-  };
+  componentDidUpdate(prevProps, prevState, snapshot) {}
 
   handleChange = (idx) => (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     const receipts = [...this.state.receipts];
     receipts[idx] = {
       ...receipts[idx],
@@ -114,27 +93,40 @@ class ConfirmtoPatientModal extends Component {
       ...copyState,
     });
   };
-  async handleConfirmBooking(bookingId, closeBookingModal) {
-    console.log("Medical Records", this.state, bookingId);
+  async handleConfirmBooking(bookingId, closeBookingModal, date) {
     let data = {
       bookingId: bookingId,
       medicalRecords: this.state.medicalRecord,
       medicineRange: this.state.medicalRange,
       receipts: this.state.receipts,
+      date: date,
     };
     let res = await postMedicalRecords(data);
     if (res && res.errCode === 0) {
       closeBookingModal();
       toast.success("Thêm đơn thuốc cho bệnh nhân thành công");
-      // getDataPatient()
     }
   }
+  buildDataInputSelect = (inputData, type) => {
+    let result = [];
+    if (inputData && inputData.length > 0) {
+      if (type === "MEDICINE") {
+        inputData.map((item, index) => {
+          let object = {};
+          let medicineName = item.nameMedicine;
+          object.label = medicineName;
+          object.value = item.id;
+          result.push(object);
+        });
+      }
+    }
+    return result;
+  };
   onChangeMedicine = (idx, selectedMedicine) => (e) => {
-    console.log("selectedInfor", idx);
-    console.log("e", e);
-    let { medicineByClinicId } = this.props;
+    let { dataMedicineByClinicId } = this.props;
+    console.log(dataMedicineByClinicId);
     let selected = {};
-    medicineByClinicId.forEach((item) => {
+    dataMedicineByClinicId.forEach((item) => {
       if (item.nameMedicine === e.label) {
         selected = item;
       }
@@ -149,22 +141,18 @@ class ConfirmtoPatientModal extends Component {
       receipts,
       selectedMedicine: selectedMedicine,
     });
-
-    // const { name, value } = e;
-    // const receipts = [...this.state.receipts];
-    // receipts[idx] = {
-    //   ...receipts[idx],
-    //   [name]: value,
-    // };
-    // this.setState({
-    //   receipts,
-    // });
   };
   render() {
     let { receipts, listMedicineByClinicId, selectedMedicine } = this.state;
-    let { isOpenModal, closeBookingModal, dataTime, bookingId } = this.props;
-    console.log("booking id", bookingId);
+    let {
+      isOpenModal,
+      closeBookingModal,
+      dataTime,
+      bookingId,
+      patientInformation,
+    } = this.props;
     let patientId = dataTime && !_.isEmpty(dataTime) ? dataTime.patientId : "";
+    console.log("listMedicineByClinicId", listMedicineByClinicId);
     return (
       <Modal
         isOpen={isOpenModal}
@@ -183,106 +171,132 @@ class ConfirmtoPatientModal extends Component {
           </div>
 
           <div className="medical-record-modal-body">
-            <div className="doctor-infor">
-              <ProfileUser patientId={patientId} />
+            <div className="patient-infor">
+              <ProfileUser
+                patientId={patientId}
+                patientInformation={patientInformation}
+              />
             </div>
-            <div className="row">
-              <div className="col-12 form-group">
-                <label>Thời gian khám</label>
-                <span className="form-control">{dataTime.bookingDate}</span>
+            <div className="medical-note">
+            <div className="bottom-container">
+                  <table className="table" id="tableMedicine">
+                    <thead>
+                      <tr>
+                        <th className="col-4">Tên thuốc</th>
+                        <th className="col-2">Mã thuốc</th>
+                        <th className="col-2">Đơn vị tính</th>
+                        <th className="col-2">Số lượng</th>
+                        <th className="col-2">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {receipts.map((item, idx) => {
+                        return (
+                          <tr>
+                            <td>
+                              <Select
+                                value={selectedMedicine}
+                                onChange={this.onChangeMedicine(idx)}
+                                name="selectedMedicine"
+                                options={listMedicineByClinicId}
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                name="medicineName"
+                                value={receipts[idx].medicineCode}
+                                //  onChange={this.handleChange(idx)}
+                                className="form-control"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                name="unit"
+                                value={receipts[idx].unit}
+                                //  onChange={this.handleChange(idx)}
+                                className="form-control"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                name="quantity"
+                                min="1"
+                                value={receipts[idx].quantity}
+                                onChange={this.handleChange(idx)}
+                                className="form-control"
+                              />
+                            </td>
+                            <td>
+                              <button
+                                className="btn btn-outline-danger btn-sm"
+                                onClick={this.handleRemoveSprcificRow(idx)}
+                              >
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                              <button
+                                className="btn btn-outline-success btn-sm"
+                                onClick={this.handleAddRow}
+                              >
+                                <i class="fas fa-plus"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                
               </div>
-              <div className="col-12 form-group">
-                <label>Bệnh án</label>
-                <textarea
-                  className="form-control"
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "medicalRecord")
-                  }
-                ></textarea>
+              <div className="top-container">
+                <div className="top-left">
+                  <div className="form-group">
+                    <label className="sub-title">
+                      <span>
+                        <i class="fas fa-clock"></i>Thời gian khám{" "}
+                      </span>{" "}
+                    </label>
+                    :
+                    <input
+                      readOnly
+                      className="input-content"
+                      defaultValue={dataTime.bookingDate}
+                    />
+                    {/* <span className="input-content">{dataTime.bookingDate}</span> */}
+                  </div>
+                  <div className="form-group">
+                    <label>
+                      <span>
+                        <i class="fas fa-sun"></i>
+                      </span>
+                      Số ngày cấp
+                    </label>
+                    <input
+                      className="input-content"
+                      type="number"
+                      min="1"
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "medicalRange")
+                      }
+                    ></input>
+                  </div>
+                </div>
+                <div className="top-right">
+                  <div className="medicalRecord-content">
+                    <label>
+                    <i class="fas fa-notes-medical"></i>Bệnh án</label>
+                    <textarea
+                      className="form-control medicalRecord"
+                      onChange={(event) =>
+                        this.handleOnChangeInput(event, "medicalRecord")
+                      }
+                    ></textarea>
+                  </div>
+                </div>
               </div>
-              <div className="col-12 form-group">
-                <label>Kê đơn thuốc</label>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th className="col-4">Tên thuốc</th>
-                      <th className="col-2">Mã thuốc</th>
-                      <th className="col-2">Đơn vị tính</th>
-                      <th className="col-2">Số lượng</th>
-                      <th className="col-2">Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {receipts.map((item, idx) => {
-                      return (
-                        <tr>
-                          <td>
-                            <Select
-                              value={selectedMedicine}
-                              onChange={this.onChangeMedicine(idx)}
-                              name="selectedMedicine"
-                              options={listMedicineByClinicId}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              name="medicineName"
-                              value={receipts[idx].medicineCode}
-                              //  onChange={this.handleChange(idx)}
-                              className="form-control"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              name="unit"
-                              value={receipts[idx].unit}
-                              //  onChange={this.handleChange(idx)}
-                              className="form-control"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              name="quantity"
-                              min="1"
-                              value={receipts[idx].quantity}
-                              onChange={this.handleChange(idx)}
-                              className="form-control"
-                            />
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-outline-danger btn-sm"
-                              onClick={this.handleRemoveSprcificRow(idx)}
-                            >
-                              <i class="fas fa-trash-alt"></i>
-                            </button>
-                            <button
-                              className="btn btn-outline-success btn-sm"
-                              onClick={this.handleAddRow}
-                            >
-                              <i class="fas fa-plus"></i>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              <div className="col-6 form-group">
-                <label>Số ngày cấp</label>
-                <input
-                  className="form-control"
-                  type="number"
-                  min="1"
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "medicalRange")
-                  }
-                ></input>
-              </div>
+   
             </div>
           </div>
 
@@ -290,7 +304,11 @@ class ConfirmtoPatientModal extends Component {
             <button
               className="btn-booking-comfirm"
               onClick={() =>
-                this.handleConfirmBooking(bookingId, closeBookingModal)
+                this.handleConfirmBooking(
+                  bookingId,
+                  closeBookingModal,
+                  dataTime.date
+                )
               }
             >
               Gửi
@@ -311,15 +329,12 @@ const mapStateToProps = (state) => {
     genderRedux: state.admin.genders,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
-    medicineByClinicId: state.doctor.medicineByClinicId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getGendersStart: () => dispatch(actions.fetchGenderStart()),
-    fetchAllMedicine: (clinicId) =>
-      dispatch(actions.fetchAllMedicine(clinicId)),
   };
 };
 
@@ -327,23 +342,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ConfirmtoPatientModal);
-{
-  /* <select
-className="form-control"
-value={selectedMedicine}
-onChange={(event) => {
-  this.onChangeMedicine(event, "medicine");
-}}
->
-{/* <option>Choose...</option> */
-}
-// {listMedicineByClinicId &&
-//   listMedicineByClinicId.length > 0 &&
-//   listMedicineByClinicId.map((item, index) => {
-//     return (
-//       <option key={index} value={item.medicineCode}>
-//        {item.nameMedicine}
-//       </option>
-//     );
-//   })}
-// </select> */}

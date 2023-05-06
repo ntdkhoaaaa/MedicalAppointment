@@ -30,18 +30,39 @@ class BookingModal extends Component {
       doctorId: "",
       timetype: "",
       date: "",
+      height: "",
+      weight: "",
+      bloodType: "",
+      pathology: "",
       isOpenModalWaiting: false,
     };
   }
   componentDidMount() {
     this.props.getGendersStart();
     if (this.props.isLoggedIn) {
+      let blood = {};
+      if (this.props.userInfo?.bloodType) {
+        blood = {
+          value: this.props.userInfo?.bloodType,
+          label: this.props.userInfo?.bloodType,
+        };
+      }
+      console.log(
+        "blood",
+        this.props.userInfo,
+        " ",
+        this.props.userInfo.UserMedicalInformation
+      );
       this.setState({
         email: this.props.userInfo?.email,
         lastName: this.props.userInfo?.lastName,
         firstName: this.props.userInfo?.firstName,
         address: this.props.userInfo?.address,
         phoneNumber: this.props.userInfo?.phoneNumber,
+        height: this.props.userInfo?.height,
+        weight: this.props.userInfo?.weight,
+        bloodType: blood,
+        pathology: this.props.userInfo?.pathology,
         genderIdentity:
           this.props.userInfo?.gender === "M"
             ? {
@@ -78,22 +99,21 @@ class BookingModal extends Component {
       this.setState({
         genders: this.buildDataGenders(this.props.genderRedux),
         genderIdentity:
-        this.props.userInfo?.gender === "M"
-          ? {
-              label: this.props.language === LANGUAGES.VI ? "Nam" : "Male",
-              value: "M",
-            }
-          : this.props.userInfo?.gender === "F"
-          ? {
-              label: this.props.language === LANGUAGES.VI ? "Nữ" : "Female",
-              value: "F",
-            }
-          : {
-              label: this.props.language === LANGUAGES.VI ? "Khác" : "Other",
-              value: "O",
-            },
+          this.props.userInfo?.gender === "M"
+            ? {
+                label: this.props.language === LANGUAGES.VI ? "Nam" : "Male",
+                value: "M",
+              }
+            : this.props.userInfo?.gender === "F"
+            ? {
+                label: this.props.language === LANGUAGES.VI ? "Nữ" : "Female",
+                value: "F",
+              }
+            : {
+                label: this.props.language === LANGUAGES.VI ? "Khác" : "Other",
+                value: "O",
+              },
       });
-      console.log('check language',this.state.genderIdentity)
     }
     if (this.props.genderRedux !== prevProps.genderRedux) {
       this.setState({
@@ -105,7 +125,6 @@ class BookingModal extends Component {
         let doctorId = this.props.dataTime.doctorId;
         let timetype = this.props.dataTime.timetype;
         let date = this.props.dataTime.date;
-        console.log("date", this.props.dataTime);
         this.setState({
           doctorId: doctorId,
           timetype: timetype,
@@ -114,12 +133,23 @@ class BookingModal extends Component {
       }
     }
     if (this.props.userInfo !== prevProps.userInfo) {
+      let blood = {};
+      if (this.props.userInfo?.bloodType) {
+        blood = {
+          value: this.props.userInfo?.bloodType,
+          label: this.props.userInfo?.bloodType,
+        };
+      }
       this.setState({
         email: this.props.userInfo?.email,
         lastName: this.props.userInfo?.lastName,
         firstName: this.props.userInfo?.firstName,
         address: this.props.userInfo?.address,
         phoneNumber: this.props.userInfo?.phoneNumber,
+        height: this.props.userInfo?.height,
+        weight: this.props.userInfo?.weight,
+        bloodType: blood,
+        pathology: this.props.userInfo?.pathology,
         genderIdentity:
           this.props.userInfo?.gender === "M"
             ? {
@@ -151,10 +181,12 @@ class BookingModal extends Component {
       doB: date[0],
     });
   };
-  handleOnChangeGender = (gender) => {
-    let genderSelected = gender;
+  handleChangeSelectInfor = (selectedInfor, name) => {
+    let stateName = name.name;
+    let stateCopy = { ...this.state };
+    stateCopy[stateName] = selectedInfor;
     this.setState({
-      genderIdentity: genderSelected,
+      ...stateCopy,
     });
   };
   capitalizeFirstLetter(string) {
@@ -263,31 +295,35 @@ class BookingModal extends Component {
         clinicId: dataTime.bookingInfor[0].clinicId,
         specialtyId: dataTime.bookingInfor[0].specialtyId,
         fromSpecialtyHospital: true,
+        height: this.state.height,
+        weight: this.state.weight,
+        bloodType: this.state.bloodType.value,
+        pathology: this.state.pathology,
       });
       this.setState({ isOpenModalWaiting: false });
       if (res && res.errCode === 0) {
         this.setState({
-          lastName: this.state.lastName,
-          firstName: this.state.firstName,
-          phoneNumber: this.state.phoneNumber,
-          email: this.state.email,
-          address: this.state.address,
           reason: "",
-          genderIdentity: this.props.userInfo?.gender === "M"
-          ? {
-              label: this.props.language === LANGUAGES.VI ? "Nam" : "Male",
-              value: "M",
-            }
-          : this.props.userInfo?.gender === "F"
-          ? {
-              label: this.props.language === LANGUAGES.VI ? "Nữ" : "Female",
-              value: "F",
-            }
-          : {
-              label:
-                this.props.language === LANGUAGES.VI ? "Khác" : "Other",
-              value: "O",
-            },
+          height: "",
+          weight: "",
+          bloodType:"",
+          pathology: "",
+          genderIdentity:
+            this.props.userInfo?.gender === "M"
+              ? {
+                  label: this.props.language === LANGUAGES.VI ? "Nam" : "Male",
+                  value: "M",
+                }
+              : this.props.userInfo?.gender === "F"
+              ? {
+                  label: this.props.language === LANGUAGES.VI ? "Nữ" : "Female",
+                  value: "F",
+                }
+              : {
+                  label:
+                    this.props.language === LANGUAGES.VI ? "Khác" : "Other",
+                  value: "O",
+                },
           doctorId: "",
           forwho: "",
           timetype: "",
@@ -323,16 +359,25 @@ class BookingModal extends Component {
         patientAge: this.state.patientAge,
         doctorName: doctorName,
         fromSpecialtyHospital: false,
+        height: this.state.height,
+        weight: this.state.weight,
+        bloodType: this.state.bloodType.value,
+        pathology: this.state.pathology,
       });
       this.setState({ isOpenModalWaiting: false });
       if (res && res.errCode === 0) {
         this.setState({
-          lastName: this.state.lastName,
-          firstName: this.state.firstName,
-          phoneNumber: this.state.phoneNumber,
-          email: this.state.email,
-          address: this.state.address,
+          // lastName: this.state.lastName,
+          // firstName: this.state.firstName,
+          // phoneNumber: this.state.phoneNumber,
+          // email: this.state.email,
+          // address: this.state.address,
           reason: "",
+          reason: "",
+          height: "",
+          weight: "",
+          bloodType:"",
+          pathology: "",
           genderIdentity:
             this.props.userInfo?.gender === "M"
               ? {
@@ -366,7 +411,14 @@ class BookingModal extends Component {
     }
   };
   render() {
-    let { genderIdentity, isOpenModalWaiting } = this.state;
+    let {
+      genderIdentity,
+      isOpenModalWaiting,
+      height,
+      weight,
+      bloodType,
+      pathology,
+    } = this.state;
     let {
       isOpenModal,
       closeBookingModal,
@@ -377,7 +429,41 @@ class BookingModal extends Component {
       specialtyBooking,
     } = this.props;
     let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : "";
-
+    const bloodTypeArr = [
+      {
+        value: "A+",
+        label: "A+",
+      },
+      {
+        value: "A-",
+        label: "A-",
+      },
+      {
+        value: "B+",
+        label: "B+",
+      },
+      {
+        value: "B-",
+        label: "B-",
+      },
+      {
+        value: "AB+",
+        label: "AB+",
+      },
+      {
+        value: "AB-",
+        label: "AB-",
+      },
+      {
+        value: "O+",
+        label: "O+",
+      },
+      {
+        value: "O-",
+        label: "O-",
+      },
+    ];
+    console.log(this.state);
     return (
       <Modal
         isOpen={isOpenModal}
@@ -473,6 +559,7 @@ class BookingModal extends Component {
                   <FormattedMessage id="patient.modal-booking.phonenumber" />
                 </label>
                 <input
+                  type="number"
                   className="form-control"
                   value={this.state.phoneNumber}
                   onChange={(event) =>
@@ -481,7 +568,7 @@ class BookingModal extends Component {
                 ></input>
               </div>
 
-              <div className="col-12 form-group">
+              <div className="col-5 form-group">
                 <label>
                   <FormattedMessage id="patient.modal-booking.prognostic" />
                 </label>
@@ -493,7 +580,7 @@ class BookingModal extends Component {
                   }
                 ></input>
               </div>
-              <div className="col-5 form-group">
+              <div className="col-4 form-group">
                 <label>
                   <FormattedMessage id="patient.modal-booking.booking-for" />
                 </label>
@@ -505,11 +592,12 @@ class BookingModal extends Component {
                   }
                 ></input>
               </div>
-              <div className="col-4 form-group">
+              <div className="col-3 form-group">
                 <label>
                   <FormattedMessage id="patient.modal-booking.patientAge" />
                 </label>
                 <input
+                  type="number"
                   className="form-control"
                   value={this.state.patientAge}
                   onChange={(event) =>
@@ -522,10 +610,62 @@ class BookingModal extends Component {
                   <FormattedMessage id="patient.modal-booking.genderIdentity" />
                 </label>
                 <Select
+                  name="genderIdentity"
                   value={genderIdentity}
-                  onChange={this.handleOnChangeGender}
+                  onChange={this.handleChangeSelectInfor}
                   options={this.state.genders}
                 ></Select>
+              </div>
+              <div className="col-3 form-group">
+                <label>
+                  <FormattedMessage id="patient.modal-booking.bloodType" />
+                </label>
+                <Select
+                  name="bloodType"
+                  value={bloodType}
+                  onChange={this.handleChangeSelectInfor}
+                  options={bloodTypeArr}
+                ></Select>
+              </div>
+              <div className="col-3 form-group">
+                <label>
+                  <FormattedMessage id="patient.modal-booking.height" />
+                </label>
+                <input
+                  className="form-control"
+                  type="number"
+                  value={height}
+                  onChange={(event) =>
+                    this.handleOnChangeInput(event, "height")
+                  }
+                ></input>
+              </div>
+              <div className="col-3 form-group">
+                <label>
+                  <FormattedMessage id="patient.modal-booking.weight" />
+                </label>
+                <input
+                  className="form-control"
+                  type="number"
+                  value={weight}
+                  onChange={(event) =>
+                    this.handleOnChangeInput(event, "weight")
+                  }
+                ></input>
+              </div>
+              <div className="col-12 form-group">
+                <label>
+                  <FormattedMessage id="patient.modal-booking.pathology" />
+                </label>
+                <textarea
+                  className="pathology"
+                  type="text"
+                  onChange={(event) =>
+                    this.handleOnChangeInput(event, "pathology")
+                  }
+                  value={pathology}
+                  placeholder="Nếu có thông tin về bệnh lý, bệnh nhân vui lòng cung cấp để các bác sĩ nắm rõ thông tin"
+                ></textarea>
               </div>
             </div>
           </div>

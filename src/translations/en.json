@@ -129,10 +129,14 @@
             "address-contact": "Contact Address",
             "prognostic": "Prognostic",
             "booking-for": "Booking for",
-            "patientAge": "Patient's age",
-            "genderIdentity": "Gender Identity",
+            "patientAge": "Age",
+            "genderIdentity": "Gender",
             "Medical-fee": "Medical fee: ",
-            "bookingforfree": "Booking for free"
+            "bookingforfree": "Booking for free",
+            "height":"Height",
+            "weight":"Weight",
+            "bloodType":"Blood Type",
+            "pathology":"Pathology"
         }
     },
     "admin": {

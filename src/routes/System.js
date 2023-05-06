@@ -136,9 +136,9 @@ class System extends Component {
                           {item.stt === 1 && <i class="fas fa-users"></i>}
                           {item.stt === 2 && <i class="fas fa-user-md"></i>}
                         </div>
-                        <span className="navigate-name">
+                        <div className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>
-                        </span>
+                        </div>
                       </Link>
                     </div>
                   );

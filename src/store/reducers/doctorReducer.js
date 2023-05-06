@@ -3,21 +3,42 @@ import actionTypes from "../actions/actionTypes";
 const initialState = {
   medicineByClinicId: [],
   doctorWeekSchedules: [],
+  medicalRecords: {},
+  registeredPatients: [],
+  examinatedPatients: [],
+  patientsMedicalRecords: [],
 };
 const doctorReducer = (state = initialState, action) => {
-    let copyState = { ...state };
+  let copyState = { ...state };
 
   switch (action.type) {
-
     case actionTypes.FETCH_ALL_MEDICINE_BY_CLINICID_SUCCESS:
-        copyState.medicineByClinicId = action.data;
-      console.log(action.data);
+      copyState.medicineByClinicId = action.data;
       return {
         ...copyState,
       };
     case actionTypes.FETCH_ALL_SCHEDULE_WEEK_SUCCESS:
-        copyState.doctorWeekSchedules = action.data;
-      console.log(action.data);
+      copyState.doctorWeekSchedules = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_MEDICAL_RECORD_SUCCESS:
+      copyState.medicalRecords = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_REGISTERED_PATIENT_SUCCESS:
+      copyState.registeredPatients = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_EXAMINATED_PATIENT_SUCCESS:
+      copyState.examinatedPatients = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_PATIENTS_MEDICAL_RECORD_BYDATE_SUCCESS:
+      copyState.patientsMedicalRecords = action.data;
       return {
         ...copyState,
       };

@@ -47,6 +47,8 @@ export const applyDragForBackend = (
     let itemToAdd = payload;
     if (removedIndex !== null) {
       itemToAdd = result.splice(removedIndex, 1)[0];
+      return result;
+
     }
     if (addedIndex !== null) {
       object.date = arrDateTimeStamp[date];

@@ -17,15 +17,27 @@ class ProfileDoctor extends Component {
         }
     }
     async componentDidMount() {
-        let data = await this.getProfileDoctor(this.props.doctorId)
-        this.setState({
-            dataProfile: data
-        })
+        if(this.props.checkModal && this.props.checkModal===true)
+        {
+            let data = await this.getProfileDoctor(this.props.doctorId,true)
+            this.setState({
+                dataProfile: data
+            })
+        console.log(data)
+
+        }
+        else{
+            let data = await this.getProfileDoctor(this.props.doctorId,false)
+            this.setState({
+                dataProfile: data
+            })
+        }
+
     }
-    getProfileDoctor = async (id) => {
+    getProfileDoctor = async (id,checkModal) => {
         let result = {}
         if (id) {
-            let res = await getProfileDoctorById(id);
+            let res = await getProfileDoctorById(id,checkModal);
             if (res && res.errCode === 0) {
                 result = res.data;
             }
@@ -37,10 +49,23 @@ class ProfileDoctor extends Component {
 
         }
         if (this.props.doctorId !== prevProps.doctorId) {
-            let data = await this.getProfileDoctor(this.props.doctorId)
-            this.setState({
-                dataProfile: data
-            })
+            if(this.props.checkModal && this.props.checkModal===true)
+            {
+                let data = await this.getProfileDoctor(this.props.doctorId,true)
+                this.setState({
+                    dataProfile: data
+                })
+            }
+            else{
+                let data = await this.getProfileDoctor(this.props.doctorId,false)
+                this.setState({
+                    dataProfile: data
+                })
+            }
+            // let data = await this.getProfileDoctor(this.props.doctorId)
+            // this.setState({
+            //     dataProfile: data
+            // })
         }
     }
     capitalizeFirstLetter(string) {

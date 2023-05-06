@@ -37,6 +37,6 @@ export default (history) => combineReducers({
     doctor:doctorReducer,
     clinicAccountant:clinicAccountantReducer,
     hospitalAccountant:hospitalAccountantReducer,
-    hospitalDoctorReducer:hospitalDoctorReducer
+    hospitalDoctor:hospitalDoctorReducer
 
 })

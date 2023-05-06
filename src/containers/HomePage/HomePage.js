@@ -35,7 +35,7 @@ class HomePage extends Component {
     if (permission === USER_ROLE.HOSPITAL_ACCOUNTANT) {
       return <Redirect to={"/accountantHospital/manage-hospital"} />;
     }
-    if (permission === USER_ROLE.HOSPITAL_ACCOUNTANT) {
+    if (permission === USER_ROLE.HOSPITAL_DOCTOR) {
       return <Redirect to={"/doctorHospital/manage-schedule"} />;
     }
     return (

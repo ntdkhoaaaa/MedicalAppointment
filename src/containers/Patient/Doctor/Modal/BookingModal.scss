@@ -19,7 +19,13 @@
         }
         .booking-modal-body{
             padding: 0px 10px;
-            height:80%
+            height:80%;
+            .pathology{
+                height:80px;
+                width: 670px;
+                // text-align: center;
+                align-self: center;
+            }
         }
         .booking-modal-footer{
             // padding: 10px;

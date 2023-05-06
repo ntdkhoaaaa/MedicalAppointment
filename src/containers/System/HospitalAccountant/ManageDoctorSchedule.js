@@ -63,9 +63,9 @@ class ManageDoctorSchedule extends Component {
     let crr = new Date();
     crr.setHours(0);
     crr.setMinutes(0);
-    crr.setMilliseconds(0);
+    crr.setSeconds(0);
     const dateCopy = new Date(crr.getTime());
-
+    console.log('crr',crr)
     const nextMonday = new Date(
       dateCopy.setDate(
         dateCopy.getDate() + ((7 - dateCopy.getDay() + 1) % 7 || 7)
@@ -78,20 +78,22 @@ class ManageDoctorSchedule extends Component {
     );
     await this.props.fetchClinicWeekSchedules(
       this.props.userInfo.clinicId,
-      nextMonday.getTime() / 1000,
+      new Date(),
       "TA"
     );
     let { arrDayofWeekTimeStamp, arrDayofWeek } = this.state;
     nextMonday.setDate(nextMonday.getDate() - nextMonday.getDay() + 1);
-    console.log('date: ' + nextMonday)
     for (var i = 1; i <= 7; i++) {
-      let value = moment().day(i+7).valueOf();
-      console.log('date',moment().day(i+7),moment().day(i+7).valueOf());
+      nextMonday.setHours(0)
+      nextMonday.setMinutes(0)
+      nextMonday.setSeconds(0)
+      let value = moment().startOf('days').isoWeekday(i+7).valueOf("day");
+      console.log(moment().startOf('days').isoWeekday(i+7).valueOf())
       arrDayofWeekTimeStamp.push(value);
       arrDayofWeek.push(new Date(nextMonday));
       nextMonday.setDate(nextMonday.getDate() + 1);
-      console.log('date: ' + arrDayofWeek)
     }
+    console.log(arrDayofWeekTimeStamp,arrDayofWeek)
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -99,6 +101,7 @@ class ManageDoctorSchedule extends Component {
     }
     if (prevProps.clinicWeekSchedules !== this.props.clinicWeekSchedules) {
       let { clinicWeekSchedules } = this.props;
+      console.log('clinicWeekSchedules',clinicWeekSchedules)
       let MondayArr = [];
       let TuesdayArr = [];
       let WednesdayArr = [];
@@ -108,7 +111,7 @@ class ManageDoctorSchedule extends Component {
       let SundayArr = [];
       clinicWeekSchedules.forEach((element) => {
         let date = new Date(element.picked_date).getDay();
-        console.log(date);
+        console.log(date,element.picked_date);
         if (date === 1) {
           MondayArr.push(element);
         }
@@ -131,7 +134,6 @@ class ManageDoctorSchedule extends Component {
           SundayArr.push(element);
         }
       });
-      console.log("clinicWeekSchedules", clinicWeekSchedules);
       if (
         clinicWeekSchedules &&
         clinicWeekSchedules.length > 0 &&

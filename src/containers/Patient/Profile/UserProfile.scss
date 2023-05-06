@@ -2,7 +2,7 @@
   background-color: #eff1f5;
   height: fit-content;
   width: 100%;
-//   margin: 0 100px;
+  //   margin: 0 100px;
   .container-patient {
     width: 100%;
     display: flex;
@@ -42,4 +42,46 @@
       color: rgb(88, 169, 142);
     }
   }
+}
+.modal-announce-cancel {
+  .modal-content {
+    width: 1000px !important;
+    height: 600px;
+    .modal-announce-cancel{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 10px;
+      .title {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+      }
+    }
+  }
+}
+.modal-waiting {
+  .modal-content {
+    width: 800px !important;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .modal-waiting{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .title {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+      }
+    }
+  }
+
 }

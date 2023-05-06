@@ -10,7 +10,7 @@ import { LANGUAGES, USER_ROLE } from "../utils";
 import _ from "lodash";
 import { FormattedMessage } from "react-intl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import WeeklySchedule from "../containers/System/HospitalDoctor/WeeklySchedule";
 import {
   adminMenu,
   doctorMenu,
@@ -19,6 +19,7 @@ import {
   accountantHospitalMenu,
 } from "../containers/Header/menuApp";
 import "./System.scss";
+import * as actions from "../store/actions";
 
 class HospitalDoctor extends Component {
   constructor(props) {
@@ -26,13 +27,13 @@ class HospitalDoctor extends Component {
     this.state = {
       menuApp: [],
       path: "",
+      listMedicineByClinicId: [],
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
     let { permission, systemMenuPath } = this.props;
     let { path } = this.state;
     path = this.props.location.pathname;
-    console.log("systemMenuPath", path);
     let menu = [];
     if (permission && !_.isEmpty(permission)) {
       if (permission === USER_ROLE.ADMIN) {
@@ -54,7 +55,24 @@ class HospitalDoctor extends Component {
     this.setState({
       menuApp: menu,
     });
+    let { userInfo } = this.props;
+    await this.props.fetchAllMedicineFromDoctorHospital(userInfo?.clinicId);
   }
+  buildDataInputSelect = (inputData, type) => {
+    let result = [];
+    if (inputData && inputData.length > 0) {
+      if (type === "MEDICINE") {
+        inputData.map((item, index) => {
+          let object = {};
+          let medicineName = item.nameMedicine;
+          object.label = medicineName;
+          object.value = item.id;
+          result.push(object);
+        });
+      }
+    }
+    return result;
+  };
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.permission !== this.props.permission) {
       let { permission, systemMenuPath } = this.props;
@@ -76,10 +94,19 @@ class HospitalDoctor extends Component {
           menu = accountantHospitalMenu;
         }
       }
-      console.log(menu);
       this.setState({
         menuApp: menu,
       });
+    }
+    if (prevProps.medicineByClinicId !== this.props.medicineByClinicId) {
+      // let dataSelectMedicine = this.buildDataInputSelect(
+      //   this.props.medicineByClinicId,
+      //   "MEDICINE"
+      // );
+      this.setState({
+        listMedicineByClinicId: this.props.medicineByClinicId,
+      });
+      // console.log('dataSelectMedicine',dataSelectMedicine)
     }
   }
   render() {
@@ -125,7 +152,7 @@ class HospitalDoctor extends Component {
                             <i class="fas fa-calendar-alt"></i>
                           )}
                           {item.stt === 2 && (
-                            <i class="fas fa-calendar-alt"></i>
+      <i class="fas fa-procedures"></i>
                           )}
                           {item.stt === 3 && <i class="fas fa-capsules"></i>}
                         </div>
@@ -141,11 +168,15 @@ class HospitalDoctor extends Component {
                 <Switch>
                   <Route
                     path="/doctorHospital/manage-schedule"
-                    component={ManageSchedule}
+                    component={WeeklySchedule}
                   />
                   <Route
                     path="/doctorHospital/manage-patient"
-                    component={ManagePatient}
+                    component={() => (
+                      <ManagePatient
+                        myProp={this.state.listMedicineByClinicId}
+                      />
+                    )}
                   />
                   <Route
                     path="/doctorHospital/manage-medicine"
@@ -168,11 +199,16 @@ const mapStateToProps = (state) => {
     systemMenuPath: state.app.systemMenuPath,
     isLoggedIn: state.user.isLoggedIn,
     permission: state.user.permission,
+    userInfo: state.user.userInfo,
+    medicineByClinicId: state.hospitalDoctor.medicineByClinicId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    fetchAllMedicineFromDoctorHospital: (clinicId) =>
+      dispatch(actions.fetchAllMedicineFromDoctorHospital(clinicId)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HospitalDoctor);

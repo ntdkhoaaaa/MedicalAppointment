@@ -151,7 +151,6 @@ export const fetchClinicWeekSchedules = (clinicId, date,type) => {
         currentDate: date,
         timetype: type
       });
-      console.log("check res", res);
       if (res && res.errCode === 0) {
         dispatch({
           type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_SUCCESS,

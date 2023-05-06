@@ -17,6 +17,8 @@ import {
   accountantMenu,
 } from "../containers/Header/menuApp";
 import "./System.scss";
+// import * as actions from "../../../store/actions";
+import * as actions from "../store/actions";
 
 class Doctor extends Component {
   constructor(props) {
@@ -24,13 +26,13 @@ class Doctor extends Component {
     this.state = {
       menuApp: [],
       path: "",
+      listMedicineByClinicId: [],
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
     let { permission, systemMenuPath } = this.props;
     let { path } = this.state;
     path = this.props.location.pathname;
-    console.log("systemMenuPath", path);
     let menu = [];
     if (permission && !_.isEmpty(permission)) {
       if (permission === USER_ROLE.ADMIN) {
@@ -46,7 +48,26 @@ class Doctor extends Component {
     this.setState({
       menuApp: menu,
     });
+    let { userInfo } = this.props;
+    console.log("checkkks", userInfo);
+    await this.props.fetchAllMedicine(userInfo.Doctor_Infor.clinicId);
   }
+  buildDataInputSelect = (inputData, type) => {
+    let result = [];
+    if (inputData && inputData.length > 0) {
+      if (type === "MEDICINE") {
+        inputData.map((item, index) => {
+          let object = {};
+          let medicineName = item.nameMedicine;
+          object.label = medicineName;
+          object.value = item.id;
+          result.push(object);
+        });
+      }
+    }
+    console.log("from doctor", result);
+    return result;
+  };
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.permission !== this.props.permission) {
       let { permission, systemMenuPath } = this.props;
@@ -65,6 +86,15 @@ class Doctor extends Component {
       console.log(menu);
       this.setState({
         menuApp: menu,
+      });
+    }
+    if (prevProps.medicineByClinicId !== this.props.medicineByClinicId) {
+      // let dataSelectMedicine = this.buildDataInputSelect(
+      //   this.props.medicineByClinicId,
+      //   "MEDICINE"
+      // );
+      this.setState({
+        listMedicineByClinicId: this.props.medicineByClinicId,
       });
     }
     // if(prevProps.location.pathname !== this.props.location.pathname){
@@ -135,7 +165,11 @@ class Doctor extends Component {
                   />
                   <Route
                     path="/doctor/manage-patient"
-                    component={ManagePatient}
+                    component={() => (
+                      <ManagePatient
+                        myProp={this.state.listMedicineByClinicId}
+                      />
+                    )}
                   />
                   <Route
                     path="/doctor/manage-medicine"
@@ -158,11 +192,16 @@ const mapStateToProps = (state) => {
     systemMenuPath: state.app.systemMenuPath,
     isLoggedIn: state.user.isLoggedIn,
     permission: state.user.permission,
+    userInfo: state.user.userInfo,
+    medicineByClinicId: state.doctor.medicineByClinicId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    fetchAllMedicine: (clinicId) =>
+      dispatch(actions.fetchAllMedicine(clinicId)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Doctor);

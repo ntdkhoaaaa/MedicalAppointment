@@ -130,10 +130,15 @@
             "address-contact": "Địa chỉ liên hệ",
             "prognostic": "Triệu chứng",
             "booking-for": "Đặt lịch cho ai",
-            "patientAge": "Tuổi của bệnh nhân",
-            "genderIdentity": "Bản dạng giới",
+            "patientAge": "Tuổi",
+            "genderIdentity": "Giới tính",
             "Medical-fee": "Giá khám: ",
-            "bookingforfree": "Miễn phí đặt lịch"
+            "bookingforfree": "Miễn phí đặt lịch",
+            "height":"Chiều cao",
+            "weight":"Cân nặng",
+            "bloodType":"Nhóm máu",
+            "pathology":"Bệnh án từ trước"
+
         }
     },
     "admin": {

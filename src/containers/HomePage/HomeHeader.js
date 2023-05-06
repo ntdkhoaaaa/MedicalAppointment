@@ -38,12 +38,11 @@ class HomeHeader extends Component {
                 clinicData: res.dataClinic
             })
         }
-        // let userInfo = this.props.userInfo;
 
     }
     MoveToProfile = () => {
         if (this.props.history) {
-            this.props.history.push(`/patient`)
+            this.props.history.push(`/patient/patient-basic-information`)
         }
     }
     MoveToHome = () => {

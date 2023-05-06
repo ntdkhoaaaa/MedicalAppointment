@@ -26,7 +26,6 @@ const deleteUserService = (userId) => {
             id: userId
         }
     })
-    // return axios.delete('/api/delete-user', { id: userId })
 }
 const deleteDoctorService = (userId) => {
     return axios.post('/api/delete-doctor', userId)
@@ -101,8 +100,8 @@ const deleteSelectedSchedule = (data) => {
 const getExtraInforDoctorById = (doctorId) => {
     return axios.get(`/api/get-extra-infor-doctor-byId?doctorId=${doctorId}`)
 }
-const getProfileDoctorById = (doctorId) => {
-    return axios.get(`/api/get-profile-doctor-byId?doctorId=${doctorId}`)
+const getProfileDoctorById = (doctorId,checkModal) => {
+    return axios.get(`/api/get-profile-doctor-byId?doctorId=${doctorId}&checkModal=${checkModal}`)
 }
 
 
@@ -131,6 +130,9 @@ const getClinicWeekSchedules = (data) => {
 }
 const getDoctorWeekSchedules = (data) => {
     return axios.post(`/api/get-doctor-week-schedules`,data)
+}
+const getDoctorSpecialtyWeekSchedules = (data) => {
+    return axios.post(`/api/get-doctor-specialty-week-schedules`,data)
 }
 const deleteSpecialtyById = (id) => {
     return axios.get(`/api/delete-specialty-by-id?id=${id}`)
@@ -218,6 +220,9 @@ const postRating = (data) => {
 const getMedicalRecordByBookingId = (data) => {
     return axios.get(`/api/get-history-patient?bookingId=${data}`)
 }
+const getMedicalRecordByDate= (data) => {
+    return axios.get(`/api/get-history-patientByDate?date=${data}`)
+}
 const getListExaminatedPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-examinated-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
@@ -250,8 +255,8 @@ export {
     getAllDoctors, cancelBookingFromPatient,getScheduleDoctorByDateContainUserId,
     saveDetailDoctorService, getAllMarkdown,getSpecialtyScheduleByWeek,
     getDetailInforDoctor, saveBulkScheduleDoctor,getExtraSpecialtyInforClinic,
-    getSelectedSchedule, getScheduleDoctorByDate,
-    deleteSelectedSchedule, getExtraInforDoctorById,
+    getSelectedSchedule, getScheduleDoctorByDate,getDoctorSpecialtyWeekSchedules,
+    deleteSelectedSchedule, getExtraInforDoctorById,getMedicalRecordByDate,
     getProfileDoctorById, postPatientAppointment,deleteDoctorClinicService,
     postVerifyBooking, addNewSpecialty, getAllAppointmentOfPatient,
     getAllSpecialties, addNewClinic, getAllClinics,editDoctorClinicService,

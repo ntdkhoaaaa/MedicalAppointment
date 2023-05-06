@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../utils";
+import { LANGUAGES, TEMPLATE_EXCEL_FILE } from "../../../utils";
 import { emitter } from "../../../utils/emitter";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
@@ -12,7 +12,8 @@ import * as XLSX from "xlsx";
 import "./ModalAddNewMedicine.scss";
 import Switch from "react-switch";
 import { toast } from "react-toastify";
-
+import FileSaver from "file-saver";
+import "./Switch.css";
 class ModalAddNewMedicine extends Component {
   constructor(props) {
     super(props);
@@ -30,9 +31,7 @@ class ModalAddNewMedicine extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  async componentDidMount() {
-    let { user } = this.props;
-  }
+  async componentDidMount() {}
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
@@ -67,8 +66,9 @@ class ModalAddNewMedicine extends Component {
   };
   handleAddRow = async () => {
     let temp = [...this.state.receipts];
-
-    let checkDuplicated = await this.checkDuplicated(temp);
+    let { clinicId } = this.props;
+    console.log(temp);
+    let checkDuplicated = await this.checkDuplicated(temp, clinicId);
     if (checkDuplicated.result === true) {
       toast.error(
         "Thông tin thuốc bạn thêm vào bị trùng với danh thuốc đã thêm trước đó"
@@ -87,14 +87,13 @@ class ModalAddNewMedicine extends Component {
   };
 
   handleRemoveSprcificRow = (idx) => () => {
-    if(this.state.receipts.length > 1)
-    {
+    if (this.state.receipts.length > 1) {
       const receipts = [...this.state.receipts];
       receipts.splice(idx, 1);
       this.setState({ receipts });
     }
-    if(this.state.receipts.length===1){
-      if(this.state.receipts[idx].isDuplicated===true){
+    if (this.state.receipts.length === 1) {
+      if (this.state.receipts[idx].isDuplicated === true) {
         this.setState({
           receipts: [
             {
@@ -104,7 +103,8 @@ class ModalAddNewMedicine extends Component {
               price: "",
               isDuplicated: false,
             },
-          ]})
+          ],
+        });
       }
     }
   };
@@ -134,7 +134,13 @@ class ModalAddNewMedicine extends Component {
       };
     });
     promise.then(async (d) => {
-      let res = await warningDuplicateMedicine(d);
+      let { clinicId } = this.props;
+      let data = {
+        medicineArr: d,
+        clinicId: clinicId,
+      };
+      let res = await warningDuplicateMedicine(data);
+      console.log(res);
       if (res.data.result === true) {
         let dulicatedArr = res.data.warningDuplicateMedicine;
         let receiptArr = d;
@@ -155,11 +161,16 @@ class ModalAddNewMedicine extends Component {
     });
     console.log(this.state.receipts);
   };
-  async checkDuplicated(medicineArr) {
-    let res = await warningDuplicateMedicine(medicineArr);
-    let dulicatedArr = res.data.warningDuplicateMedicine;
+  async checkDuplicated(medicineArr, clinicId) {
+    let data = {
+      medicineArr: medicineArr,
+      clinicId: clinicId,
+    };
+    let res = await warningDuplicateMedicine(data);
+    console.log(res);
 
-    if (res.data.result === true) {
+    if (res.data?.result === true) {
+      let dulicatedArr = res.data.warningDuplicateMedicine;
       medicineArr.map((item) => {
         if (dulicatedArr.includes(item.medicineCode)) {
           item.isDuplicated = true;
@@ -193,7 +204,15 @@ class ModalAddNewMedicine extends Component {
     });
   };
   handleAddNewMedicine = async (clinicId) => {
-    let checkDuplicated = await this.checkDuplicated(this.state.receipts);
+    // let data={
+    //   medicineArr:this.state.receipts,
+    //   clinicId:clinicId
+    // }
+    console.log("this.state.receipts", this.state.receipts);
+    let checkDuplicated = await this.checkDuplicated(
+      this.state.receipts,
+      clinicId
+    );
     if (checkDuplicated.result === true) {
       toast.error(
         "Thông tin thuốc bạn thêm vào bị trùng với danh thuốc đã thêm trước đó"
@@ -220,6 +239,28 @@ class ModalAddNewMedicine extends Component {
       }
     }
   };
+  handleDownloadTemplateExcelFile = () => {
+    let dataBlob = TEMPLATE_EXCEL_FILE.FILE;
+    let sliceSize = 1024;
+    let byteCharacters = atob(dataBlob);
+    let bytesLength = byteCharacters.length;
+    let slicesCount = Math.ceil(bytesLength / sliceSize);
+    let byteArrays = new Array(slicesCount);
+    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+      let begin = sliceIndex + sliceSize;
+      let end = Math.min(begin + sliceSize, bytesLength);
+      let bytes = new Array(end - begin);
+      for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+        bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    let blob = new Blob(byteArrays, { type: "application/vnd.ms-excel" });
+    FileSaver.saveAs(
+      new Blob([blob], {}),
+      "templateFileForImportMedicines.xlxs"
+    );
+  };
   render() {
     let { receipts, submitFile } = this.state;
     let { clinicId } = this.props;
@@ -232,212 +273,277 @@ class ModalAddNewMedicine extends Component {
       >
         <ModalHeader className="title">Thêm thông tin thuốc mới</ModalHeader>
         <ModalBody>
-          <div>
-            <label className="title-excel-container">
-              <span className="add-excel-title">Thêm thuốc với file excel</span>
-              <Switch onChange={this.submitFile} checked={submitFile} />
-            </label>
-          </div>
+          <div className="top">
+            <div className="excel-container">
+              <div className="excel-top">
+                <label className="add-excel-title">
+                  Thêm thuốc với file excel
+                </label>
+                <Switch
+                  onColor={"#75b2eb"}
+                  onChange={this.submitFile}
+                  checked={submitFile}
+                />
+              </div>
+              {submitFile && (
+                <div className="excel-bot">
+                  <span>
+                    {" "}
+                    <label className="template-excel-title">
+                      Tải file excel mẫu
+                    </label>
+                    <button
+                      className="btn-download-template-file"
+                      onClick={() => {
+                        this.handleDownloadTemplateExcelFile();
+                      }}
+                    >
+                      <i class="fas fa-download"></i>
+                    </button>
+                  </span>
 
-          <div className="modal-add-new-medicine">
-            <div className="col-12 form-group">
-              {submitFile === false ? (
-                <div>
-                  <table className="medicine-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Tên thuốc</th>
-                        <th scope="col">Mã thuốc</th>
-                        <th scope="col">Đơn vị tính</th>
-                        <th scope="col">Đơn giá</th>
-                        <th scope="col"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {receipts.map((item, idx) => {
-                        return (
-                          <tr
-                            style={
-                              item.isDuplicated === true
-                                ? { backgroundColor: "red" }
-                                : {}
-                            }
-                          >
-                            <td>{idx}</td>
-                            <td>
-                              <input
-                                type="text"
-                                name="nameMedicine"
-                                value={receipts[idx].nameMedicine}
-                                onChange={this.handleChange(idx)}
-                                className="form-control"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="text"
-                                name="medicineCode"
-                                value={receipts[idx].medicineCode}
-                                onChange={this.handleChange(idx)}
-                                className="form-control"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="text"
-                                name="unit"
-                                value={receipts[idx].unit}
-                                onChange={this.handleChange(idx)}
-                                className="form-control"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="number"
-                                name="price"
-                                min="1"
-                                value={receipts[idx].price}
-                                onChange={this.handleChange(idx)}
-                                className="form-control"
-                              />
-                            </td>
-                            <td>
-                              <button
-                                className="btn btn-outline-danger btn-sm"
-                                onClick={this.handleRemoveSprcificRow(idx)}
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </button>
-                              <button
-                                className="btn btn-outline-success btn-sm"
-                                onClick={this.handleAddRow}
-                              >
-                                <i class="fas fa-plus"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <div>
                   <input
                     type="file"
                     onChange={(event) =>
                       this.readExcelFile(event.target.files[0])
                     }
                   />
-                  <div>
-                    <tbody>
-                      <table className="medicine-table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Tên thuốc</th>
-                            <th scope="col">Mã thuốc</th>
-                            <th scope="col">Đơn vị tính</th>
-                            <th scope="col">Đơn giá</th>
-                            <th scope="col"></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {receipts.map((item, idx) => {
-                            return (
-                              <tr
-                                style={
-                                  item.isDuplicated === true
-                                    ? { backgroundColor: "red" }
-                                    : {}
-                                }
-                              >
-                                <td>{idx}</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="nameMedicine"
-                                    value={receipts[idx].nameMedicine}
-                                    onChange={this.handleChange(idx)}
-                                    className="form-control"
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="medicineCode"
-                                    value={receipts[idx].medicineCode}
-                                    onChange={this.handleChange(idx)}
-                                    className="form-control"
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="unit"
-                                    value={receipts[idx].unit}
-                                    onChange={this.handleChange(idx)}
-                                    className="form-control"
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="number"
-                                    name="price"
-                                    min="1"
-                                    value={receipts[idx].price}
-                                    onChange={this.handleChange(idx)}
-                                    className="form-control"
-                                  />
-                                </td>
-                                <td>
-                                  <button
-                                    className="btn btn-outline-danger btn-sm"
-                                    onClick={this.handleRemoveSprcificRow(idx)}
-                                    style={
-                                      item.isDuplicated === true
-                                        ? { backgroundColor: "white" }
-                                        : {}
-                                    }
-                                  >
-                                    <i class="fas fa-trash-alt"></i>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-success btn-sm"
-                                    onClick={this.handleAddRow}
-                                  >
-                                    <i class="fas fa-plus"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </tbody>
-                  </div>
                 </div>
               )}
             </div>
+
+            <div className="btn-group">
+              <button
+                className="btn-add-new-medicine"
+                onClick={() => {
+                  this.handleAddNewMedicine(clinicId);
+                }}
+              >
+                <i className="fas fa-save"></i> Save
+              </button>{" "}
+              <button
+                className="btn-cancel-medicine"
+                onClick={() => {
+                  this.toggle();
+                }}
+              >
+                <i className="fas fa-window-close"></i> Close
+              </button>
+            </div>
           </div>
-          <div className="btn-group">
-            <button
-              className="btn-add-new-medicine"
-              onClick={() => {
-                this.handleAddNewMedicine(clinicId);
-              }}
-            >
-              Yes
-            </button>{" "}
-            <button
-              className="btn-cancel-medicine"
-              onClick={() => {
-                this.toggle();
-              }}
-            >
-              Close
-            </button>
+          <div className="bottom">
+            {submitFile === false ? (
+              <table className="medicine-table" id="tableMedicineAdding">
+                <thead>
+                  <tr>
+                    <th width="2%">#</th>
+                    <th width="20%">Tên thuốc</th>
+                    <th width="20%">Mã thuốc</th>
+                    <th width="20%">Đơn vị tính</th>
+                    <th width="20%">Đơn giá</th>
+                    <th width="18%">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {receipts.map((item, idx) => {
+                    return (
+                      <tr
+                        style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }
+                      >
+                        <td                      style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }>{idx}</td>
+                        <td                      style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }>
+                          <input
+                            type="text"
+                            name="nameMedicine"
+                            value={receipts[idx].nameMedicine}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                      style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }>
+                          <input
+                            type="text"
+                            name="medicineCode"
+                            value={receipts[idx].medicineCode}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                      style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }>
+                          <input
+                            type="text"
+                            name="unit"
+                            value={receipts[idx].unit}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                      style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }>
+                          <input
+                            type="number"
+                            name="price"
+                            min="1"
+                            value={receipts[idx].price}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                      style={
+                          item.isDuplicated === true
+                            ? { backgroundColor: "red" }
+                            : {}
+                        }>
+                          <button
+                            className={item.isDuplicated===true ?'btn danger duplicated':'btn btn-outline-danger'}
+                            onClick={this.handleRemoveSprcificRow(idx)}
+                          >
+                            <i className="fas fa-trash-alt"></i>  
+                          </button>
+                          <button
+                            className={item.isDuplicated===true ?'btn  success duplicated':'btn  btn-outline-success'}
+                            onClick={this.handleAddRow}
+                          >
+                            <i className="fas fa-plus"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <table className="medicine-table" id="tableMedicineAdding">
+                <thead>
+                  <tr>
+                    <th width="2%">#</th>
+                    <th width="20%">Tên thuốc</th>
+                    <th width="20%">Mã thuốc</th>
+                    <th width="20%">Đơn vị tính</th>
+                    <th width="20%">Đơn giá</th>
+                    <th width="18%">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {receipts.map((item, idx) => {
+                    return (
+                      <tr
+                      >
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
+                          {idx}
+                        </td>
+                        <td 
+                                                style={
+                                                  item.isDuplicated === true
+                                                    ? { backgroundColor: "red" }
+                                                    : {}
+                                                }>
+                          <input
+                            type="text"
+                            name="nameMedicine"
+                            value={receipts[idx].nameMedicine}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                         style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }>
+                          <input
+                            type="text"
+                            name="medicineCode"
+                            value={receipts[idx].medicineCode}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                         style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }>
+                          <input
+                            type="text"
+                            name="unit"
+                            value={receipts[idx].unit}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                         style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }>
+                          <input
+                            type="number"
+                            name="price"
+                            min="1"
+                            value={receipts[idx].price}
+                            onChange={this.handleChange(idx)}
+                            className="form-control"
+                          />
+                        </td>
+                        <td                         style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }>
+                          <button
+                            className="btn btn-outline-danger btn-sm"
+                            onClick={this.handleRemoveSprcificRow(idx)}
+                            style={
+                              item.isDuplicated === true
+                                ? { backgroundColor: "white" }
+                                : {}
+                            }
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                          <button
+                            className="btn btn-outline-success btn-sm"
+                            onClick={this.handleAddRow}
+                          >
+                            <i className="fas fa-plus"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         </ModalBody>
       </Modal>

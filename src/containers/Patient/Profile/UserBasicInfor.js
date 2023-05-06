@@ -58,7 +58,6 @@ class UserBasicInfor extends Component {
         pathology: response.users?.pathology,
       });
     }
-    console.log(response.user?.bloodType)
 
   }
 
@@ -92,7 +91,6 @@ class UserBasicInfor extends Component {
           pathology: response.users?.pathology,
         });
       }
-      console.log(blood)
     }
   }
   setGenderCheck = (gender) => {
@@ -101,7 +99,6 @@ class UserBasicInfor extends Component {
     });
   };
   async SaveBasicInfor() {
-    console.log(this.state)
     let gender = this.state.gender;
     if (gender === "male") {
       gender = "M";
@@ -315,7 +312,7 @@ class UserBasicInfor extends Component {
                     <div className="email">
                       <label className="sub-title">
                         <span>
-                          <i class="far fa-envelope"></i> Email{" "}
+                          <i class="fas fa-envelope"></i> Email{" "}
                         </span>{" "}
                       </label>
                       <input
