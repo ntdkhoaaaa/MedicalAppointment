@@ -50,7 +50,7 @@ class Doctor extends Component {
     });
     let { userInfo } = this.props;
     console.log("checkkks", userInfo);
-    await this.props.fetchAllMedicine(userInfo.Doctor_Infor.clinicId);
+    await this.props.fetchAllMedicine(userInfo.Doctor_Infor?.clinicId);
   }
   buildDataInputSelect = (inputData, type) => {
     let result = [];
@@ -145,7 +145,7 @@ class Doctor extends Component {
                             <i class="fas fa-calendar-alt"></i>
                           )}
                           {item.stt === 2 && (
-                            <i class="fas fa-calendar-alt"></i>
+                           <i class="fas fa-procedures"></i>
                           )}
                           {item.stt === 3 && <i class="fas fa-capsules"></i>}
                         </div>

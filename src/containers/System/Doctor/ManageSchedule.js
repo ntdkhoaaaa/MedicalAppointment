@@ -35,6 +35,8 @@ class ManageSchedule extends Component {
       selectedItem: "",
       selectedButton: "",
       eventState: [],
+      checker:0,
+      arrDayofWeek:[]
     };
   }
   async componentDidMount() {
@@ -44,6 +46,14 @@ class ManageSchedule extends Component {
       this.props.user.id,
       new Date().getTime()
     );
+    let temp=[]
+    for (var i = 1; i <= 7; i++) {
+      let currentDate = moment().isoWeekday(i);
+      temp.push(new Date(currentDate).toLocaleDateString());
+    }
+    this.setState({
+      arrDayofWeek:temp
+    })
   }
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.allDoctors !== this.props.allDoctors) {
@@ -76,12 +86,7 @@ class ManageSchedule extends Component {
       let doctorWeekSchedules = await this.props.doctorWeekSchedules;
       doctorWeekSchedules.map((item) => {
         let object = {};
-        let pick = new Date(Date.parse(item.picked_date));
-        console.log(
-          pick.getDay(),
-          item.picked_date,
-          new Date(item.picked_date)
-        );
+        let pick = new Date(item.picked_date);
         let tempDay = new Date(item.picked_date).getDay();
         object.title = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
         object.start = tempDay;
@@ -89,7 +94,6 @@ class ManageSchedule extends Component {
         object.position = item.timetype.slice(1);
         object.isFullAppointment = item.isFullAppointment;
         object.isBooked = item.isBooked;
-        console.log("check doctor week schedules", object);
         temp.push(object);
       });
       this.setState({
@@ -297,20 +301,77 @@ class ManageSchedule extends Component {
       isOpenModalCanceSchedule: !this.state.isOpenModalCanceSchedule,
     });
   };
+  handleChangeWeeklySchedule = async (sign) => {
+    let {checker}=this.state
+    let result=checker+sign
+    console.log(result,checker,sign)
+    if(result<=1 && result >=-1)
+    {
+      this.setState({
+        checker:result
+      })
+      let nextMonday = new Date();
+      if(result===1)
+      {
+        nextMonday.setDate(nextMonday.getDate() + (((1 + 7 - nextMonday.getDay()) % 7) || 7));
+        console.log(nextMonday)
+        await this.props.fetchAllScheduleForWeek(
+          this.props.user.id,
+          nextMonday
+        );
+        let temp=[]
+        for (var i = 1; i <= 7; i++) {
+          let currentDate = moment(nextMonday).isoWeekday(i);
+          temp.push(new Date(currentDate).toLocaleDateString());
+        }
+        this.setState({
+          arrDayofWeek:temp
+        })
+      }
+      if(result===0)
+      {
+        await this.props.fetchAllScheduleForWeek(
+          this.props.user.id,
+          nextMonday
+        );
+        let temp=[]
+        for (var i = 1; i <= 7; i++) {
+          let currentDate = moment().isoWeekday(i);
+          temp.push(new Date(currentDate).toLocaleDateString());
+        }
+        this.setState({
+          arrDayofWeek:temp
+        })
+      }
+      if(result===-1)
+      {
+        nextMonday.setDate(nextMonday.getDate() - (nextMonday.getDay()+5%7+1));
+        console.log(nextMonday)
+        await this.props.fetchAllScheduleForWeek(
+          this.props.user.id,
+          nextMonday
+        );
+        let temp=[]
+        for (var i = 1; i <= 7; i++) {
+          let currentDate = moment(nextMonday).isoWeekday(i);
+          temp.push(new Date(currentDate).toLocaleDateString());
+        }
+        this.setState({
+          arrDayofWeek:temp
+        })
+      }
+    }
+    
+  };
   render() {
     let { permission } = this.props;
     if (permission === "R3") {
       return <Redirect to="/home" />;
     }
-    let { rangeTime, isOpenModalCanceSchedule, selectedItem, eventState } =
+    let { rangeTime,arrDayofWeek,isOpenModalCanceSchedule, selectedItem, eventState } =
       this.state;
     let { language, doctorWeekSchedules } = this.props;
     let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    let arrDayofWeek = [];
-    for (var i = 1; i <= 7; i++) {
-      let currentDate = moment().isoWeekday(i);
-      arrDayofWeek.push(new Date(currentDate).toLocaleDateString());
-    }
     let mon = [];
     let tue = [];
     let wed = [];
@@ -320,8 +381,7 @@ class ManageSchedule extends Component {
     let sun = [];
     if (eventState && eventState.length > 0) {
       eventState.forEach((element) => {
-        console.log(element.start === 0);
-        if (element.start === 6) {
+        if (element.start && element.start === 6) {
           sat.push(element);
         }
         if (element.start && element.start === 1) {
@@ -339,13 +399,11 @@ class ManageSchedule extends Component {
         if (element.start && element.start === 5) {
           fri.push(element);
         }
-        if (element.start && element.start === 0) {
+        if (element.start === 0) {
           sun.push(element);
         }
       });
     }
-    console.log("element", sat);
-
     return (
       <div className="manage-schedule-container">
         <ModalCancelSchedule
@@ -360,13 +418,14 @@ class ManageSchedule extends Component {
               <div className="top-content">
                 <div className="col-6 form-group">
                   <label>
-                    <FormattedMessage id="manage-schedule.choose-doctor" />
+                    <FormattedMessage id="manage-schedule.doctor-name" />
                   </label>
-                  <Select
+                  {/* <Select
                     value={this.state.selectedDoctor}
                     onChange={this.handleChange}
                     options={this.state.listDoctocs}
-                  />
+                  /> */}
+                  <input onClick={false} className="doctor-name"  value={this.state.selectedDoctor.label}/>
                 </div>
                 <div className="col-6 form-group">
                   <label>
@@ -443,8 +502,15 @@ class ManageSchedule extends Component {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-12 ExtraCalendar">
+          <div className="time-table-container">
+          <div className="btn-container">
+              <button className="btn"
+                onClick={() => this.handleChangeWeeklySchedule(-1)}
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+            <div className="ExtraCalendar">
               <table
                 cellspacing="0"
                 cellpadding="0"
@@ -651,7 +717,6 @@ class ManageSchedule extends Component {
                               {sat &&
                                 sat.length > 0 &&
                                 sat.map((element) => {
-                                  console.log(element.isBooked);
                                   if (element.timetype === item.keyMap) {
                                     return (
                                       <div
@@ -700,6 +765,14 @@ class ManageSchedule extends Component {
                     })}
                 </tbody>
               </table>
+            </div>
+            <div className="btn-container">
+              <button
+                className="btn"
+                onClick={() => this.handleChangeWeeklySchedule(+1)}
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
             </div>
           </div>
         </div>

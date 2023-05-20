@@ -244,14 +244,14 @@ class UserBasicInfor extends Component {
           <div className="right">
             <div className="basic-infor">
               <span className="title-name">
-                {lastName} {firstName}
+                <FormattedMessage id={"user-infor.user-information.individual-information"}/>
               </span>
               <div className="user-information">
                 <div className="user-name">
                   <div className="firstName">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i>First Name{" "}
+                        <i class="fas fa-user"></i>{" "}<FormattedMessage id={"user-infor.user-information.firstName"}/>
                       </span>{" "}
                     </label>
                     <input
@@ -265,7 +265,7 @@ class UserBasicInfor extends Component {
                   <div className="lastName">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i>Last Name{" "}
+                        <i class="fas fa-user"></i><FormattedMessage id={"user-infor.user-information.lastName"}/>{" "}
                       </span>{" "}
                     </label>
                     <input
@@ -282,7 +282,7 @@ class UserBasicInfor extends Component {
                     <div className="phone">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-phone"></i> Điện thoại{" "}
+                          <i class="fas fa-phone"></i> <FormattedMessage id={"user-infor.user-information.phonenumber"}/>{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -296,7 +296,7 @@ class UserBasicInfor extends Component {
                     <div className="address">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-map-marker-alt"></i> Địa chỉ{" "}
+                          <i class="fas fa-map-marker-alt"></i>{" "}<FormattedMessage id={"user-infor.user-information.address"}/>{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -312,7 +312,7 @@ class UserBasicInfor extends Component {
                     <div className="email">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-envelope"></i> Email{" "}
+                          <i class="fas fa-envelope"></i> <FormattedMessage id={"user-infor.user-information.email"}/>{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -347,14 +347,14 @@ class UserBasicInfor extends Component {
               </div>
             </div>
             <div className="medical-infor">
-              <span className="medical-info-title">Medical Information</span>
+              <span className="medical-info-title"><FormattedMessage id={"user-infor.user-information.medical-infor"}/></span>
               <div className="medical-user-information">
                 <div className="personal-parameters">
                   <div className="user-height">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-ruler-vertical"></i>Chiều cao(cm){" "}
-                      </span>{" "}
+                        <i class="fas fa-ruler-vertical"></i>{" "}<FormattedMessage id={"user-infor.user-information.height"}/>(cm){" "}
+                      </span>
                     </label>
                     <input
                       type="number"
@@ -368,7 +368,7 @@ class UserBasicInfor extends Component {
                   <div className="user-weight">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-weight"></i>Cân nặng(kg){" "}
+                        <i class="fas fa-weight"></i><FormattedMessage id={"user-infor.user-information.weight"}/>(kg){" "}
                       </span>{" "}
                     </label>
                     <input
@@ -383,7 +383,7 @@ class UserBasicInfor extends Component {
                   <div className="bloodType">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-tint"></i> Nhóm máu{" "}
+                        <i class="fas fa-tint"></i> <FormattedMessage id={"user-infor.user-information.bloodType"}/>{" "}
                       </span>{" "}
                     </label>
                     <Select
@@ -398,7 +398,7 @@ class UserBasicInfor extends Component {
                 <div className="personal-pathology">
                   <label className="sub-title">
                     <span>
-                      <i class="fas fa-notes-medical"></i> Bệnh lý{" "}
+                      <i class="fas fa-notes-medical"></i> <FormattedMessage id={"user-infor.user-information.pathology"}/>{" "}
                     </span>{" "}
                   </label>
                   <textarea

@@ -38,7 +38,7 @@ class ManageClinicDoctorSchedules extends Component {
     await this.props.fetchAllScheduleTime();
 
     await this.props.fetchAllScheduleForWeek(
-      this.props.clinicDoctors[0].doctorId,
+      this.props?.clinicDoctors[0]?.doctorId,
       new Date().getTime()
     );
   }
@@ -63,6 +63,7 @@ class ManageClinicDoctorSchedules extends Component {
     if (prevProps.clinicDoctors !== this.props.clinicDoctors) {
       let { clinicDoctors } = this.props;
       let dataSelect = this.buildDataInputSelect(clinicDoctors);
+      console.log('dataSelect', dataSelect,clinicDoctors)
       this.setState({
         listDoctocs: dataSelect,
         selectedDoctor: dataSelect[0],
@@ -220,8 +221,9 @@ class ManageClinicDoctorSchedules extends Component {
                 </span>
               </div>
             </div>
-            <div className="col-12 ExtraCalendar">
+            <div className="ExtraCalendar">
               <table
+               id="TableManageSchedule"
                 cellspacing="0"
                 cellpadding="0"
                 className="extra-calendar-schedule"

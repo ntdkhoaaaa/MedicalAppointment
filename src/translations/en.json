@@ -11,7 +11,9 @@
         "Support": "Support",
         "welcome": "Welcome to KMP Appointment, ",
         "hello": "Welcome, ",
-        "login": "Sign in "
+        "login": "Sign in ",
+        "register": "Sign up"
+
     },
     "banner": {
         "medical-platform": "Medical Platform",
@@ -106,7 +108,9 @@
         "title": "Manage Doctor's Schedule",
         "choose-doctor": "Choose a doctor",
         "choose-date": "Choose a date",
-        "save": "Save schedule"
+        "save": "Save schedule",
+        "doctor-name":"Doctor Name"
+
     },
     "patient": {
         "detail-doctor": {
@@ -153,6 +157,38 @@
             "clinic-address": "Clinic's address",
             "clinic-Note": "Note",
             "maximun-patient-in-same-time": "Maximun patient in 1 range time"
+        }
+    },
+    "user-infor":{
+        "user-information":{
+            "individual-information":"Individual",
+            "basic-infor":"Basic Information",
+            "firstName":"First Name",
+            "lastName":"Last Name",
+            "phonenumber":"Phone Number",
+            "address":"Address",
+            "email":"Email",
+            "medical-infor":"Medical Information",
+            "height":"Height",
+            "weight":"Weight",
+            "bloodType":"Blood Type",
+            "pathology":"Pathology"
+        },
+        "user-appointment":{
+            "choose-date":"Choose a date",
+            "filter-status":"Status Filter",
+            "search":"Search",
+            "registered":"Registered",
+            "examinted":"Examinated",
+            "not-yet":"Not Yet",
+            "cancelled":"cancelled",
+            "rated":"Rated",
+            "time":"Time",
+            "forwho":"For Who",
+            "symptom":"Symptom",
+            "doctor":"Doctor Information",
+            "clinicInfor":"Clinic Information",
+            "actions":"Actions"
         }
     }
 }

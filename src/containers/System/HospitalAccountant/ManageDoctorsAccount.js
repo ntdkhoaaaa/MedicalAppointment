@@ -673,7 +673,7 @@ class ManageDoctorsAccount extends Component {
                           <div className="doctor-phoneNumber">
                             {item.phoneNumber}
                           </div>
-                          <div className="btn-group">
+                          <div className="btn-group-manage-doctor-account">
                             <button
                               onClick={() => this.handleEditUser(item)}
                               className=" btn btn-edit-user-item"

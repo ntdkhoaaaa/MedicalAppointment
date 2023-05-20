@@ -11,7 +11,8 @@
         "Support": "Hỗ trợ",
         "welcome": "Chào mừng đến với KMP Appointment,",
         "hello": "Xin chào, ",
-        "login": "Đăng nhập "
+        "login": "Đăng nhập ",
+        "register": "Đăng ký"
     },
     "banner": {
         "medical-platform": "Nền tảng y tế",
@@ -107,7 +108,8 @@
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
         "choose-doctor": "Chọn bác sĩ",
         "choose-date": "Chọn ngày",
-        "save": "Lưu thông tin"
+        "save": "Lưu thông tin",
+        "doctor-name":"Tên bác sĩ"
     },
     "patient": {
         "detail-doctor": {
@@ -155,6 +157,38 @@
             "clinic-address": "Địa chỉ phòng khám",
             "clinic-Note": "Ghi chú",
             "maximun-patient-in-same-time": "Giới hạn cho 1 khung giờ"
+        }
+    },
+    "user-infor":{
+        "user-information":{
+            "individual-information":"Thông tin cá nhân",
+            "basic-infor":"Thông tin cá nhân",
+            "firstName":"Tên",
+            "lastName":"Họ",
+            "phonenumber":"Điện thoại",
+            "address":"Địa chỉ",
+            "email":"Email",
+            "medical-infor":"Thông tin y tế",
+            "height":"Chiều cao",
+            "weight":"Cân nặng",
+            "bloodType":"Nhóm máu",
+            "pathology":"Bệnh án"
+        },
+        "user-appointment":{
+            "choose-date":"Chọn ngày",
+            "filter-status":"Bộ lọc lịch hẹn",
+            "search":"Tìm kiếm",
+            "registered":"Đã đăng ký",
+            "examinted":"Đã khám",
+            "not-yet":"Chưa khám",
+            "cancelled":"Đã hủy",
+            "rated":"Đã đánh giá",
+            "time":"Thời gian",
+            "forwho":"Đặt cho ai",
+            "symptom":"Triệu chứng",
+            "doctor":"Thông tin bác sĩ",
+            "clinicInfor":"Thông tin phòng khám",
+            "actions":"Thao tác"
         }
     }
 }

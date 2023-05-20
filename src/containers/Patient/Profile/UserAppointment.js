@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 // import { LANGUAGES } from '../../../utils';
 import "./UserAppointment.scss";
 // import { data } from './data'
@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
 import Select from "react-select";
 import LoadingOverlay from "react-loading-overlay";
+import { LANGUAGES } from "../../../utils";
 class UserAppointment extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +38,7 @@ class UserAppointment extends Component {
       CancelSuccess: false,
       isOpenModalWaiting: false,
       selectedStatus: {
-        label: "Tất cả",
+        label: `${this.props.language === LANGUAGES.VI ? "Tất cả" : "All" }`,
         value: "All",
       },
       chooseDate: "",
@@ -177,6 +178,16 @@ class UserAppointment extends Component {
         });
       }
     }
+    if(this.props.language!== prevProps.language)
+    {
+      console.log('Language')
+      this.setState({
+        selectedStatus: {
+          label: `${this.props.language === LANGUAGES.VI ? "Tất cả" : "All" }`,
+          value: "All",
+        },
+      })
+    }
   }
   RatingTime = (index) => {
     if (this.props.isLoggedIn) {
@@ -255,7 +266,7 @@ class UserAppointment extends Component {
   }
   handleOnChangeDatePicker = async (date) => {
     let chooseDate = new Date(date[0]).getTime();
-
+    let {language}=this.props
     if (chooseDate) {
       this.setState({ chooseDate: chooseDate });
       let filteredAppointment = this.state.PatientAppointment.filter(
@@ -264,7 +275,7 @@ class UserAppointment extends Component {
       this.setState({
         filteredAppointment: filteredAppointment,
         selectedStatus: {
-          label: "Tất cả",
+          label: `${language === LANGUAGES.VI ? "Tất cả" : "All" }`,
           value: "All",
         },
         totalRegisteredAppointment: filteredAppointment.length,
@@ -403,38 +414,36 @@ class UserAppointment extends Component {
       ratingDoctorInformation,
       RatingInfor,
     } = this.state;
-    let { userInfo } = this.props;
+    let { userInfo,language } = this.props;
     const appointmentStatusArr = [
       {
-        label: "Tất cả",
-        value: "All",
+        label: `${language === LANGUAGES.VI ? "Tất cả" : "All" }`,
+        value:   "All",
       },
       {
-        label: "Chưa khám",
+        label: `${language === LANGUAGES.VI ? "Chưa khám" : "Not yet" }`,
         value: "S2",
       },
       {
-        label: "Đã hủy hẹn",
+        label: `${language === LANGUAGES.VI ? "Đã hủy" : "cancelled" }`,
         value: "S4",
       },
       {
-        label: "Đã khám xong",
+        label: `${language === LANGUAGES.VI ? "Đã khám xong" : "Examinated" }`,
         value: "S3",
       },
       {
-        label: "Đã đánh giá",
+        label: `${language === LANGUAGES.VI ?"Đã đánh giá" : "Rated" }`,
         value: "S5",
       },
     ];
-    console.log(this.state);
-    // console.log('ratingBookingId',ratingBookingId,'userInfo.id',userInfo.id,'RatingInfor',RatingInfor,'isOpenModalRating',isOpenModalRating)
     return (
       <React.Fragment>
         <div className="patient-appointment">
           <div className="left-container">
             <div className="filter-container">
               <div className="col-12 form-group">
-                <label>Chọn ngày</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.choose-date"}/></label>
                 <DatePicker
                   onChange={this.handleOnChangeDatePicker}
                   className="date-picker form-control"
@@ -442,7 +451,7 @@ class UserAppointment extends Component {
                 />
               </div>
               <div className="type-search">
-                <label>Bộ lọc lịch hẹn</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.filter-status"}/></label>
                 <Select
                   className="type-select"
                   name="selectedStatus"
@@ -452,7 +461,7 @@ class UserAppointment extends Component {
                 />
               </div>
               <div className="search-container">
-                <label>Bệnh nhân</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.search"}/></label>
                 <div className="search">
                   <input
                     className="search-medicine"
@@ -469,28 +478,23 @@ class UserAppointment extends Component {
             </div>
             <div className="statistical-container">
               <div className="total total-medicine ">
-                {/* isOpenModalAnnounce,
-      totalRegisteredAppointment,
-      totalCanceledAppointment,
-      totalExaminatedAppointment,
-      totalRatedAppointment, */}
-                <label>Đăng ký</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.registered"}/></label>
                 <span>{totalRegisteredAppointment}</span>
               </div>
               <div className="total total-tupe ">
-                <label>Đã khám</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.examinted"}/></label>
                 <span>{totalExaminatedAppointment}</span>
               </div>
               <div className="total total-pill ">
-                <label>Chưa khám</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.not-yet"}/></label>
                 <span>{totalUnexaminatedAppointment}</span>
               </div>
               <div className="total total-pill ">
-                <label>Đã hủy</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.cancelled"}/></label>
                 <span>{totalCanceledAppointment}</span>
               </div>
               <div className="total total-pill ">
-                <label>Đã đánh giá</label>
+                <label><FormattedMessage id={"user-infor.user-appointment.rated"}/></label>
                 <span>{totalRatedAppointment}</span>
               </div>
             </div>
@@ -502,12 +506,12 @@ class UserAppointment extends Component {
             >
               <tbody>
                 <tr>
-                  <th width={"15%"}>Thời gian</th>
-                  <th width={"15%"}>Đặt cho ai</th>
-                  <th width={"15%"}>Triệu chứng</th>
-                  <th width={"20%"}>Tên bác sĩ</th>
-                  <th width={"25%"}>Thông tin phòng khám</th>
-                  <th width={"3%"}>Actions</th>
+                  <th width={"15%"}><FormattedMessage id={"user-infor.user-appointment.time"}/></th>
+                  <th width={"15%"}><FormattedMessage id={"user-infor.user-appointment.forwho"}/></th>
+                  <th width={"15%"}><FormattedMessage id={"user-infor.user-appointment.symptom"}/></th>
+                  <th width={"20%"}><FormattedMessage id={"user-infor.user-appointment.doctor"}/></th>
+                  <th width={"25%"}><FormattedMessage id={"user-infor.user-appointment.clinicInfor"}/></th>
+                  <th width={"3%"}><FormattedMessage id={"user-infor.user-appointment.actions"}/></th>
                 </tr>
                 {filteredAppointment && filteredAppointment.length > 0
                   ? filteredAppointment.map((item, index) => {

@@ -708,7 +708,7 @@ class ManageAndRegisterDoctorForHospital extends Component {
                         <div className="doctor-specialty">
                           {item.phoneNumber}
                         </div>
-                        <div className="btn-group">
+                        <div className="btn-group-accountant">
                           <button
                             onClick={() => this.handleEditUser(item)}
                             className=" btn btn-edit-user-item"
@@ -755,7 +755,7 @@ class ManageAndRegisterDoctorForHospital extends Component {
                           <div className="doctor-specialty">
                             {item.phoneNumber}
                           </div>
-                          <div className="btn-group">
+                          <div className="btn-group-accountant">
                             <button
                               onClick={() => this.handleEditUser(item)}
                               className=" btn btn-edit-user-item"

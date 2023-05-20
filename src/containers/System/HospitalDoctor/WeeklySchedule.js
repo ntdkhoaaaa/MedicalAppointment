@@ -120,7 +120,7 @@ class WeeklySchedule extends Component {
       }
       if(result===-1)
       {
-        nextMonday.setDate(nextMonday.getDate() - (((1 - 7 - nextMonday.getDay()) % 7) || 7));
+        nextMonday.setDate(nextMonday.getDate() - (nextMonday.getDay()+5%7+1));
         await this.props.fetchSpecialtyDoctorScheduleForWeek(
           this.props.user.id,
           nextMonday
@@ -166,9 +166,6 @@ class WeeklySchedule extends Component {
         if (element.start && element.start === 5) {
           fri.push(element);
         }
-        // if (element.start && element.start === 0) {
-        //   ;
-        // }
         if (element.start === 0) {
           sun.push(element);
         }

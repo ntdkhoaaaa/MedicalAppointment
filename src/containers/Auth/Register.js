@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from "connected-react-router";
 
-import './Login.scss';
+import './Register.scss';
 import { FormattedMessage } from 'react-intl';
 
 // import adminService from '../services/adminService';
@@ -81,7 +81,7 @@ class Register extends Component {
       if (data && data.errCode === 0) {
         toast.success(`Vui lòng xác nhận đăng kí tại email: ${this.state.email} để hoàn tất quá trình đăng kí`)
         const { navigate } = this.props;
-        const redirectPath = '/login';
+        const redirectPath = '/register';
         navigate(`${redirectPath}`);
       }
     } catch (error) {
@@ -111,23 +111,23 @@ class Register extends Component {
   }
   render() {
     return (
-      <div className='login-background'>
-        <div className='login-container'>
-          <div className='login-content row'>
-            <div className='col-12 text-center text-login'>Register</div>
-            <div className='col-12 from-group login-input'>
+      <div className='register-background'>
+        <div className='register-container'>
+          <div className='register-content row'>
+            <div className='col-12 text-center text-register'>Register</div>
+            <div className='col-12 from-group register-input'>
               <label>Email</label>
               <input type='text' className='form-control '
                 placeholder='Enter your email' value={this.state.email}
                 onChange={(event) => this.handleOnChangeemail(event)}
               ></input>
             </div>
-            <div className='col-12 from-group login-input'>
+            <div className='col-12 from-group register-input'>
               <label>Password</label>
               <div className='custom-input-password'>
                 <input type={this.state.isShowPassword ? 'text' : 'password'}
                   className='form-control'
-                  placeholder='Enter you password' value={this.state.password}
+                  placeholder='Enter your password' value={this.state.password}
                   onChange={(event) => this.handleOnChangePassword(event)}
                 ></input>
                 <span
@@ -136,17 +136,17 @@ class Register extends Component {
 
               </div>
             </div>
-            <div className='col-12 from-group login-input'>
+            <div className='col-12 from-group register-input'>
               <label>FirstName</label>
               <input type='text' className='form-control '
-                placeholder='Enter your firstName' value={this.state.firstName}
+                placeholder='Enter your first name' value={this.state.firstName}
                 onChange={(event) => this.handleOnChangeInput(event, 'firstName')}
               ></input>
             </div>
-            <div className='col-12 from-group login-input'>
+            <div className='col-12 from-group register-input'>
               <label>LastName</label>
               <input type='text' className='form-control '
-                placeholder='Enter your lastName' value={this.state.lastName}
+                placeholder='Enter your last name' value={this.state.lastName}
                 onChange={(event) => this.handleOnChangeInput(event, 'lastName')}
               ></input>
             </div>
@@ -155,7 +155,7 @@ class Register extends Component {
 
             </div>
             <div className='col-12 '>
-              <button className='btn-login'
+              <button className='btn-register'
                 onClick={() => { this.handleRegister() }}
               >Register</button>
             </div>

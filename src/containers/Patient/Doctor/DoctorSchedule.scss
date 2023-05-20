@@ -59,6 +59,10 @@
                 .booked{
                     background-color: #4ca0e9 !important;
                 }
+                .fulled{
+                    background-color:  rgb(30, 218, 155);
+                    cursor: not-allowed;
+                }
                 .unavailable{
                     font-style: italic;
                     font-size: 14px;

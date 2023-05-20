@@ -48,6 +48,8 @@ class DoctorSchedule extends Component {
         arrDays[0].value,
         this.props.user.id
       );
+      console.log("check result", res);
+
       if (res && res.errCode === 0) {
         this.setState({
           allAvailableTime: res.data ? res.data : [],
@@ -56,7 +58,6 @@ class DoctorSchedule extends Component {
       this.setState({
         allAvailableTime: res.data ? res.data : [],
       });
-      console.log("check result", res);
     }
   }
   capitalizeFirstLetter(string) {
@@ -132,7 +133,7 @@ class DoctorSchedule extends Component {
           });
         }
       } else {
-        let res = await getScheduleDoctorByDate(
+        let res = await getScheduleDoctorByDateContainUserId(
           doctorId,
           date,
           this.props.user.id
@@ -226,14 +227,16 @@ class DoctorSchedule extends Component {
                           className={
                             language === LANGUAGES.VI &&
                             item.bookedByThisUser === true
-                              ? "btn-vi booked"
+                              ? "btn-vi booked"  
+                              : item.bookedButFull===true ? "btn-vi fulled"
                               : language === LANGUAGES.EN &&
                                 item.bookedByThisUser === true
-                              ? "btn-en booked"
+                              ? "btn-en booked" : item.bookedButFull===true ? "btn-en fulled"
                               : language === LANGUAGES.VI
                               ? "btn-vi"
                               : "btn-en"
                           }
+                          disabled={item.bookedButFull===true ? true : false}
                           key={index}
                           onClick={() => this.handleClickScheduleTime(item)}
                         >

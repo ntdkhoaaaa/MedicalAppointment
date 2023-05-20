@@ -132,7 +132,7 @@ class ProfileDoctor extends Component {
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI ?
                         <NumberFormat
                             className='currency'
-                            value={dataProfile.Doctor_Infor.priceData.valueVi}
+                            value={dataProfile.Doctor_Infor?.priceData?.valueVi}
                             displayType={'text'}
                             thousandSeparator={true}
                             suffix={'VND'}
@@ -141,7 +141,7 @@ class ProfileDoctor extends Component {
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.EN ?
                         <NumberFormat
                             className='currency'
-                            value={dataProfile.Doctor_Infor.priceData.valueEn}
+                            value={dataProfile.Doctor_Infor?.priceData?.valueEn}
                             displayType={'text'}
                             thousandSeparator={true}
                             suffix={'$'}

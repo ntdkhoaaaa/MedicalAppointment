@@ -48,7 +48,7 @@ export const fetchAllScheduleForWeek = (doctorId, date) => {
         doctorId: doctorId,
         currentDate: date,
       });
-
+      console.log(res);
       if (res && res.errCode === 0) {
         dispatch({
           type: actionTypes.FETCH_ALL_SCHEDULE_WEEK_SUCCESS,

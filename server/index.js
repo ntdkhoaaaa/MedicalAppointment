@@ -35,8 +35,3 @@ app.listen(port);
 console.log('React.JS App is running on the port ' + port);
 
 
-const bodyParser = require('body-parser');
-const {Configuration,OpenAIApi}=require('openai')
-const config=new Configuration({
-    
-})

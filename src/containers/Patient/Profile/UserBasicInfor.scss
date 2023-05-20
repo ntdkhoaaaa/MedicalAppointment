@@ -65,6 +65,9 @@
             justify-content: space-between;
             flex-direction: column;
             gap: 12px;
+            .phone{
+              max-width: 385px;
+            }
             .basic-information {
               display: flex;
               gap: 12px;
@@ -142,6 +145,7 @@
             justify-content: space-between;
             gap: 12px;
           }
+
           .personal-pathology {
             display: flex;
             width: 60%;

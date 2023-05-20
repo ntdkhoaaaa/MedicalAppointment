@@ -7,6 +7,7 @@ import { getMedicalRecordByBookingId } from "../../../services/userServices";
 import ProfileDoctor from "../Doctor/ProfileDoctor";
 import DoctorInformation from "./DoctorInformation";
 import "./ModalViewMedicalRecord.scss";
+import axios from "axios";
 class ModalViewMedicalRecord extends Component {
   constructor(props) {
     super(props);
@@ -16,9 +17,9 @@ class ModalViewMedicalRecord extends Component {
   }
   async componentDidMount() {
     let { viewingBookingId } = this.props;
-    console.log("viewingBookingId",viewingBookingId)
+    console.log("viewingBookingId", viewingBookingId);
     let res = await getMedicalRecordByBookingId(viewingBookingId);
-    console.log("historyInfo",res)
+    console.log("historyInfo", res);
 
     if (res && res.errCode === 0) {
       this.setState({
@@ -32,7 +33,7 @@ class ModalViewMedicalRecord extends Component {
     }
     if (this.props.viewingBookingId !== prevProps.viewingBookingId) {
       let { viewingBookingId } = this.props;
-    console.log("viewingBookingId",viewingBookingId)
+      console.log("viewingBookingId", viewingBookingId);
 
       let res = await getMedicalRecordByBookingId(viewingBookingId);
       if (res && res.errCode === 0) {
@@ -42,15 +43,25 @@ class ModalViewMedicalRecord extends Component {
       }
     }
   }
+  ResearchTime = async (index) => {
+    let prompt = `${index} là gì`;
+    // e.preventDefault();
+
+    let res =await axios.post(`http://localhost:8081/chat`,{ prompt })
+    console.log(res);
+    // .then((res)=>{
+    //   console.log(res.data)
+    // })
+    // .catch((err)=>{
+    //   console.error(err)
+    // })
+
+    console.log("response", res);
+  };
   render() {
-    let {
-      viewingBookingId,
-      isOpenViewMedicalRecord,
-      closeViewMedicalRecordModal,
-      bookingDate,
-    } = this.props;
+    let { isOpenViewMedicalRecord, closeViewMedicalRecordModal, bookingDate } =
+      this.props;
     let { Record } = this.state;
-    console.log("Viewing Booking", this.props);
     return (
       <Modal
         toggle={closeViewMedicalRecordModal}
@@ -100,7 +111,7 @@ class ModalViewMedicalRecord extends Component {
                     <th scope="col">Tên thuốc</th>
                     <th scope="col">Đơn vị tính</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col"></th>
+                    <th scope="col">So sánh</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,6 +145,18 @@ class ModalViewMedicalRecord extends Component {
                               value={item.quantity}
                               className="form-control"
                             />
+                          </td>
+                          <td>
+                            <div className="btn-research">
+                              <button
+                                onClick={() =>
+                                  this.ResearchTime(item.medicineName)
+                                }
+                                className="mp-btn-remedy"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       );
