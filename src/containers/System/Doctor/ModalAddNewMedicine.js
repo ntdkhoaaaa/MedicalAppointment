@@ -14,6 +14,8 @@ import Switch from "react-switch";
 import { toast } from "react-toastify";
 import FileSaver from "file-saver";
 import "./Switch.css";
+import Select from "react-select";
+
 class ModalAddNewMedicine extends Component {
   constructor(props) {
     super(props);
@@ -22,21 +24,51 @@ class ModalAddNewMedicine extends Component {
         {
           nameMedicine: "",
           medicineCode: "",
-          unit: "",
+          unit: "viên",
           price: "",
           isDuplicated: false,
         },
       ],
       submitFile: false,
+      unitSelected: {
+        value: "viên",
+        label: "viên",
+      },
+      units: [
+        {
+          value: "viên",
+          label: "viên",
+        },
+        {
+          value: "tuýp",
+          label: "tuýp",
+        },
+      ],
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  async componentDidMount() {}
+  async componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
 
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
     }
   }
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      // Perform action on Enter key press inside the modal
+      if(this.props.user?.clinicId)
+      {
+        this.handleAddNewMedicine(this.props.user?.clinicId)
+      }
+      else this.handleAddNewMedicine(this.props.user?.Doctor_Infor?.clinicId)
+       
+    }
+  };
   toggle = () => {
     this.setState({
       receipts: [
@@ -196,7 +228,7 @@ class ModalAddNewMedicine extends Component {
         {
           nameMedicine: "",
           medicineCode: "",
-          unit: "",
+          unit: "viên",
           price: "",
           isDuplicated: false,
         },
@@ -204,10 +236,6 @@ class ModalAddNewMedicine extends Component {
     });
   };
   handleAddNewMedicine = async (clinicId) => {
-    // let data={
-    //   medicineArr:this.state.receipts,
-    //   clinicId:clinicId
-    // }
     console.log("this.state.receipts", this.state.receipts);
     let checkDuplicated = await this.checkDuplicated(
       this.state.receipts,
@@ -261,12 +289,22 @@ class ModalAddNewMedicine extends Component {
       "templateFileForImportMedicines.xlxs"
     );
   };
+  handleChangeSelectInfor = (selectedInfor, name) => {
+    let stateName = name.name;
+    let stateCopy = { ...this.state };
+    stateCopy[stateName] = selectedInfor;
+    this.setState({
+      ...stateCopy,
+    });
+  };
   render() {
-    let { receipts, submitFile } = this.state;
+    let { receipts, submitFile, unitSelected ,units} = this.state;
+
     let { clinicId } = this.props;
     return (
       <Modal
         isOpen={this.props.openModalAddNewMedicine}
+        // onKeyDown={this.handleKeyDown}
         toggle={() => {
           this.toggle();
         }}
@@ -318,6 +356,8 @@ class ModalAddNewMedicine extends Component {
                 onClick={() => {
                   this.handleAddNewMedicine(clinicId);
                 }}
+              onKeyDown={this.handleKeyDown}
+
               >
                 <i className="fas fa-save"></i> Save
               </button>{" "}
@@ -354,16 +394,22 @@ class ModalAddNewMedicine extends Component {
                             : {}
                         }
                       >
-                        <td                      style={
-                          item.isDuplicated === true
-                            ? { backgroundColor: "red" }
-                            : {}
-                        }>{idx}</td>
-                        <td                      style={
-                          item.isDuplicated === true
-                            ? { backgroundColor: "red" }
-                            : {}
-                        }>
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
+                          {idx}
+                        </td>
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
                           <input
                             type="text"
                             name="nameMedicine"
@@ -372,11 +418,13 @@ class ModalAddNewMedicine extends Component {
                             className="form-control"
                           />
                         </td>
-                        <td                      style={
-                          item.isDuplicated === true
-                            ? { backgroundColor: "red" }
-                            : {}
-                        }>
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
                           <input
                             type="text"
                             name="medicineCode"
@@ -385,24 +433,27 @@ class ModalAddNewMedicine extends Component {
                             className="form-control"
                           />
                         </td>
-                        <td                      style={
-                          item.isDuplicated === true
-                            ? { backgroundColor: "red" }
-                            : {}
-                        }>
-                          <input
-                            type="text"
-                            name="unit"
-                            value={receipts[idx].unit}
-                            onChange={this.handleChange(idx)}
-                            className="form-control"
-                          />
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
+                          <Select
+                            name="unitSelected"
+                            value={unitSelected}
+                            onChange={this.handleChangeSelectInfor}
+                            options={units}
+                          ></Select>
                         </td>
-                        <td                      style={
-                          item.isDuplicated === true
-                            ? { backgroundColor: "red" }
-                            : {}
-                        }>
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
                           <input
                             type="number"
                             name="price"
@@ -412,19 +463,29 @@ class ModalAddNewMedicine extends Component {
                             className="form-control"
                           />
                         </td>
-                        <td                      style={
-                          item.isDuplicated === true
-                            ? { backgroundColor: "red" }
-                            : {}
-                        }>
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
                           <button
-                            className={item.isDuplicated===true ?'btn danger duplicated':'btn btn-outline-danger'}
+                            className={
+                              item.isDuplicated === true
+                                ? "btn danger duplicated"
+                                : "btn btn-outline-danger"
+                            }
                             onClick={this.handleRemoveSprcificRow(idx)}
                           >
-                            <i className="fas fa-trash-alt"></i>  
+                            <i className="fas fa-trash-alt"></i>
                           </button>
                           <button
-                            className={item.isDuplicated===true ?'btn  success duplicated':'btn  btn-outline-success'}
+                            className={
+                              item.isDuplicated === true
+                                ? "btn  success duplicated"
+                                : "btn  btn-outline-success"
+                            }
                             onClick={this.handleAddRow}
                           >
                             <i className="fas fa-plus"></i>
@@ -450,8 +511,7 @@ class ModalAddNewMedicine extends Component {
                 <tbody>
                   {receipts.map((item, idx) => {
                     return (
-                      <tr
-                      >
+                      <tr>
                         <td
                           style={
                             item.isDuplicated === true
@@ -461,12 +521,13 @@ class ModalAddNewMedicine extends Component {
                         >
                           {idx}
                         </td>
-                        <td 
-                                                style={
-                                                  item.isDuplicated === true
-                                                    ? { backgroundColor: "red" }
-                                                    : {}
-                                                }>
+                        <td
+                          style={
+                            item.isDuplicated === true
+                              ? { backgroundColor: "red" }
+                              : {}
+                          }
+                        >
                           <input
                             type="text"
                             name="nameMedicine"
@@ -475,11 +536,13 @@ class ModalAddNewMedicine extends Component {
                             className="form-control"
                           />
                         </td>
-                        <td                         style={
+                        <td
+                          style={
                             item.isDuplicated === true
                               ? { backgroundColor: "red" }
                               : {}
-                          }>
+                          }
+                        >
                           <input
                             type="text"
                             name="medicineCode"
@@ -488,24 +551,34 @@ class ModalAddNewMedicine extends Component {
                             className="form-control"
                           />
                         </td>
-                        <td                         style={
+                        <td
+                          style={
                             item.isDuplicated === true
                               ? { backgroundColor: "red" }
                               : {}
-                          }>
-                          <input
+                          }
+                        >
+                          {/* <input
                             type="text"
                             name="unit"
                             value={receipts[idx].unit}
                             onChange={this.handleChange(idx)}
                             className="form-control"
-                          />
+                          /> */}
+                          <Select
+                            name="unitSelected"
+                            value={unitSelected}
+                            // onChange={this.handleChangeSelectInfor}
+                            options={units}
+                          ></Select>
                         </td>
-                        <td                         style={
+                        <td
+                          style={
                             item.isDuplicated === true
                               ? { backgroundColor: "red" }
                               : {}
-                          }>
+                          }
+                        >
                           <input
                             type="number"
                             name="price"
@@ -515,11 +588,13 @@ class ModalAddNewMedicine extends Component {
                             className="form-control"
                           />
                         </td>
-                        <td                         style={
+                        <td
+                          style={
                             item.isDuplicated === true
                               ? { backgroundColor: "red" }
                               : {}
-                          }>
+                          }
+                        >
                           <button
                             className="btn btn-outline-danger btn-sm"
                             onClick={this.handleRemoveSprcificRow(idx)}

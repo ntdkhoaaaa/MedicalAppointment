@@ -37,7 +37,6 @@ class Accountant extends Component {
     let { permission, systemMenuPath } = this.props;
     let { path } = this.state;
     path = this.props.location.pathname;
-    console.log("systemMenuPath", path);
     let menu = [];
     if (permission && !_.isEmpty(permission)) {
       if (permission === USER_ROLE.ADMIN) {
@@ -81,7 +80,6 @@ class Accountant extends Component {
           menu = accountantHospitalMenu;
         }
       }
-      console.log(menu);
       this.setState({
         menuApp: menu,
       });
@@ -97,7 +95,6 @@ class Accountant extends Component {
 
     let menu = menuApp[0];
 
-    console.log(this.props.permission);
     if (this.props.permission === "R2") {
       return <Redirect to={"/doctor/manage-schedule"} />;
     }

@@ -57,8 +57,8 @@ export const fetchPositionStart = () => {
             dispatch({
                 type: actionTypes.FETCH_GENDER_START
             })
-            let res = await getAllCodeService("Position");
-
+            let res = await getAllCodeService("POSITION");
+            console.log('checkkkk',res)
             if (res && res.errCode === 0) {
                 dispatch(fetchPositionSuccess(res.data));
             }
@@ -79,7 +79,7 @@ export const fetchRolesStart = () => {
             dispatch({
                 type: actionTypes.FETCH_GENDER_START
             })
-            let res = await getAllCodeService("Role");
+            let res = await getAllCodeService("ROLE");
 
             if (res && res.errCode === 0) {
                 dispatch(fetchRolesSuccess(res.data));

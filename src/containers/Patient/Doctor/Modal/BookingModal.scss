@@ -1,55 +1,108 @@
-.booking-modal-container{
-    .booking-modal-content{
-        height: auto;
+.booking-modal-container {
+  .booking-modal-content {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #eff1f5;
+    .booking-modal-header {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      background-color: #fff;
+      .left {
+        font-size: 20px;
+        font-weight: 600;
+      color: #75b2eb;
 
+      }
+      .right {
+        float: right;
+        cursor: pointer;
+      }
+    }
+    .booking-modal-body {
+      // padding: 0px 10px;
+      // margin: 10px;
+      padding: 10px;
+
+      height: 80%;
+      width: 700px;
+      background-color: #eff1f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .doctor-infor {
+        width: 100%;
+        margin-bottom: 4px;
+      }
+      .booking-information {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        .booking-modal-header{
+        background-color: #eff1f5;
+        gap: 10px;
+        .basic-information {
+          padding: 10px;
+          background-color: #fff;
+          border-radius: 5px;
+          margin: 0px !important;
+          // width: 98%;
+        }
+        .medical-information {
+          padding: 10px;
+          background-color: #fff;
+          margin: 0px !important;
+          border-radius: 5px;
+        }
+        .input-container{
+            height: 40px;
+            // min-width: 200px;
+            border-radius: 10px;
+            background-color: #f4f5fa;
             padding: 10px;
-            border-bottom:1px solid #ccc ;
-            .left{
-                font-size: 15px;
-                font-weight: 600;
-                color: #333;
-            }
-            .right{
-                float: right;
-                cursor: pointer;
-            }
+            border: none;
+            box-shadow: 5px;
         }
-        .booking-modal-body{
-            padding: 0px 10px;
-            height:80%;
-            .pathology{
-                height:80px;
-                width: 670px;
-                // text-align: center;
-                align-self: center;
-            }
+        .small-input{
+            max-width: 70px !important;
         }
-        .booking-modal-footer{
-            // padding: 10px;
-            // height: 90px;
-            // border-top: 1px solid #ccc;
-            display: flex;
-            justify-content: flex-end;
-            gap:15px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            margin-right: 3px;
-            button{
-                border: none;
-                outline: none;
-                padding: 8px 5px;
-                border-radius: 5px;
-                min-width: 100px;
-            }
-            .btn-booking-comfirm{
-                background-color: rgb(73, 234, 73);
-            }
-            .btn-booking-cancel{
-                background-color: rgb(255, 200, 81);
-            }
-        }
+        label {
+            margin-right: 4px;
+            font-weight: 500;
+            min-width: 80px;
+            color: #75b2eb;
+          }
+      }
+      .pathology {
+        height: 100px;
+        width: 600px;
+        // text-align: center;
+        align-self: center;
+      }
     }
+    .booking-modal-footer {
+      // padding: 10px;
+      // height: 90px;
+      // border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      margin-right: 3px;
+      button {
+        border: none;
+        outline: none;
+        padding: 8px 5px;
+        border-radius: 5px;
+        min-width: 100px;
+      }
+      .btn-booking-comfirm {
+        background-color: #75b2eb;
+      }
+      .btn-booking-cancel {
+        background-color: rgb(255, 200, 81);
+      }
+    }
+  }
 }

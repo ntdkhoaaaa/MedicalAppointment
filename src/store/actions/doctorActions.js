@@ -5,7 +5,8 @@ import {
   getMedicalRecordByBookingId,
   getListPatientForDoctor,
   getListExaminatedPatientForDoctor,
-  getMedicalRecordByDate
+  getMedicalRecordByDate,
+  getListPatientForDoctorWithTimeType
 } from "../../services/userServices";
 import { toast } from "react-toastify";
 export const fetchAllMedicine = (clinicId) => {
@@ -175,6 +176,35 @@ export const fetchPatientMedicalRecordsByDate = (date) => {
       console.log("fetch FETCH_PATIENTS_MEDICAL_RECORD_BYDATE_FAIL", e);
       dispatch({
         type: actionTypes.FETCH_PATIENTS_MEDICAL_RECORD_BYDATE_FAIL,
+      });
+    }
+  };
+};
+
+export const fetchRegisteredPatientByDateAndTimeType = (doctorId, date,timeType) => {
+  return async (dispatch, getState) => {
+    try {
+      console.log('Loading',timeType)
+      let res = await getListPatientForDoctorWithTimeType({
+        doctorId: doctorId,
+        date: date,
+        timeType:timeType
+      });
+
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_PATIENT_INFOR_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_REGISTERED_PATIENT_FAIL,
+        });
+      }
+    } catch (e) {
+      console.log("fetch all medicine by clinicId", e);
+      dispatch({
+        type: actionTypes.FETCH_REGISTERED_PATIENT_FAIL,
       });
     }
   };

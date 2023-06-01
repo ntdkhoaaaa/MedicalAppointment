@@ -63,69 +63,237 @@
       }
     }
     .medical-information {
-        background-color: #fff;
-        width: 100%;
-        border-radius: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-right: 10px;
-        padding-left: 10px;
-        gap: 10px;
+      background-color: #fff;
+      width: 100%;
+      border-radius: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-right: 10px;
+      padding-left: 10px;
+      gap: 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      height: 400px;
+      label {
+        margin-right: 4px;
+        font-weight: 500;
+        min-width: 80px;
+        color: #75b2eb;
+      }
+      .pathology {
         display: flex;
-        justify-content: center;
-        flex-direction: column;
+        width: 100%;
         align-items: center;
-        height: 400px;
-        label {
-            margin-right: 4px;
-            font-weight: 500;
-            min-width: 80px;
-            color: #75b2eb;
-          }
-          .pathology{
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-          }
+        justify-content: space-between;
+      }
     }
   }
 }
 #TablePatientInformation {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 95%;
-    align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+  align-items: center;
+  border-radius: 5px;
+  border-collapse: collapse;
+  // border-radius: 1em;
+  overflow: hidden;
+  .mp-btn-remedy {
+    border: none;
     border-radius: 5px;
-    border-collapse: collapse;
-    // border-radius: 1em;
-    overflow: hidden;
-    .mp-btn-remedy {
-      border: none;
-      border-radius: 5px;
-      &:hover {
-        background-color: #87c4f3;
-        border-radius: 10px;
+    &:hover {
+      background-color: #87c4f3;
+      border-radius: 10px;
+    }
+  }
+}
+#TablePatientInformation td,
+#TablePatientInformation th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  align-items: center;
+  text-align: center;
+}
+
+#TablePatientInformation tr:hover {
+  background-color: #fff;
+}
+
+#TablePatientInformation th {
+  // padding-top: 12px;
+  // padding-bottom: 12px;
+  text-align: center;
+  background-color: #eff1f5;
+  color: #000;
+}
+.patient-detail-container-from-accountant {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  .left-container {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #eff1f5;
+
+    .preview-img {
+      color: #fff;
+      height: 200px;
+      background-color: #fff !important;
+      width: 200px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      font-size: 0;
+      background: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      cursor: pointer;
+    }
+  }
+  .right-container {
+    width: 70%;
+    height: 100%;
+    background-color: #eff1f5;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    .appointment-booker {
+      background-color: #fff;
+      width: 100%;
+      border-radius: 10px;
+      padding: 10px;
+      .appointment-booker-title{
+        // margin-right: 85px;
+        font-weight: 500;
+        min-width: 80px;
+        text-align: center;
+        color: #75b2eb;
+        font-size: 20px;
+      }
+      .basic-information {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 10px;
+
+        label {
+          margin-right: 185px;
+          font-weight: 300;
+          min-width: 80px;
+          color: #75b2eb;
+        }
+        .each-input {
+          min-width: 280px;
+          height: 40px;
+          border-radius: 10px;
+          background-color: #f4f5fa;
+          padding: 10px;
+          border: none;
+          box-shadow: 5px;
+          // border-bottom: 1px solid black;
+        }
+      }
+    }
+    .appointment-information{
+      background-color: #fff;
+      width: 100%;
+      border-radius: 10px;
+      padding: 10px;
+      .appointment-booker-title{
+        // margin-right: 85px;
+        font-weight: 500;
+        text-align: center;
+        min-width: 80px;
+        color: #75b2eb;
+        font-size: 20px;
+      }
+      .basic-information {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
+
+        .title-tiny
+        {
+          width: 25%;
+          display: flex;
+          flex-direction: column;
+          align-items:flex-start;
+          justify-content: center;
+          label {
+            // margin-right: 85px;
+            font-weight: 300;
+            min-width: 80px;
+            color: #75b2eb;
+          }
+          .each-input-for-small {
+            min-width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #f4f5fa;
+            padding: 10px;
+            border: none;
+            box-shadow: 5px;
+            // border-bottom: 1px solid black;
+          }
+          .each-input-for-tiny {
+            max-width: 50px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #f4f5fa;
+            padding: 10px;
+            border: none;
+            box-shadow: 5px;
+            // border-bottom: 1px solid black;
+          }
+        }
+        .title{
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items:flex-start;
+
+          justify-content: center;
+          label {
+            // margin-right: 85px;
+            font-weight: 300;
+            min-width: 80px;
+            color: #75b2eb;
+          }
+          .each-input-for-small {
+            min-width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #f4f5fa;
+            padding: 10px;
+            border: none;
+            box-shadow: 5px;
+            // border-bottom: 1px solid black;
+          }
+          .each-input-for-tiny {
+            max-width: 50px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #f4f5fa;
+            padding: 10px;
+            border: none;
+            box-shadow: 5px;
+            // border-bottom: 1px solid black;
+          }
+        }
+
       }
     }
   }
-  #TablePatientInformation td,
-  #TablePatientInformation th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    align-items: center;
-    text-align: center;
-  }
-
-
-  #TablePatientInformation tr:hover {
-    background-color: #fff;
-  }
-
-  #TablePatientInformation th {
-    // padding-top: 12px;
-    // padding-bottom: 12px;
-    text-align: center;
-    background-color: #eff1f5;
-    color: #000;
-  }
+}

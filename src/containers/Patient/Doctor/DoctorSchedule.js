@@ -120,6 +120,7 @@ class DoctorSchedule extends Component {
         console.log("check result", res);
       }
     }
+
   }
   handleOnChangeSelect = async (event) => {
     if (this.props.doctorIdFromParent && this.props.doctorIdFromParent !== -1) {
@@ -164,10 +165,26 @@ class DoctorSchedule extends Component {
       this.props.history.push("/login");
     }
   };
-  closeBookingModal = () => {
+  closeBookingModal =async () => {
     this.setState({
       isOpenModalBooking: false,
     });
+    let doctorId = this.props.doctorIdFromParent;
+    let arrDays = this.getArrDays(this.props.language);
+    let res = await getScheduleDoctorByDateContainUserId(
+      doctorId,
+      arrDays[0].value,
+      this.props.user.id
+    );
+    if (res && res.errCode === 0) {
+      this.setState({
+        allAvailableTime: res.data ? res.data : [],
+      });
+    }
+    this.setState({
+      allAvailableTime: res.data ? res.data : [],
+    });
+    console.log("check result", res);
   };
   closeNotification = () => {
     this.setState({

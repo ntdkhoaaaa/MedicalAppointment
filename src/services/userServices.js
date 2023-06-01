@@ -202,6 +202,9 @@ const handleRegisterApi = async (data) => {
 const getListPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
+const getListPatientForDoctorWithTimeType = (data) => {
+    return axios.get(`/api/get-list-patient-for-doctor-withtimeType?doctorId=${data.doctorId}&date=${data.date}&timeType=${data.timeType}`)
+}
 const getAllAppointmentOfPatient = (data) => {
     return axios.get(`/api/get-all-appointment-of-user?id=${data}`)
 }
@@ -250,7 +253,7 @@ export {
     deleteMedicineById,getMedicineById,editMedicineInfor,getDetailClinicByIdInAccountantSide,
     deleteUserService,getMedicineByClinicId,warningDuplicateMedicine,addNewSpecialtyOfClinic,
     editUserService,getAllSpecialtiesOfClinic,getAllDoctorOfHospital,deleteDoctorService,
-    getAllCodeService,getAllDoctorOfClinic,getClinicWeekSchedules,
+    getAllCodeService,getAllDoctorOfClinic,getClinicWeekSchedules,getListPatientForDoctorWithTimeType,
     getTopDoctorHomeService,editDoctorHospitalService,getDoctorWeekSchedules,
     getAllDoctors, cancelBookingFromPatient,getScheduleDoctorByDateContainUserId,
     saveDetailDoctorService, getAllMarkdown,getSpecialtyScheduleByWeek,

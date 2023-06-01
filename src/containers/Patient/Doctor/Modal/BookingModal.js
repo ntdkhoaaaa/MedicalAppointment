@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import "./BookingModal.scss";
 import { Modal } from "reactstrap";
 import ProfileDoctor from "../ProfileDoctor";
-import _ from "lodash";
+import _, { last } from "lodash";
 import Select from "react-select";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
@@ -36,6 +36,9 @@ class BookingModal extends Component {
       pathology: "",
       isOpenModalWaiting: false,
     };
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
   }
   componentDidMount() {
     this.props.getGendersStart();
@@ -80,6 +83,7 @@ class BookingModal extends Component {
               },
       });
     }
+    document.addEventListener("keydown", this.handleKeyDown);
   }
   buildDataGenders = (data) => {
     let result = [];
@@ -169,12 +173,64 @@ class BookingModal extends Component {
     }
   }
   handleOnChangeInput = (event, id) => {
-    let inputValue = event.target.value;
-    let copyState = { ...this.state };
-    copyState[id] = inputValue;
-    this.setState({
-      ...copyState,
-    });
+    if(id==='height' || id==='weight' || id==='patientAge')
+    {
+      console.log('log',event.target.value)
+      if(id==='height')
+      {
+        if(event.target.value<0)
+        {
+          toast.warn('Chiều cao không phải là số âm')
+        }
+        else{
+          let inputValue = event.target.value;
+          let copyState = { ...this.state };
+          copyState[id] = inputValue;
+          this.setState({
+            ...copyState,
+          });
+        }
+      }
+      if(id==='weight')
+      {
+        if(event.target.value<0)
+        {
+          toast.warn('Cân nặng không phải là số âm')
+        }
+        else{
+          let inputValue = event.target.value;
+          let copyState = { ...this.state };
+          copyState[id] = inputValue;
+          this.setState({
+            ...copyState,
+          });
+        }
+      }
+      if(id==='patientAge')
+      {
+        if(event.target.value<0)
+        {
+          toast.warn('Tuổi không phải là số âm')
+        }
+        else{
+          let inputValue = event.target.value;
+          let copyState = { ...this.state };
+          copyState[id] = inputValue;
+          this.setState({
+            ...copyState,
+          });
+        }
+      }
+    }
+    else{
+      let inputValue = event.target.value;
+      let copyState = { ...this.state };
+      copyState[id] = inputValue;
+      this.setState({
+        ...copyState,
+      });
+    }
+
   };
   handleOnChangeDataPicker = (date) => {
     this.setState({
@@ -263,151 +319,220 @@ class BookingModal extends Component {
       return "";
     }
   };
+  checkState = () => {
+    if (!this.state.lastName) {
+      toast.error("Nhập thiếu họ");
+      return false;
+    }
+    if (!this.state.firstName) {
+      toast.error("Nhập thiếu tên");
+      return false;
+    }
+    if (!this.state.phoneNumber) {
+      toast.error("Nhập thiếu số điện thoại");
+      return false;
+    }
+    if (!this.state.address) {
+      toast.error("Nhập thiếu địa chỉ");
+      return false;
+    }
+    if (!this.state.reason) {
+      toast.error("Nhập thiếu triệu chứng");
+      return false;
+    }
+    if (!this.state.genderIdentity) {
+      toast.error("Nhập thiếu bản dạng giới");
+      return false;
+    }
+    if (!this.state.forwho) {
+      toast.error("Nhập thiếu đăng ký cho ai");
+      return false;
+    }
+    if (!this.state.patientAge) {
+      toast.error("Nhập thiếu tuổi bệnh nhân");
+      return false;
+    }
+    if (!this.state.height) {
+      toast.error("Nhập thiếu chiều cao");
+      return false;
+    }
+    if (!this.state.weight) {
+      toast.error("Nhập thiếu cân nặng");
+      return false;
+    }
+    if (!this.state.bloodType) {
+      toast.error("Nhập thiếu nhóm máu");
+      return false;
+    }
+    if (!this.state.pathology) {
+      toast.error(
+        "Nhập thiếu triệu chứng! Nếu không có vui lòng điền không có"
+      );
+      return false;
+    }
+    return true;
+    // if()
+  };
   handleConfirmBooking = async () => {
+    console.log("login with enter");
     let { specialtyBooking, dataTime } = this.props;
-    if (specialtyBooking) {
-      this.setState({ isOpenModalWaiting: true });
-      let timeString = this.renderBookingTimeForSpecialty(
-        dataTime.bookingInfor[0].valueVi,
-        dataTime.bookingInfor[0].valueEn,
-        dataTime.bookingInfor[0].date
-      );
-      let doctorName = this.renderDoctorNameForSpecialty(
-        dataTime.bookingInfor[0].firstName,
-        dataTime.bookingInfor[0].lastName
-      );
-      let res = await postPatientAppointment({
-        lastName: this.state.lastName,
-        firstName: this.state.firstName,
-        phoneNumber: this.state.phoneNumber,
-        email: this.state.email,
-        address: this.state.address,
-        reason: this.state.reason,
-        genderIdentity: this.state.genderIdentity.value,
-        doctorId: dataTime.bookingInfor[0].doctorId,
-        forwho: this.state.forwho,
-        timetype: dataTime.bookingInfor[0].timetype,
-        date: dataTime.bookingInfor[0].date,
-        language: this.props.language,
-        pickDate: timeString,
-        patientAge: this.state.patientAge,
-        doctorName: doctorName,
-        clinicId: dataTime.bookingInfor[0].clinicId,
-        specialtyId: dataTime.bookingInfor[0].specialtyId,
-        fromSpecialtyHospital: true,
-        height: this.state.height,
-        weight: this.state.weight,
-        bloodType: this.state.bloodType.value,
-        pathology: this.state.pathology,
-      });
-      this.setState({ isOpenModalWaiting: false });
-      if (res && res.errCode === 0) {
-        this.setState({
-          reason: "",
-          height: "",
-          weight: "",
-          bloodType:"",
-          pathology: "",
-          genderIdentity:
-            this.props.userInfo?.gender === "M"
-              ? {
-                  label: this.props.language === LANGUAGES.VI ? "Nam" : "Male",
-                  value: "M",
-                }
-              : this.props.userInfo?.gender === "F"
-              ? {
-                  label: this.props.language === LANGUAGES.VI ? "Nữ" : "Female",
-                  value: "F",
-                }
-              : {
-                  label:
-                    this.props.language === LANGUAGES.VI ? "Khác" : "Other",
-                  value: "O",
-                },
-          doctorId: "",
-          forwho: "",
-          timetype: "",
-          date: "",
-          language: "",
-          pickDate: "",
-          patientAge: "",
-          doctorName: "",
+    let checkState = this.checkState();
+    if (checkState) {
+      if (specialtyBooking) {
+        this.setState({ isOpenModalWaiting: true });
+        let timeString = this.renderBookingTimeForSpecialty(
+          dataTime.bookingInfor[0].valueVi,
+          dataTime.bookingInfor[0].valueEn,
+          dataTime.bookingInfor[0].date
+        );
+        let doctorName = this.renderDoctorNameForSpecialty(
+          dataTime.bookingInfor[0].firstName,
+          dataTime.bookingInfor[0].lastName
+        );
+        let res = await postPatientAppointment({
+          lastName: this.state.lastName,
+          firstName: this.state.firstName,
+          phoneNumber: this.state.phoneNumber,
+          email: this.state.email,
+          address: this.state.address,
+          reason: this.state.reason,
+          genderIdentity: this.state.genderIdentity.value,
+          doctorId: dataTime.bookingInfor[0].doctorId,
+          forwho: this.state.forwho,
+          timetype: dataTime.bookingInfor[0].timetype,
+          date: dataTime.bookingInfor[0].date,
+          language: this.props.language,
+          pickDate: timeString,
+          patientAge: this.state.patientAge,
+          doctorName: doctorName,
+          clinicId: dataTime.bookingInfor[0].clinicId,
+          specialtyId: dataTime.bookingInfor[0].specialtyId,
+          fromSpecialtyHospital: true,
+          height: this.state.height,
+          weight: this.state.weight,
+          bloodType: this.state.bloodType.value,
+          pathology: this.state.pathology,
         });
-        toast.success("Thêm lịch hẹn thành công");
+        this.setState({ isOpenModalWaiting: false });
+        if (res && res.errCode === 0) {
+          this.setState({
+            reason: "",
+            height: "",
+            weight: "",
+            bloodType: "",
+            pathology: "",
+            genderIdentity:
+              this.props.userInfo?.gender === "M"
+                ? {
+                    label:
+                      this.props.language === LANGUAGES.VI ? "Nam" : "Male",
+                    value: "M",
+                  }
+                : this.props.userInfo?.gender === "F"
+                ? {
+                    label:
+                      this.props.language === LANGUAGES.VI ? "Nữ" : "Female",
+                    value: "F",
+                  }
+                : {
+                    label:
+                      this.props.language === LANGUAGES.VI ? "Khác" : "Other",
+                    value: "O",
+                  },
+            doctorId: "",
+            forwho: "",
+            timetype: "",
+            date: "",
+            language: "",
+            pickDate: "",
+            patientAge: "",
+            doctorName: "",
+          });
+          toast.success("Thêm lịch hẹn thành công");
+        } else {
+          toast.error("Bạn nhập thiếu thông tin.Xin mời kiểm tra lại");
+        }
+        this.props.closeBookingModal();
       } else {
-        toast.error("Bạn nhập thiếu thông tin.Xin mời kiểm tra lại");
-      }
-      this.props.closeBookingModal();
-    } else {
-      this.setState({ isOpenModalWaiting: true });
-      let timeString = this.renderBookingTime(this.props.dataTime);
-      let doctorName = this.renderDoctorName(this.props.dataTime);
-      let res = await postPatientAppointment({
-        lastName: this.state.lastName,
-        firstName: this.state.firstName,
-        phoneNumber: this.state.phoneNumber,
-        email: this.state.email,
-        address: this.state.address,
-        reason: this.state.reason,
-        genderIdentity: this.state.genderIdentity.value,
-        doctorId: this.state.doctorId,
-        forwho: this.state.forwho,
-        timetype: this.state.timetype,
-        date: this.props.dataTime.date,
-        language: this.props.language,
-        pickDate: timeString,
-        patientAge: this.state.patientAge,
-        doctorName: doctorName,
-        fromSpecialtyHospital: false,
-        height: this.state.height,
-        weight: this.state.weight,
-        bloodType: this.state.bloodType.value,
-        pathology: this.state.pathology,
-      });
-      this.setState({ isOpenModalWaiting: false });
-      if (res && res.errCode === 0) {
-        this.setState({
-          // lastName: this.state.lastName,
-          // firstName: this.state.firstName,
-          // phoneNumber: this.state.phoneNumber,
-          // email: this.state.email,
-          // address: this.state.address,
-          reason: "",
-          reason: "",
-          height: "",
-          weight: "",
-          bloodType:"",
-          pathology: "",
-          genderIdentity:
-            this.props.userInfo?.gender === "M"
-              ? {
-                  label: this.props.language !== LANGUAGES.VI ? "Nam" : "Male",
-                  value: "M",
-                }
-              : this.props.userInfo?.gender === "F"
-              ? {
-                  label: this.props.language !== LANGUAGES.VI ? "Nữ" : "Female",
-                  value: "F",
-                }
-              : {
-                  label:
-                    this.props.language !== LANGUAGES.VI ? "Khác" : "Other",
-                  value: "O",
-                },
-          doctorId: "",
-          forwho: "",
-          timetype: "",
-          date: "",
-          language: "",
-          pickDate: "",
-          patientAge: "",
-          doctorName: "",
+        this.setState({ isOpenModalWaiting: true });
+        let timeString = this.renderBookingTime(this.props.dataTime);
+        let doctorName = this.renderDoctorName(this.props.dataTime);
+        let res = await postPatientAppointment({
+          lastName: this.state.lastName,
+          firstName: this.state.firstName,
+          phoneNumber: this.state.phoneNumber,
+          email: this.state.email,
+          address: this.state.address,
+          reason: this.state.reason,
+          genderIdentity: this.state.genderIdentity.value,
+          doctorId: this.state.doctorId,
+          forwho: this.state.forwho,
+          timetype: this.state.timetype,
+          date: this.props.dataTime.date,
+          language: this.props.language,
+          pickDate: timeString,
+          patientAge: this.state.patientAge,
+          doctorName: doctorName,
+          fromSpecialtyHospital: false,
+          height: this.state.height,
+          weight: this.state.weight,
+          bloodType: this.state.bloodType.value,
+          pathology: this.state.pathology,
         });
-        toast.success("Thêm lịch hẹn thành công");
-      } else {
-        toast.error("Bạn nhập thiếu thông tin.Xin mời kiểm tra lại");
+        this.setState({ isOpenModalWaiting: false });
+        if (res && res.errCode === 0) {
+          this.setState({
+            // lastName: this.state.lastName,
+            // firstName: this.state.firstName,
+            // phoneNumber: this.state.phoneNumber,
+            // email: this.state.email,
+            // address: this.state.address,
+            reason: "",
+            reason: "",
+            height: "",
+            weight: "",
+            bloodType: "",
+            pathology: "",
+            genderIdentity:
+              this.props.userInfo?.gender === "M"
+                ? {
+                    label:
+                      this.props.language !== LANGUAGES.VI ? "Nam" : "Male",
+                    value: "M",
+                  }
+                : this.props.userInfo?.gender === "F"
+                ? {
+                    label:
+                      this.props.language !== LANGUAGES.VI ? "Nữ" : "Female",
+                    value: "F",
+                  }
+                : {
+                    label:
+                      this.props.language !== LANGUAGES.VI ? "Khác" : "Other",
+                    value: "O",
+                  },
+            doctorId: "",
+            forwho: "",
+            timetype: "",
+            date: "",
+            language: "",
+            pickDate: "",
+            patientAge: "",
+            doctorName: "",
+          });
+          toast.success("Thêm lịch hẹn thành công");
+        } else {
+          toast.error("Bạn nhập thiếu thông tin.Xin mời kiểm tra lại");
+        }
+        this.props.closeBookingModal();
       }
-      this.props.closeBookingModal();
+    }
+  };
+  handleKeyDown = (event) => {
+    console.log("handleKeyDown");
+    if (event.key === "Enter") {
+      // Perform action on Enter key press inside the modal
+      this.handleConfirmBooking();
     }
   };
   render() {
@@ -462,6 +587,10 @@ class BookingModal extends Component {
         value: "O-",
         label: "O-",
       },
+      {
+        value: "unidentified",
+        label: "Chưa xác định",
+      },
     ];
     console.log(this.state);
     return (
@@ -471,6 +600,7 @@ class BookingModal extends Component {
         toggle={closeBookingModal}
         centered={true}
         backdrop={true}
+        // onKeyDown={this.handleKeyDown}
         className="booking-modal-container"
       >
         <div className="booking-modal-content">
@@ -506,170 +636,179 @@ class BookingModal extends Component {
                 />
               )}
             </div>
-            <div className="row">
-              <div className="col-6 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.email" />
-                </label>
-                <input
-                  className="form-control"
-                  readOnly={true}
-                  value={this.state.email}
-                  onChange={(event) => this.handleOnChangeInput(event, "email")}
-                ></input>
-              </div>
-              <div className="col-6 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.address-contact" />
-                </label>
-                <input
-                  className="form-control"
-                  value={this.state.address}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "address")
-                  }
-                ></input>
-              </div>
-              <div className="col-4 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.lastname" />
-                </label>
-                <input
-                  className="form-control"
-                  value={this.state.firstName}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "firstName")
-                  }
-                ></input>
-              </div>
-              <div className="col-4 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.firstname" />
-                </label>
-                <input
-                  className="form-control"
-                  value={this.state.lastName}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "lastName")
-                  }
-                ></input>
-              </div>
-              <div className="col-4 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.phonenumber" />
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={this.state.phoneNumber}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "phoneNumber")
-                  }
-                ></input>
+            <div className="booking-information">
+              <div className="basic-information row">
+                <div className="col-6 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.email" />
+                  </label>
+                  <input
+                    className="input-container"
+                    readOnly={true}
+                    value={this.state.email}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "email")
+                    }
+                  ></input>
+                </div>
+                <div className="col-6 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.address-contact" />
+                  </label>
+                  <input
+                    className="input-container"
+                    value={this.state.address}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "address")
+                    }
+                  ></input>
+                </div>
+                <div className="col-4 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.lastname" />
+                  </label>
+                  <input
+                    className="input-container"
+                    value={this.state.firstName}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "firstName")
+                    }
+                  ></input>
+                </div>
+                <div className="col-4 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.firstname" />
+                  </label>
+                  <input
+                    className="input-container"
+                    value={this.state.lastName}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "lastName")
+                    }
+                  ></input>
+                </div>
+                <div className="col-4 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.phonenumber" />
+                  </label>
+                  <input
+                    type="number"
+                    className="input-container"
+                    value={this.state.phoneNumber}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "phoneNumber")
+                    }
+                  ></input>
+                </div>
               </div>
 
-              <div className="col-5 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.prognostic" />
-                </label>
-                <input
-                  className="form-control"
-                  value={this.state.reason}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "reason")
-                  }
-                ></input>
-              </div>
+              <div className="medical-information row">
               <div className="col-4 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.booking-for" />
-                </label>
-                <input
-                  className="form-control"
-                  value={this.state.forwho}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "forwho")
-                  }
-                ></input>
-              </div>
-              <div className="col-3 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.patientAge" />
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={this.state.patientAge}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "patientAge")
-                  }
-                ></input>
-              </div>
-              <div className="col-3 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.genderIdentity" />
-                </label>
-                <Select
-                  name="genderIdentity"
-                  value={genderIdentity}
-                  onChange={this.handleChangeSelectInfor}
-                  options={this.state.genders}
-                ></Select>
-              </div>
-              <div className="col-3 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.bloodType" />
-                </label>
-                <Select
-                  name="bloodType"
-                  value={bloodType}
-                  onChange={this.handleChangeSelectInfor}
-                  options={bloodTypeArr}
-                ></Select>
-              </div>
-              <div className="col-3 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.height" />
-                </label>
-                <input
-                  className="form-control"
-                  type="number"
-                  value={height}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "height")
-                  }
-                ></input>
-              </div>
-              <div className="col-3 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.weight" />
-                </label>
-                <input
-                  className="form-control"
-                  type="number"
-                  value={weight}
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "weight")
-                  }
-                ></input>
-              </div>
-              <div className="col-12 form-group">
-                <label>
-                  <FormattedMessage id="patient.modal-booking.pathology" />
-                </label>
-                <textarea
-                  className="pathology"
-                  type="text"
-                  onChange={(event) =>
-                    this.handleOnChangeInput(event, "pathology")
-                  }
-                  value={pathology}
-                  placeholder="Nếu có thông tin về bệnh lý, bệnh nhân vui lòng cung cấp để các bác sĩ nắm rõ thông tin"
-                ></textarea>
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.booking-for" />
+                  </label>
+                  <input
+                    className="input-container"
+                    value={this.state.forwho}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "forwho")
+                    }
+                  ></input>
+                </div>
+                <div className="col-5 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.prognostic" />
+                  </label>
+                  <input
+                    className="input-container"
+                    value={this.state.reason}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "reason")
+                    }
+                  ></input>
+                </div>
+
+                <div className="col-3 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.patientAge" />
+                  </label>
+                  <input
+                    type="number"
+                    className="small-input input-container "
+                    value={this.state.patientAge}
+                    min={0}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "patientAge")
+                    }
+                  ></input>
+                </div>
+                <div className="col-3 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.genderIdentity" />
+                  </label>
+                  <Select
+                    name="genderIdentity"
+                    value={genderIdentity}
+                    onChange={this.handleChangeSelectInfor}
+                    options={this.state.genders}
+                  ></Select>
+                </div>
+                <div className="col-3 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.bloodType" />
+                  </label>
+                  <Select
+                    name="bloodType"
+                    value={bloodType}
+                    onChange={this.handleChangeSelectInfor}
+                    options={bloodTypeArr}
+                  ></Select>
+                </div>
+                <div className="col-3 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.height" />
+                  </label>
+                  <input
+                    className="small-input input-container"
+                    type="number"
+                    value={height}
+                    min={120}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "height")
+                    }
+                  ></input>
+                </div>
+                <div className="col-3 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.weight" />
+                  </label>
+                  <input
+                    className="small-input input-container "
+                    type="number"
+                    value={weight}
+                    min={5}
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "weight")
+                    }
+                  ></input>
+                </div>
+                <div className="col-12 form-group">
+                  <label>
+                    <FormattedMessage id="patient.modal-booking.pathology" />
+                  </label>
+                  <textarea
+                    className="pathology"
+                    type="text"
+                    onChange={(event) =>
+                      this.handleOnChangeInput(event, "pathology")
+                    }
+                    value={pathology}
+                    placeholder="Nếu có thông tin về bệnh lý, bệnh nhân vui lòng cung cấp để các bác sĩ nắm rõ thông tin"
+                  ></textarea>
+                </div>
               </div>
             </div>
           </div>
-
           <div className="booking-modal-footer">
             <button
               className="btn-booking-comfirm"

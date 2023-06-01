@@ -433,7 +433,7 @@ class ManageAndRegisterDoctorForHospital extends Component {
 
     return (
       <div className="manage-container">
-        <div className="title-manage">Quản lý thông tin bác sĩ bệnh viện</div>
+        <div className="title-manage">Quản lý thông tin bác sĩ phòng khám</div>
         <div className="register-form">
           <div className="left">
             <input

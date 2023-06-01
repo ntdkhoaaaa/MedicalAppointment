@@ -111,7 +111,15 @@ class Login extends Component {
                             {this.state.errMessage}
                         </div>
                         <div className='col-12 '>
-                            <button className='btn-login' onClick={() => { this.handleLogin() }}>
+                            <button 
+                            className='btn-login' 
+                            onClick={() => { this.handleLogin() }}
+                            onKeyPress={event => {
+                                if (event.key === 'Enter') {
+                                  this.handleLogin()
+                                }
+                              }}
+                            >
                                 Login
                             </button>
                         </div>

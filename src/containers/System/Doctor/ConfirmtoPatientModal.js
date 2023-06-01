@@ -131,6 +131,11 @@ class ConfirmtoPatientModal extends Component {
         selected = item;
       }
     });
+    let temp=[...this.state.listMedicineByClinicId]
+    console.log('before',temp);
+
+    temp=temp.filter(item => item.label!==e.label)
+    console.log('after',temp);
     const receipts = [...this.state.receipts];
     receipts[idx] = {
       medicineName: selected.nameMedicine,
@@ -140,6 +145,7 @@ class ConfirmtoPatientModal extends Component {
     this.setState({
       receipts,
       selectedMedicine: selectedMedicine,
+      listMedicineByClinicId:temp
     });
   };
   render() {

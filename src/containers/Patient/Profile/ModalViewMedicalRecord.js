@@ -13,6 +13,8 @@ class ModalViewMedicalRecord extends Component {
     super(props);
     this.state = {
       Record: {},
+      modalIsOpen: false,
+      researchResult: "",
     };
   }
   async componentDidMount() {
@@ -44,24 +46,43 @@ class ModalViewMedicalRecord extends Component {
     }
   }
   ResearchTime = async (index) => {
-    let prompt = `${index} là gì`;
-    // e.preventDefault();
-
-    let res =await axios.post(`http://localhost:8081/chat`,{ prompt })
+    this.setState({
+      modalIsOpen: true,
+    });
+    let prompt = ` Cách hỗ trợ và phương pháp điều trị bệnh ${index}`;
+    let res = await axios.post(
+      `http://localhost:8081/chat`,
+      { prompt }
+    );
     console.log(res);
-    // .then((res)=>{
-    //   console.log(res.data)
-    // })
-    // .catch((err)=>{
-    //   console.error(err)
-    // })
 
     console.log("response", res);
+    this.setState({
+      researchResult: res.data,
+    });
+  };
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false,
+    });
   };
   render() {
     let { isOpenViewMedicalRecord, closeViewMedicalRecordModal, bookingDate } =
       this.props;
-    let { Record } = this.state;
+    let { Record, researchResult } = this.state;
+    const modalStyles = {
+      overlay: {
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1000,
+      },
+      content: {
+        maxWidth: "400px",
+        margin: "auto",
+        backgroundColor: "#fff",
+        borderRadius: "4px",
+        padding: "20px",
+      },
+    };
     return (
       <Modal
         toggle={closeViewMedicalRecordModal}
@@ -82,6 +103,30 @@ class ModalViewMedicalRecord extends Component {
                 <label>
                   <i class="fas fa-notes-medical"></i>Bệnh án
                 </label>
+                <div className="btn-research">
+                <button
+                  onClick={() => this.ResearchTime(Record.medicalRecords)}
+                  className="mp-btn-remedy"
+                >
+                 <i class="fas fa-question-circle"></i>
+                </button>
+              </div>
+              <Modal
+                isOpen={this.state.modalIsOpen}
+                toggle={this.closeModal}
+                style={modalStyles}
+                contentLabel="Chat Modal"
+                className="research-modal"
+              >
+                <div className="chat-history">
+                  <div className="question">
+                    {`Cách hỗ trợ và phương pháp điều trị bệnh ${Record.medicalRecords} `}
+                  </div>
+                  <div className="answer">
+                    {researchResult && <pre>{researchResult}</pre>}
+                  </div>
+                </div>
+              </Modal>
                 <textarea
                   className="form-control medicalRecord"
                   value={Record.medicalRecords}
@@ -111,7 +156,6 @@ class ModalViewMedicalRecord extends Component {
                     <th scope="col">Tên thuốc</th>
                     <th scope="col">Đơn vị tính</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col">So sánh</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -146,23 +190,12 @@ class ModalViewMedicalRecord extends Component {
                               className="form-control"
                             />
                           </td>
-                          <td>
-                            <div className="btn-research">
-                              <button
-                                onClick={() =>
-                                  this.ResearchTime(item.medicineName)
-                                }
-                                className="mp-btn-remedy"
-                              >
-                                <i class="fas fa-eye"></i>
-                              </button>
-                            </div>
-                          </td>
                         </tr>
                       );
                     })}
                 </tbody>
               </table>
+
             </div>
           </div>
         </div>

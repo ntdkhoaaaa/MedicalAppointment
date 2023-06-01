@@ -311,8 +311,6 @@ class ManageClinicSpecialties extends Component {
               />
             </div>
             </div>
-
-
             <div className="specialty-image">
               <label className="image-tilte">Ảnh Chuyên Khoa</label>
               <div className="preview-container">

@@ -260,9 +260,7 @@ class ManageSchedule extends Component {
       toast.error("Invalid selected doctor!");
       return;
     }
-    console.log("currentDate from save schedule", currentDate);
     let formatedDate = new Date(currentDate).getTime();
-    console.log("formatedDate from save schedule", formatedDate);
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
       if (selectedTime && selectedTime.length > 0) {
@@ -275,7 +273,7 @@ class ManageSchedule extends Component {
           result.push(object);
         });
       } else {
-        toast.error("Invalid selected item!");
+        toast.error("Bạn chưa chọn khung giờ");
         return;
       }
     }
@@ -371,7 +369,7 @@ class ManageSchedule extends Component {
     let { rangeTime,arrDayofWeek,isOpenModalCanceSchedule, selectedItem, eventState } =
       this.state;
     let { language, doctorWeekSchedules } = this.props;
-    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    // let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     let mon = [];
     let tue = [];
     let wed = [];
@@ -420,12 +418,8 @@ class ManageSchedule extends Component {
                   <label>
                     <FormattedMessage id="manage-schedule.doctor-name" />
                   </label>
-                  {/* <Select
-                    value={this.state.selectedDoctor}
-                    onChange={this.handleChange}
-                    options={this.state.listDoctocs}
-                  /> */}
-                  <input onClick={false} className="doctor-name"  value={this.state.selectedDoctor.label}/>
+
+                  <input onClick={false} className="doctor-name"  value={this.state.selectedDoctor?.label}/>
                 </div>
                 <div className="col-6 form-group">
                   <label>
@@ -435,7 +429,7 @@ class ManageSchedule extends Component {
                     className="form-control picker-date"
                     onChange={this.handleOnChangeDataPicker}
                     value={this.state.currentDate}
-                    minDate={yesterday}
+                    minDate={new Date()}
                   />
                 </div>
               </div>

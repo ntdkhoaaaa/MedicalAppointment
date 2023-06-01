@@ -29,6 +29,7 @@ class ManageMedicine extends Component {
         value: "All",
         label: "Tất cả",
       },
+
       // tubeFilter: [],
       // pillFilter: [],
     };

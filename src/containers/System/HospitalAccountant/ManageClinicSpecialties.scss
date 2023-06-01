@@ -36,6 +36,9 @@
         display: flex;
         flex-direction: column;
         height: 550px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 10px;
         .specialty-name {
           display: flex;
           flex-direction: column;
@@ -334,7 +337,9 @@
         align-items: flex-start;
         padding: 0px;
         gap: 16px;
-
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 10px;
         width: 500px;
         height: 600px;
         /* Inside auto layout */
@@ -425,7 +430,7 @@
       width: 74px;
       height: 40px;
       right: 400px;
-      top: 75px;
+      top: 90px;
     }
     .btn-edit-specialty {
       

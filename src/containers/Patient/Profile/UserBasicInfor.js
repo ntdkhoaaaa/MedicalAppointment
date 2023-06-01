@@ -34,13 +34,12 @@ class UserBasicInfor extends Component {
   async componentDidMount() {
     let { userInfo } = this.props;
     let response = await getAllUsers(userInfo?.id);
-    let blood={}
-    if(response.users?.bloodType)
-    {
+    let blood = {};
+    if (response.users?.bloodType) {
       blood = {
         value: response.users?.bloodType,
-        label: response.users?.bloodType
-      }
+        label: response.users?.bloodType,
+      };
     }
     if (response && response.errCode === 0) {
       this.setState({
@@ -58,7 +57,6 @@ class UserBasicInfor extends Component {
         pathology: response.users?.pathology,
       });
     }
-
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -67,13 +65,12 @@ class UserBasicInfor extends Component {
     if (this.props.userInfo !== prevProps.userInfo) {
       let { userInfo } = this.props;
       let response = await getAllUsers(userInfo?.id);
-      let blood={}
-      if(response.users?.bloodType)
-      {
+      let blood = {};
+      if (response.users?.bloodType) {
         blood = {
           value: response.users?.bloodType,
-          label: response.users?.bloodType
-        }
+          label: response.users?.bloodType,
+        };
       }
       if (response && response.errCode === 0) {
         this.setState({
@@ -145,11 +142,42 @@ class UserBasicInfor extends Component {
     }
   };
   onChangeInput = (event, id) => {
-    let copyState = { ...this.state };
-    copyState[id] = event.target.value;
-    this.setState({
-      ...copyState,
-    });
+    if (id === 'height' || id === 'weight') {
+      if (id === 'height') {
+        if (event.target.value < 0) {
+          console.log("Invalid")
+          toast.warn("Chiều cao không phải là số âm");
+        } 
+        else {
+          console.log("log")
+          let inputValue = event.target.value;
+          let copyState = { ...this.state };
+          copyState[id] = inputValue;
+          this.setState({
+            ...copyState,
+          });
+        }
+      }
+      if (id === 'weight') {
+        if (event.target.value < 0) {
+          toast.warn("Cân nặng không phải là số âm");
+        } else {
+          let inputValue = event.target.value;
+          let copyState = { ...this.state };
+          copyState[id] = inputValue;
+          this.setState({
+            ...copyState,
+          });
+        }
+      }
+    } 
+    else {
+      let copyState = { ...this.state };
+      copyState[id] = event.target.value;
+      this.setState({
+        ...copyState,
+      });
+    }
   };
   handleChangeSelectInfor = (selectedInfor, name) => {
     let stateName = name.name;
@@ -244,14 +272,19 @@ class UserBasicInfor extends Component {
           <div className="right">
             <div className="basic-infor">
               <span className="title-name">
-                <FormattedMessage id={"user-infor.user-information.individual-information"}/>
+                <FormattedMessage
+                  id={"user-infor.user-information.individual-information"}
+                />
               </span>
               <div className="user-information">
                 <div className="user-name">
                   <div className="firstName">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i>{" "}<FormattedMessage id={"user-infor.user-information.firstName"}/>
+                        <i class="fas fa-user"></i>{" "}
+                        <FormattedMessage
+                          id={"user-infor.user-information.firstName"}
+                        />
                       </span>{" "}
                     </label>
                     <input
@@ -265,7 +298,10 @@ class UserBasicInfor extends Component {
                   <div className="lastName">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i><FormattedMessage id={"user-infor.user-information.lastName"}/>{" "}
+                        <i class="fas fa-user"></i>
+                        <FormattedMessage
+                          id={"user-infor.user-information.lastName"}
+                        />{" "}
                       </span>{" "}
                     </label>
                     <input
@@ -282,7 +318,10 @@ class UserBasicInfor extends Component {
                     <div className="phone">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-phone"></i> <FormattedMessage id={"user-infor.user-information.phonenumber"}/>{" "}
+                          <i class="fas fa-phone"></i>{" "}
+                          <FormattedMessage
+                            id={"user-infor.user-information.phonenumber"}
+                          />{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -296,7 +335,10 @@ class UserBasicInfor extends Component {
                     <div className="address">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-map-marker-alt"></i>{" "}<FormattedMessage id={"user-infor.user-information.address"}/>{" "}
+                          <i class="fas fa-map-marker-alt"></i>{" "}
+                          <FormattedMessage
+                            id={"user-infor.user-information.address"}
+                          />{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -312,7 +354,10 @@ class UserBasicInfor extends Component {
                     <div className="email">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-envelope"></i> <FormattedMessage id={"user-infor.user-information.email"}/>{" "}
+                          <i class="fas fa-envelope"></i>{" "}
+                          <FormattedMessage
+                            id={"user-infor.user-information.email"}
+                          />{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -347,13 +392,21 @@ class UserBasicInfor extends Component {
               </div>
             </div>
             <div className="medical-infor">
-              <span className="medical-info-title"><FormattedMessage id={"user-infor.user-information.medical-infor"}/></span>
+              <span className="medical-info-title">
+                <FormattedMessage
+                  id={"user-infor.user-information.medical-infor"}
+                />
+              </span>
               <div className="medical-user-information">
                 <div className="personal-parameters">
                   <div className="user-height">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-ruler-vertical"></i>{" "}<FormattedMessage id={"user-infor.user-information.height"}/>(cm){" "}
+                        <i class="fas fa-ruler-vertical"></i>{" "}
+                        <FormattedMessage
+                          id={"user-infor.user-information.height"}
+                        />
+                        (cm){" "}
                       </span>
                     </label>
                     <input
@@ -361,14 +414,19 @@ class UserBasicInfor extends Component {
                       onChange={(event) => {
                         this.onChangeInput(event, "height");
                       }}
+                      max={120}
                       className="input-container user-mail "
-                      defaultValue={height}
+                      value={height}
                     />
                   </div>
                   <div className="user-weight">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-weight"></i><FormattedMessage id={"user-infor.user-information.weight"}/>(kg){" "}
+                        <i class="fas fa-weight"></i>
+                        <FormattedMessage
+                          id={"user-infor.user-information.weight"}
+                        />
+                        (kg){" "}
                       </span>{" "}
                     </label>
                     <input
@@ -376,14 +434,19 @@ class UserBasicInfor extends Component {
                       onChange={(event) => {
                         this.onChangeInput(event, "weight");
                       }}
+                      min={5}
+
                       className="input-container user-mail "
-                      defaultValue={weight}
+                      value={weight}
                     />
                   </div>
                   <div className="bloodType">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-tint"></i> <FormattedMessage id={"user-infor.user-information.bloodType"}/>{" "}
+                        <i class="fas fa-tint"></i>{" "}
+                        <FormattedMessage
+                          id={"user-infor.user-information.bloodType"}
+                        />{" "}
                       </span>{" "}
                     </label>
                     <Select
@@ -398,7 +461,10 @@ class UserBasicInfor extends Component {
                 <div className="personal-pathology">
                   <label className="sub-title">
                     <span>
-                      <i class="fas fa-notes-medical"></i> <FormattedMessage id={"user-infor.user-information.pathology"}/>{" "}
+                      <i class="fas fa-notes-medical"></i>{" "}
+                      <FormattedMessage
+                        id={"user-infor.user-information.pathology"}
+                      />{" "}
                     </span>{" "}
                   </label>
                   <textarea
@@ -412,11 +478,13 @@ class UserBasicInfor extends Component {
               </div>
             </div>
             <div className="btn-container">
-            <button className="btn btn-submit" onClick={()=>this.SaveBasicInfor()}>
-              Save
-            </button>
+              <button
+                className="btn btn-submit"
+                onClick={() => this.SaveBasicInfor()}
+              >
+                Save
+              </button>
             </div>
-
           </div>
         </div>
       </div>

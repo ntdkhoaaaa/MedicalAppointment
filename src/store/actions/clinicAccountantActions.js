@@ -220,7 +220,6 @@ export const SaveNewDoctorFailed = () => ({
 export const fetchAllDoctorsOfHospital = (data) => {
   return async (dispatch, getState) => {
     try {
-      console.log('checkdata', data);
       let res = await getAllDoctorOfHospital(data);
       console.log("check specialty", res);
       if (res && res.errCode === 0) {

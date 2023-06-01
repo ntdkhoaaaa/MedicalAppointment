@@ -7,15 +7,29 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import {
   editMedicineInfor,
   getMedicineById,
-  warningDuplicateMedicine
+  warningDuplicateMedicine,
 } from "../../../services/userServices";
 import { toast } from "react-toastify";
-// import './'
+import Select from "react-select";
 class ModalEditMedicine extends Component {
   constructor(props) {
     super(props);
     this.state = {
       receipts: {},
+      unit: {
+        value: "viên",
+        label: "viên",
+      },
+      units: [
+        {
+          value: "viên",
+          label: "viên",
+        },
+        {
+          value: "tuýp",
+          label: "tuýp",
+        },
+      ],
     };
   }
   async componentDidMount() {
@@ -87,46 +101,32 @@ class ModalEditMedicine extends Component {
     }
   }
   async handleEditMedicineInfor() {
-    let {user}=this.props
-    let clinicId=''
-    let meArr=[]
-    let medicine={}
-    medicine.isDuplicated=true
-    medicine.medicineCode=this.state.receipts.medicineCode
-    medicine.nameMedicine=this.state.receipts.nameMedicine
-    medicine.price=this.state.receipts.price
-    medicine.unit=this.state.receipts.unit
-    medicine.id=this.state.receipts.id
-    if(user.DoctorInfor?.clinicId)
-    {
-      clinicId=user.DoctorInfor.clinicId
-    }
-    else clinicId=user.clinicId
-    meArr.push(medicine)
-    let data={
-      medicineArr:meArr,
-      clinicId:clinicId
-    }
-    let checkDuplicated = await warningDuplicateMedicine(data);
-    console.log('checkDuplicated',checkDuplicated)
-    
-    if (checkDuplicated.data.result === true) {
-      toast.error(
-        "Thông tin thuốc bạn sửa bị trùng với danh thuốc đã thêm trước đó"
-      );
-    } else {
-      console.log('co vo day hong')
-      let res = await editMedicineInfor(this.state.receipts);
-      console.log(res)
-      if (res && res.errCode === 0) {
-        this.toggle();
-      }
+    let res = await editMedicineInfor(this.state.receipts);
+    console.log(res);
+    if (res && res.errCode === 0) {
+      this.toggle();
     }
   }
+  handleChangeSelectInfor = (selectedInfor, name) => {
+    let stateName = name.name;
+    let stateCopy = { ...this.state };
+    stateCopy[stateName] = selectedInfor;
+    this.setState({
+      ...stateCopy,
+    });
+    let temp = { ...this.state.receipts };
+    temp = {
+      ...temp,
+      [stateName]: selectedInfor.value,
+    };
+    this.setState({
+      receipts: temp,
+    });
+  };
   render() {
     let { openModalEditMedicine, editedMedicineId } = this.props;
 
-    let { receipts } = this.state;
+    let { receipts, unit, units } = this.state;
     return (
       <Modal
         isOpen={openModalEditMedicine}
@@ -141,10 +141,10 @@ class ModalEditMedicine extends Component {
               <table className="medicine-table">
                 <thead>
                   <tr>
-                    <th scope="col">Tên thuốc</th>
-                    <th scope="col">Mã thuốc</th>
-                    <th scope="col">Đơn vị tính</th>
-                    <th scope="col">Đơn giá</th>
+                    <th width="25%">Tên thuốc</th>
+                    <th width="25%">Mã thuốc</th>
+                    <th width="25%">Đơn vị tính</th>
+                    <th width="25%">Đơn giá</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -153,8 +153,9 @@ class ModalEditMedicine extends Component {
                       <input
                         type="text"
                         name="nameMedicine"
+                        disabled={true}
                         value={receipts.nameMedicine}
-                        onChange={this.handleChange()}
+                        // onChange={this.handleChange()}
                         className="form-control"
                       />
                     </td>
@@ -163,18 +164,17 @@ class ModalEditMedicine extends Component {
                         type="text"
                         name="medicineCode"
                         value={receipts.medicineCode}
-                        onChange={this.handleChange()}
+                        disabled={true}
                         className="form-control"
                       />
                     </td>
                     <td>
-                      <input
-                        type="text"
+                      <Select
                         name="unit"
-                        value={receipts.unit}
-                        onChange={this.handleChange()}
-                        className="form-control"
-                      />
+                        value={unit}
+                        onChange={this.handleChangeSelectInfor}
+                        options={units}
+                      ></Select>
                     </td>
                     <td>
                       <input

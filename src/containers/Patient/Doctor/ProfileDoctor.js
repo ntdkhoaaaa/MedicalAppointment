@@ -127,7 +127,7 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-                {isShowPrice && isShowPrice == true ? <div className='price'>
+                {/* {isShowPrice && isShowPrice == true ? <div className='price'>
                     <FormattedMessage id='patient.modal-booking.Medical-fee' />
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI ?
                         <NumberFormat
@@ -154,7 +154,7 @@ class ProfileDoctor extends Component {
                         <Link to={`/detail-doctor/${doctorId}`} >Xem Thêm</Link>
                     </div>
                     :
-                    <div></div>}
+                    <div></div>} */}
 
             </div>
 

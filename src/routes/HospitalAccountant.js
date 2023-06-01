@@ -12,13 +12,13 @@ import { LANGUAGES, USER_ROLE } from "../utils";
 import _ from "lodash";
 import { FormattedMessage } from "react-intl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import ManagePatient from "../containers/System/HospitalAccountant/ManagePatient";
 import {
   adminMenu,
   doctorMenu,
   accountantMenu,
   doctorHospitalMenu,
-  accountantHospitalMenu
+  accountantHospitalMenu,
 } from "../containers/Header/menuApp";
 import "./System.scss";
 class HospitalAccountant extends Component {
@@ -137,6 +137,7 @@ class HospitalAccountant extends Component {
                           {item.stt === 4 && (
                             <i class="fas fa-calendar-alt"></i>
                           )}
+                          {item.stt === 5 && <i class="fas fa-procedures"></i>}
                         </div>
                         <span className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>
@@ -163,6 +164,10 @@ class HospitalAccountant extends Component {
                   <Route
                     path="/accountantHospital/manage-hospital-doctors-account"
                     component={ManageDoctorsAccount}
+                  />
+                  <Route
+                    path="/accountantHospital/manage-hospital-patients"
+                    component={ManagePatient}
                   />
                 </Switch>
               </div>

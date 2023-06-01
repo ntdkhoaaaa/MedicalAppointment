@@ -12,6 +12,7 @@ import "react-date-range/dist/theme/default.css";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import moment from "moment";
+import e from "cors";
 
 class ManageDoctorSchedule extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class ManageDoctorSchedule extends Component {
       SaturdayAfternoon: [],
       SundayAfternoon: [],
       doctorArr: [],
+      doctorForShow: [],
       arrSchedules: [],
       arrSchedulesForAfternoon: [],
       arrDayofWeekTimeStamp: [],
@@ -52,14 +54,11 @@ class ManageDoctorSchedule extends Component {
     };
   }
   async componentDidMount() {
-    this.props.getPositionStart();
-    this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
-    this.props.fetchAllDoctorsOfHospital({
+    await this.props.getPositionStart();
+    await this.props.fetchAllSpecialtiesOfClinic(this.props.userInfo.clinicId);
+    await this.props.fetchAllDoctorsOfHospital({
       clinicId: this.props.userInfo.clinicId,
-      specialtyCode: "All",
-      positionCode: "All",
     });
-
     let crr = new Date();
     crr.setHours(0);
     crr.setMinutes(0);
@@ -164,6 +163,7 @@ class ManageDoctorSchedule extends Component {
       let { hospitalDoctors } = this.props;
       this.setState({
         doctorArr: hospitalDoctors,
+        doctorForShow:hospitalDoctors
       });
     }
     if (prevProps.clinicSpecialties !== this.props.clinicSpecialties) {
@@ -181,6 +181,8 @@ class ManageDoctorSchedule extends Component {
       });
     }
     if (prevProps.positionRedux !== this.props.positionRedux) {
+      console.log("Position", this.props.positionRedux)
+
       let arrPositions = this.buildDataInputSelect(
         this.props.positionRedux,
         "allcode"
@@ -228,12 +230,11 @@ class ManageDoctorSchedule extends Component {
     });
   }
   handleSaveBulkSchedules = async () => {
-    console.log("before", this.state.arrSchedules);
     let { arrSchedules } = this.state;
     let result = [];
     arrSchedules.map((item) => {
       let object = {};
-      object.currentNumber = "";
+      object.currentNumber = 0;
       object.maxNumber = item.count;
       object.date = item.date;
       object.timetype = item.timetype;
@@ -272,7 +273,7 @@ class ManageDoctorSchedule extends Component {
   };
   handleChange = async (selectedInfor, name) => {
     console.log("cos vo day k ?", selectedInfor, name);
-    let { filterDegree, filterSpecialty } = this.state;
+    let { filterDegree, filterSpecialty,doctorForShow,doctorArr } = this.state;
     let stateName = name.name;
     let stateCopy = { ...this.state };
     stateCopy[stateName] = selectedInfor;
@@ -287,23 +288,26 @@ class ManageDoctorSchedule extends Component {
     }
     if (name.name === "filterSpecialty") {
       console.log("ewwe", selectedInfor);
-      await this.props.fetchAllDoctorsOfHospital({
-        clinicId: this.props.userInfo.clinicId,
-        specialtyCode: selectedInfor.value,
-        positionCode: filterDegree.value,
-      });
+      
+      let temp=this.state.doctorArr.filter(e => e.specialtyId === selectedInfor.value)
+      this.setState({
+        doctorForShow:temp
+      })
+      // await this.props.fetchAllDoctorsOfHospital({
+      //   clinicId: this.props.userInfo.clinicId,
+      //   specialtyCode: selectedInfor.value,
+      //   positionCode: filterDegree.value,
+      // });
     }
     if (name.name === "filterDegree") {
-      console.log("ewwe");
-      await this.props.fetchAllDoctorsOfHospital({
-        clinicId: this.props.userInfo.clinicId,
-        specialtyCode: filterSpecialty.value,
-        positionCode: selectedInfor.value,
-      });
+      let temp=this.state.doctorArr.filter(e => e.positionId === selectedInfor.value)
+      this.setState({
+        doctorForShow:temp
+      })
     }
   };
   render() {
-    let { arrDayofWeekTimeStamp, arrDayofWeek, arrSchedulesForAfternoon } =
+    let { arrDayofWeekTimeStamp, arrDayofWeek, doctorForShow } =
       this.state;
     let dayofWeek = [];
     let today = new Date();
@@ -370,14 +374,14 @@ class ManageDoctorSchedule extends Component {
                 orientation="horizontal"
                 groupName="1"
                 autoScrollEnabled="true"
-                getChildPayload={(i) => this.state.doctorArr[i]}
+                getChildPayload={(i) => this.state.doctorForShow[i]}
                 onDrop={(e) =>
                   this.setState({
-                    doctorArr: applyDrag(this.state.doctorArr, e),
+                    doctorForShow: applyDrag(this.state.doctorForShow, e),
                   })
                 }
               >
-                {this.state.doctorArr.map((item, i) => {
+                {this.state.doctorForShow.map((item, i) => {
                   return (
                     <Draggable key={i}>
                       <div className="grid-item">
@@ -891,14 +895,14 @@ class ManageDoctorSchedule extends Component {
                 orientation="horizontal"
                 groupName="2"
                 autoScrollEnabled="true"
-                getChildPayload={(i) => this.state.doctorArr[i]}
+                getChildPayload={(i) => this.state.doctorForShow[i]}
                 onDrop={(e) =>
                   this.setState({
-                    doctorArr: applyDrag(this.state.doctorArr, e),
+                    doctorForShow: applyDrag(this.state.doctorForShow, e),
                   })
                 }
               >
-                {this.state.doctorArr.map((item, i) => {
+                {this.state.doctorForShow.map((item, i) => {
                   return (
                     <Draggable key={i}>
                       <div className="grid-item">

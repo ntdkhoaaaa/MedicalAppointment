@@ -29,7 +29,7 @@ class DoctorExtraInfor extends Component {
             listProvinces: [],
             listSpecialties: [],
             listClinics: [],    
-
+            listDoctocs:[],
             selectedClinic: '',
             selectedSpecialty: '',
             selectedPrice: '',
@@ -43,7 +43,11 @@ class DoctorExtraInfor extends Component {
         }
     }
     async componentDidMount() {
-        this.props.fetchAllDoctors();
+        await this.props.fetchAllDoctorsOfClinic({
+            clinicId: this.props.userInfo?.clinicId,
+            specialtyCode: "All",
+            positionCode: "All",
+          });
         this.props.loadAllSpecialties();
         this.props.getAllRequiredInfor();
         this.props.loadAllClinics();
@@ -68,6 +72,15 @@ class DoctorExtraInfor extends Component {
                 listClinics: dataSelectClinics,
             })
         }
+        if (prevProps.clinicDoctors !== this.props.clinicDoctors) {
+            let { clinicDoctors } = this.props;
+            let dataSelect = this.buildDataInputSelect(clinicDoctors,"USER");
+            console.log("dataSelect", dataSelect, clinicDoctors);
+            this.setState({
+              listDoctocs: dataSelect,
+              selectedDoctor: dataSelect[0],
+            });
+          }
         if (prevProps.allRequiredInfor !== this.props.allRequiredInfor) {
             let { resPrice, resPayment, resProvince } = this.props.allRequiredInfor;
             let dataSelectPrice = this.buildDataInputSelect(resPrice, 'PRICE');
@@ -100,7 +113,7 @@ class DoctorExtraInfor extends Component {
         if (prevProps.language !== this.props.language) {
             let { resPrice, resPayment, resProvince } = this.props.allRequiredInfor;
 
-            let dataSelect = this.buildDataInputSelect(this.props.allDoctors, 'USER')
+            let dataSelect = this.buildDataInputSelect(this.props.clinicDoctors, 'USER')
             this.setState({
                 listDoctocs: dataSelect
             })
@@ -495,14 +508,19 @@ const mapStateToProps = state => {
         doctorSelected: state.admin.doctor,
         allRequiredInfor: state.admin.allRequiredInfor,
         allSpecialties: state.admin.allSpecialties,
-        allClinics: state.admin.allClinics
+        allClinics: state.admin.allClinics,
+    clinicDoctors: state.clinicAccountant.clinicDoctors,
+    userInfo: state.user.userInfo,
+
+
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getAllRequiredInfor: () => dispatch(actions.getAllRequiredInfor()),
-        fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
+        fetchAllDoctorsOfClinic: (data) =>
+        dispatch(actions.fetchAllDoctorsOfClinic(data)),
         saveDetailDoctor: (data) => dispatch(actions.saveDetailDoctor(data)),
         fetchAllMarkdown: () => dispatch(actions.fetchAllMarkdown()),
         fetchDoctor: (idInput) => dispatch(actions.fetchDoctor(idInput)),

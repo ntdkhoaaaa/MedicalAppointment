@@ -7,6 +7,7 @@ const initialState = {
   registeredPatients: [],
   examinatedPatients: [],
   patientsMedicalRecords: [],
+  dataPatients: [],
 };
 const doctorReducer = (state = initialState, action) => {
   let copyState = { ...state };
@@ -39,6 +40,11 @@ const doctorReducer = (state = initialState, action) => {
       };
     case actionTypes.FETCH_PATIENTS_MEDICAL_RECORD_BYDATE_SUCCESS:
       copyState.patientsMedicalRecords = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_PATIENT_INFOR_SUCCESS:
+      copyState.dataPatients = action.data;
       return {
         ...copyState,
       };

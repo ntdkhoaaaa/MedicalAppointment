@@ -70,7 +70,8 @@
             "manage-hospital": "Quản lý thông tin bệnh viện",
             "manage-hospital-specialties": "Quản lý chuyên khoa bệnh viện",
             "manage-hospital-doctors": "Quản lý bác sĩ",
-            "manage-doctors-schedule":"Quản lý lịch khám bệnh"
+            "manage-doctors-schedule":"Quản lý lịch khám bệnh",
+            "manage-patients":"Quản lý bệnh nhân"
         },
         "doctorHospital": {
             "general":"Quản lý chung",
@@ -78,7 +79,7 @@
             "patient": "Quản lý bệnh nhân"
         },
         "patient":{
-            "patient-basic-information":"Thông tin y tế",
+            "patient-basic-information":"Thông tin",
             "patient-booking-history":"Lịch sử khám bệnh"
         }
 

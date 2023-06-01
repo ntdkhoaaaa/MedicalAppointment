@@ -37,7 +37,7 @@ class ManageDoctorInfor extends Component {
     if (prevProps.allSpecialties !== this.props.allSpecialties) {
       let listSpecialty = this.buildDataInputSelect(
         this.props.allSpecialties,
-        ""
+        "specialties",
       );
       listSpecialty.unshift({
         value: "All",
@@ -64,11 +64,17 @@ class ManageDoctorInfor extends Component {
       });
     }
     if (prevProps.clinicDoctors !== this.props.clinicDoctors) {
-      console.log("fqfbqubqs");
+      console.log("fqfbqubqs",listDoctors);
+
       let { clinicDoctors } = this.props;
       console.log(clinicDoctors);
+      let listDoctors = this.buildDataInputSelect(
+        clinicDoctors,
+        "doctor"
+      );
+
       this.setState({
-        doctorArr: clinicDoctors,
+        doctorArr: listDoctors,
       });
     }
   }
@@ -85,15 +91,25 @@ class ManageDoctorInfor extends Component {
           result.push(object);
         });
       }
-    } else {
-      if (inputData && inputData.length > 0) {
-        inputData.map((item, index) => {
-          let object = {};
-          object.label = language === LANGUAGES.VI ? item.name : item.nameEn;
-          object.value = item.id;
-          result.push(object);
-        });
-      }
+    }
+    if(text === "doctor") {
+      inputData.map((item, index) => {
+        let object = {};
+        let labelVi = `${item.lastName} ${item.firstName}`;
+        let labelEn = `${item.firstName} ${item.lastName}`;
+        object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+        object.value = item.id;
+        result.push(object);
+      });
+    }
+    if(text === "specialties")
+    {
+      inputData.map((item, index) => {
+        let object = {};
+        object.label = language === LANGUAGES.VI ? item.name : item.nameEn;
+        object.value = item.id;
+        result.push(object);
+      });
     }
 
     return result;
@@ -315,8 +331,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllSpecialtiesOfClinic: (data) =>
-      dispatch(actions.fetchAllSpecialtiesOfClinic(data)),
+    fetchAllDoctorsOfClinic: (data) =>
+      dispatch(actions.fetchAllDoctorsOfClinic(data)),
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
     fetchAllDoctorsOfClinic: (clinicId, specialtyId, positionId) =>
       dispatch(

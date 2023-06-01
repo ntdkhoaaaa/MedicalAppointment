@@ -17,7 +17,7 @@ class About extends Component {
                     <div className='content-left'>
                     <iframe width="640" height="360" src="https://www.youtube.com/embed/QkRkFof25bQ" title="Dịch vụ khám bệnh từ xa giúp người bệnh tiết kiệm những gì?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div className='content-right'>
+                    {/* <div className='content-right'>
                         <div>
                            Nguyễn Trần Đăng Khoa <span>19154035</span> 
                            <br/>
@@ -25,7 +25,7 @@ class About extends Component {
                            <br/>
                            Đặng Thái Minh 19110241
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );

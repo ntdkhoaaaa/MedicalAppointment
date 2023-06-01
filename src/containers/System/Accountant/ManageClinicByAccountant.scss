@@ -23,8 +23,9 @@
       padding: 0px;
       gap: 64px;
       width: 1504px;
-      height: 440px;
-
+      height: 540px;
+      // background-color: #fff;
+      // border-radius: 10px;
       /* Inside auto layout */
 
       flex: none;
@@ -36,7 +37,10 @@
       .clinic-infor {
         display: flex;
         flex-direction: column;
-        height: 400px;
+        height: 540px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 10px;
         .clinic-name {
           display: flex;
           flex-direction: column;
@@ -337,9 +341,11 @@
         align-items: flex-start;
         padding: 0px;
         gap: 16px;
-
-        width: 500px;
-        height: 600px;
+        background-color: #fff;
+        width: 750px;
+        height: 540px;
+        border-radius: 15px;
+        padding: 15px;
 
         /* Inside auto layout */
 
@@ -370,8 +376,8 @@
         }
         .save-container {
           display: flex;
-          justify-content: space-between;
-          width: 700px;
+          justify-content: space-around;
+          width: 800px;
           .preview {
             width: 400px;
             height: 400px;
@@ -393,6 +399,7 @@
           .btn-save {
             //   display: flex;
             //   justify-content: flex-end;
+            width: 40%;
             display: flex;
             align-items: center;
             justify-content: center;

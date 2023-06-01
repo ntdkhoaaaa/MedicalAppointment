@@ -8,11 +8,12 @@ import Select from "react-select";
 import DatePicker from "../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
 import _, { result, times } from "lodash";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Modal, ModalBody } from "reactstrap";
+import ProfileUser from "../Doctor/ProfileUser";
 
-import {
-  saveBulkScheduleDoctor,
-  getSelectedScheduleFromDoctor,
-} from "../../../services/userServices";
 class ManageClinicDoctorSchedules extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,8 @@ class ManageClinicDoctorSchedules extends Component {
       selectedItem: "",
       selectedButton: "",
       eventState: [],
+      modalIsOpen: false,
+      dataPatient: [],
     };
   }
   async componentDidMount() {
@@ -63,7 +66,7 @@ class ManageClinicDoctorSchedules extends Component {
     if (prevProps.clinicDoctors !== this.props.clinicDoctors) {
       let { clinicDoctors } = this.props;
       let dataSelect = this.buildDataInputSelect(clinicDoctors);
-      console.log('dataSelect', dataSelect,clinicDoctors)
+      console.log("dataSelect", dataSelect, clinicDoctors);
       this.setState({
         listDoctocs: dataSelect,
         selectedDoctor: dataSelect[0],
@@ -83,10 +86,17 @@ class ManageClinicDoctorSchedules extends Component {
         object.position = item.timetype.slice(1);
         object.isFullAppointment = item.isFullAppointment;
         object.isBooked = item.isBooked;
+        object.date = item.date;
         temp.push(object);
       });
       this.setState({
         eventState: temp,
+      });
+    }
+    if (prevProps.dataPatients !== this.props.dataPatients) {
+      console.log(this.props.dataPatients);
+      this.setState({
+        dataPatient: this.props.dataPatients,
       });
     }
   }
@@ -122,7 +132,7 @@ class ManageClinicDoctorSchedules extends Component {
     }
   };
   handleOnChangeDataPicker = async (date) => {
-    console.log('onChangeDataPicker',date)
+    console.log("onChangeDataPicker", date);
     this.setState({
       currentDate: date[0],
     });
@@ -130,15 +140,28 @@ class ManageClinicDoctorSchedules extends Component {
       this.state.selectedDoctor.value,
       date[0].getTime()
     );
-
   };
-
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+  };
+  checkData = async (data) => {
+    console.log("checkData", data);
+    let { selectedDoctor } = this.state;
+    await this.props.fetchRegisteredPatientByDateAndTimeType(
+      selectedDoctor.value,
+      data.date,
+      data.timetype
+    );
+    console.log(this.state.dataPatient);
+    this.openModal();
+  };
   render() {
-    let { rangeTime, eventState,currentDate } =
-      this.state;
+    let { rangeTime, eventState, currentDate, dataPatient } = this.state;
     let arrDayofWeek = [];
-    console.log('check current date',currentDate)
-    let tempDate=new Date(currentDate)
+    let tempDate = new Date(currentDate);
     tempDate.setDate(tempDate.getDate() - tempDate.getDay() + 1);
     for (var i = 0; i < 7; i++) {
       arrDayofWeek.push(new Date(tempDate).toLocaleDateString());
@@ -176,6 +199,19 @@ class ManageClinicDoctorSchedules extends Component {
         }
       });
     }
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    };
+    let temporary={}
+    if(dataPatient && dataPatient.length===1)
+    {
+      temporary=dataPatient[0];
+    }
+    console.log('temporary',dataPatient )
     return (
       <div className="manage-clinic-doctors-schedule">
         <div className="m-s-title">
@@ -223,7 +259,7 @@ class ManageClinicDoctorSchedules extends Component {
             </div>
             <div className="ExtraCalendar">
               <table
-               id="TableManageSchedule"
+                id="TableManageSchedule"
                 cellspacing="0"
                 cellpadding="0"
                 className="extra-calendar-schedule"
@@ -323,6 +359,13 @@ class ManageClinicDoctorSchedules extends Component {
                                             ? "booked-schedule schedule"
                                             : "schedule"
                                         }
+                                        // onClick={()=>this.checkData(element)}
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
+                                        }
                                       >
                                         {element.title}
                                       </div>
@@ -345,6 +388,12 @@ class ManageClinicDoctorSchedules extends Component {
                                             : element.isBooked === true
                                             ? "booked-schedule schedule"
                                             : "schedule"
+                                        }
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
                                         }
                                       >
                                         {element.title}
@@ -369,6 +418,12 @@ class ManageClinicDoctorSchedules extends Component {
                                             ? "booked-schedule schedule"
                                             : "schedule"
                                         }
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
+                                        }
                                       >
                                         {element.title}
                                       </div>
@@ -391,6 +446,12 @@ class ManageClinicDoctorSchedules extends Component {
                                             : element.isBooked === true
                                             ? "booked-schedule schedule"
                                             : "schedule"
+                                        }
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
                                         }
                                       >
                                         {element.title}
@@ -415,6 +476,12 @@ class ManageClinicDoctorSchedules extends Component {
                                             ? "booked-schedule schedule"
                                             : "schedule"
                                         }
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
+                                        }
                                       >
                                         {element.title}
                                       </div>
@@ -437,6 +504,12 @@ class ManageClinicDoctorSchedules extends Component {
                                             : element.isBooked === true
                                             ? "booked-schedule schedule"
                                             : "schedule"
+                                        }
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
                                         }
                                       >
                                         {element.title}
@@ -461,6 +534,12 @@ class ManageClinicDoctorSchedules extends Component {
                                             ? "booked-schedule schedule"
                                             : "schedule"
                                         }
+                                        onClick={() =>
+                                          (element.isFullAppointment === true &&
+                                            this.checkData(element)) ||
+                                          (element.isBooked === true &&
+                                            this.checkData(element))
+                                        }
                                       >
                                         {element.title}
                                       </div>
@@ -479,6 +558,41 @@ class ManageClinicDoctorSchedules extends Component {
             </div>
           </div>
         </div>
+
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          toggle={this.closeModal}
+          contentLabel="Slider Modal"
+          // size="lg"
+          centered={true}
+          className="slider-modal"
+        >
+          <ModalBody>
+            {dataPatient && dataPatient.length > 1 ? (
+              <Slider {...settings}>
+                {dataPatient &&
+                  dataPatient.map((item) => 
+                  (
+                    <div className="patient-infor">
+                      <ProfileUser
+                        patientId={item.patientId}
+                        patientInformation={item}
+                        fromAccountant={true}
+                      />
+                    </div>
+                  ))}
+              </Slider>
+            ) : (
+              <div className="patient-infor">
+                <ProfileUser
+                  patientId={temporary?.patientId}
+                  patientInformation={temporary}
+                  fromAccountant={true}
+                />
+              </div>
+            )}
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
@@ -491,6 +605,7 @@ const mapStateToProps = (state) => {
     allScheduleTime: state.admin.allScheduleTime,
     clinicDoctors: state.clinicAccountant.clinicDoctors,
     doctorWeekSchedules: state.doctor.doctorWeekSchedules,
+    dataPatients: state.doctor.dataPatients,
   };
 };
 
@@ -501,6 +616,15 @@ const mapDispatchToProps = (dispatch) => {
     fetchAllScheduleTime: () => dispatch(actions.fetchAllScheduleTime()),
     fetchAllScheduleForWeek: (doctorId, date) =>
       dispatch(actions.fetchAllScheduleForWeek(doctorId, date)),
+    fetchRegisteredPatientByDateAndTimeType: (doctorId, date, timeType) => {
+      dispatch(
+        actions.fetchRegisteredPatientByDateAndTimeType(
+          doctorId,
+          date,
+          timeType
+        )
+      );
+    },
   };
 };
 
