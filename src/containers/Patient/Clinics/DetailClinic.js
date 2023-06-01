@@ -38,16 +38,17 @@ class DetailClinic extends Component {
           let arr = data.clinicData;
           if (arr && arr.length > 0) {
             arr.map((item) => {
-              arrDoc.push(item.doctorId);
+              arrDoc.push(item);
             });
           }
         }
+      console.log("check res", res);
+
         this.setState({
           dataDetailClinic: res.data,
           arrDoctors: arrDoc,
         });
       }
-      console.log("check res", res);
     }
   }
 
@@ -70,7 +71,7 @@ class DetailClinic extends Component {
             {dataDetailClinic && !_.isEmpty(dataDetailClinic) && (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: dataDetailClinic.descriptionHTML,
+                  __html: dataDetailClinic?.descriptionHTML,
                 }}
               ></div>
             )}
@@ -81,10 +82,12 @@ class DetailClinic extends Component {
                 <div className="each-doctor" key={index}>
                   <div className="dt-content-left">
                     <ProfileDoctor
-                      doctorId={item}
+                      doctorId={item.id}
+                      doctorInfor={item}
                       isShowDescription={true}
                       isShowDetail={true}
                       isShowPrice={false}
+                      checkModal={false}
                     />
                   </div>
                   <div className="dt-content-right">

@@ -23,11 +23,12 @@ class ProfileDoctor extends Component {
             this.setState({
                 dataProfile: data
             })
-        console.log(data)
 
         }
         else{
             let data = await this.getProfileDoctor(this.props.doctorId,false)
+        console.log(data)
+
             this.setState({
                 dataProfile: data
             })
@@ -94,18 +95,19 @@ class ProfileDoctor extends Component {
     }
 
     render() {
-        let { language, isShowDescription, dataTime, isShowPrice, isShowDetail, doctorId } = this.props;
-        console.log('check log state', this.state)
+        let { language, isShowDescription, dataTime, isShowPrice, isShowDetail, doctorId,doctorInfor } = this.props;
+        console.log('check log state', doctorInfor.User.image)
         let { dataProfile } = this.state;
         let nameVi, nameEn;
-        if (dataProfile && dataProfile.positionData) {
-            nameVi = `${dataProfile.positionData.valueVi},${dataProfile.lastName} ${dataProfile.firstName}`;
-            nameEn = `${dataProfile.positionData.valueEn},${dataProfile.firstName} ${dataProfile.lastName}`;
+        if (doctorInfor && doctorInfor.User) {
+            nameVi = `${doctorInfor.User.lastName} ${doctorInfor.User.firstName}`;
+            nameEn = `${doctorInfor.User.firstName} ${doctorInfor.User.lastName}`;
         }
+
         return (
             <div className='doctor-profile-container'>
                 <div className='intro-doctor'>
-                    <div className='content-left' style={{ backgroundImage: `url(${dataProfile && dataProfile.image ? dataProfile.image : ''})` }}>
+                    <div className='content-left' style={{ backgroundImage: `url(${doctorInfor.User && doctorInfor.User.image ? doctorInfor.User.image : ''})` }}>
                     </div>
                     <div className='content-right'>
                         <div className='Up' >
@@ -114,9 +116,9 @@ class ProfileDoctor extends Component {
                         <div className='Down'>
                             {isShowDescription === true ?
                                 <>
-                                    {dataProfile.Markdown &&
-                                        dataProfile.Markdown.description &&
-                                        <div dangerouslySetInnerHTML={{ __html: dataProfile.Markdown.description }}>
+                                    {doctorInfor.User?.Markdown &&
+                                        doctorInfor.User?.Markdown.description &&
+                                        <div dangerouslySetInnerHTML={{ __html: doctorInfor.User.Markdown.description }}>
                                         </div>}
                                 </>
                                 :
