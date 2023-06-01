@@ -17,15 +17,27 @@ class ProfileDoctor extends Component {
         }
     }
     async componentDidMount() {
-        let data = await this.getProfileDoctor(this.props.doctorId)
-        this.setState({
-            dataProfile: data
-        })
+        if(this.props.checkModal && this.props.checkModal===true)
+        {
+            let data = await this.getProfileDoctor(this.props.doctorId,true)
+            this.setState({
+                dataProfile: data
+            })
+        console.log(data)
+
+        }
+        else{
+            let data = await this.getProfileDoctor(this.props.doctorId,false)
+            this.setState({
+                dataProfile: data
+            })
+        }
+
     }
-    getProfileDoctor = async (id) => {
+    getProfileDoctor = async (id,checkModal) => {
         let result = {}
         if (id) {
-            let res = await getProfileDoctorById(id);
+            let res = await getProfileDoctorById(id,checkModal);
             if (res && res.errCode === 0) {
                 result = res.data;
             }
@@ -37,10 +49,23 @@ class ProfileDoctor extends Component {
 
         }
         if (this.props.doctorId !== prevProps.doctorId) {
-            let data = await this.getProfileDoctor(this.props.doctorId)
-            this.setState({
-                dataProfile: data
-            })
+            if(this.props.checkModal && this.props.checkModal===true)
+            {
+                let data = await this.getProfileDoctor(this.props.doctorId,true)
+                this.setState({
+                    dataProfile: data
+                })
+            }
+            else{
+                let data = await this.getProfileDoctor(this.props.doctorId,false)
+                this.setState({
+                    dataProfile: data
+                })
+            }
+            // let data = await this.getProfileDoctor(this.props.doctorId)
+            // this.setState({
+            //     dataProfile: data
+            // })
         }
     }
     capitalizeFirstLetter(string) {
@@ -49,14 +74,13 @@ class ProfileDoctor extends Component {
     renderBookingTime = (bookingTime) => {
         if (bookingTime) {
             let { language } = this.props;
-            // console.log(bookingTime);
+            console.log(bookingTime);
             let time = language === LANGUAGES.VI ? bookingTime.timetypeData.valueVi : bookingTime.timetypeData.valueEn
             if (bookingTime && !_.isEmpty(bookingTime)) {
                 let date = language === LANGUAGES.VI ?
                     this.capitalizeFirstLetter(moment.unix(+bookingTime.date / 1000).format('dddd - DD/MM/YYYY'))
                     :
                     moment.unix(+bookingTime.date / 1000).locale('en').format('ddd - DD/MM/YYYY')
-
                 return (
                     <>
                         <div>{time}  -  {date}</div>
@@ -98,19 +122,17 @@ class ProfileDoctor extends Component {
                                 :
                                 <>
                                     {this.renderBookingTime(dataTime)}
-
                                 </>
-
                             }
                         </div>
                     </div>
                 </div>
-                {isShowPrice && isShowPrice == true ? <div className='price'>
+                {/* {isShowPrice && isShowPrice == true ? <div className='price'>
                     <FormattedMessage id='patient.modal-booking.Medical-fee' />
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI ?
                         <NumberFormat
                             className='currency'
-                            value={dataProfile.Doctor_Infor.priceData.valueVi}
+                            value={dataProfile.Doctor_Infor?.priceData?.valueVi}
                             displayType={'text'}
                             thousandSeparator={true}
                             suffix={'VND'}
@@ -119,7 +141,7 @@ class ProfileDoctor extends Component {
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.EN ?
                         <NumberFormat
                             className='currency'
-                            value={dataProfile.Doctor_Infor.priceData.valueEn}
+                            value={dataProfile.Doctor_Infor?.priceData?.valueEn}
                             displayType={'text'}
                             thousandSeparator={true}
                             suffix={'$'}
@@ -132,7 +154,7 @@ class ProfileDoctor extends Component {
                         <Link to={`/detail-doctor/${doctorId}`} >Xem Thêm</Link>
                     </div>
                     :
-                    <div></div>}
+                    <div></div>} */}
 
             </div>
 

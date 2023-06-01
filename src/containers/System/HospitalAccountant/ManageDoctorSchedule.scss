@@ -1,0 +1,554 @@
+.schedule-container {
+  min-height: 1500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // background-color: #fff;
+  background-color: #eff1f5;
+
+  height: 2500px;
+  .morning {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    margin-bottom: 100px;
+    margin-left: 20px;
+    background-color: #fff;
+
+    // border: 1px solid #75b2eb;
+    padding: 20px;
+    width: 97%;
+    border-radius: 15px;
+
+    .morning-schedule-with-filter {
+      display: flex;
+      width: 100%;
+      .filter {
+        width: 20%;
+        background-color: #eff1f5;
+        border-radius: 20px;
+        // margin-top: 50px;
+        // margin-right: 20px;
+        // margin-left: 20px;
+        height: 320px;
+        .doctor-search {
+          margin-top: 20px;
+          margin-left: 15px;
+          margin-bottom: 20px;
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .search {
+            width: 90%;
+            justify-content: space-between;
+            display: flex;
+            border: 1px solid #180202;
+            outline: black;
+            border-radius: 15px;
+            input {
+              border-radius: 15px;
+
+              border: none;
+              width: 80%;
+              height: 35px;
+              outline: none;
+            }
+            .icon-container {
+              border-radius: 9px;
+              width: 20%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #0a1128;
+              i {
+                // background-color: aqua;
+                font-size: 20px;
+                color: white;
+              }
+            }
+          }
+        }
+        .specialty-search {
+          margin-left: 15px;
+          margin-top: 10px;
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .specialty-select {
+            width: 90%;
+          }
+        }
+        .degree-search {
+          margin-left: 15px;
+
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .degree-select {
+            width: 90%;
+          }
+        }
+      }
+      .doctors-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 64px;
+        width: 80%;
+        height: 325px;
+        /* Inside auto layout */
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+        overflow-x: auto;
+        background-color: #fff;
+        .grid-item {
+          width: 160px;
+          height: 224px;
+          margin: 20px;
+          /* Inside auto layout */
+
+          flex: none;
+          order: 1;
+          flex-grow: 0;
+          // overflow-y: auto;
+          .doctor-avatar {
+            width: 160px;
+            height: 160px;
+
+            /* 1 */
+
+            box-shadow: 0px 1px 3px 1px rgba(0, 48, 83, 0.15);
+            filter: drop-shadow(0px 1px 2px rgba(0, 48, 83, 0.3));
+            // border-radius: 1000px;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            // margin-top: 35px;
+            // height: 160px;
+            // width: 160px;
+            border-radius: 50%;
+            font-size: 0;
+            background: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: #dff0f5;
+            border: 2px solid #f715e4;
+          }
+          .doctor-position {
+            border: 2px solid #35c861;
+          }
+          .professor-position {
+            border: 2px solid #3809e2;
+          }
+          .assi-position {
+            border: 2px solid #1dcbf7;
+          }
+          .master-position {
+            border: 2px solid #e0e407;
+          }
+          .extra-infor {
+            margin-top: 30px;
+            .doctor-name {
+              font-weight: 700;
+              font-size: 20px;
+              min-height: 60px;
+            }
+            .doctor-specialty {
+              font-weight: 200;
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+    .table-time-morning {
+      // background-color: #1dcbf7;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      margin-top: 60px;
+      border: 1px solid #75b2eb;
+      border-radius: 15px;
+      span {
+        position: absolute;
+        top: 512px;
+        color: #75b2eb;
+        left: 850px;
+        font-size: 30px;
+        // z-index: 100;
+        background-color: #ffffff;
+      }
+      .table-time-right {
+        width: 100%;
+        padding: 40px;
+        display: flex;
+        .schedule {
+          width: 100%;
+          display: flex;
+          .day-container {
+            width: 14%;
+            .schedule-day {
+              width: 100%;
+              border: 1px solid #ccc;
+              min-height: 200px;
+              overflow-x: "auto";
+              // flex: 1;
+              .grid-item {
+                // border-right: 1px solid rgba(0, 0, 0, 0.8);
+                // border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .doctor-avatar {
+                  margin-top: 35px;
+                  height: 150px;
+                  width: 150px;
+                  border-radius: 50%;
+                  font-size: 0;
+                  background: center center;
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  border: 2px solid #f715e4;
+                }
+                .doctor-position {
+                  border: 2px solid #35c861;
+                }
+                .professor-position {
+                  border: 2px solid #3809e2;
+                }
+                .assi-position {
+                  border: 2px solid #1dcbf7;
+                }
+                .master-position {
+                  border: 2px solid #e0e407;
+                }
+                .extra-infor {
+                  margin-top: 30px;
+                  .doctor-name {
+                    min-height: 60px;
+
+                    font-weight: 700;
+                    font-size: 20px;
+                  }
+                  .doctor-specialty {
+                    font-weight: 200;
+                    font-size: 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .button-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .btn-save-schedules {
+            width: 80px;
+            height: 80px;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50%;
+            &:hover {
+              background-color: #75b2eb;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    .day-title {
+      background-color: #75b2eb;
+      font-size: 30px;
+      color: #fff;
+      text-align: center;
+    }
+  }
+  .afternoon {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    margin-bottom: 100px;
+    margin-left: 20px;
+    background-color: #fff;
+
+    // border: 1px solid #75b2eb;
+    padding: 20px;
+    width: 97%;
+    border-radius: 15px;
+
+    .afternoon-schedule-with-filter {
+      display: flex;
+      width: 100%;
+      .filter {
+        width: 20%;
+        background-color: #eff1f5;
+        border-radius: 20px;
+        // margin-top: 50px;
+        // margin-right: 20px;
+        // margin-left: 20px;
+        height: 320px;
+        .doctor-search {
+          margin-top: 20px;
+          margin-left: 15px;
+          margin-bottom: 20px;
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .search {
+            width: 90%;
+            justify-content: space-between;
+            display: flex;
+            border: 1px solid #180202;
+            outline: black;
+            border-radius: 15px;
+            input {
+              border-radius: 15px;
+
+              border: none;
+              width: 80%;
+              height: 35px;
+              outline: none;
+            }
+            .icon-container {
+              border-radius: 9px;
+              width: 20%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #0a1128;
+              i {
+                // background-color: aqua;
+                font-size: 20px;
+                color: white;
+              }
+            }
+          }
+        }
+        .specialty-search {
+          margin-left: 15px;
+          margin-top: 10px;
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .specialty-select {
+            width: 90%;
+          }
+        }
+        .degree-search {
+          margin-left: 15px;
+
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .degree-select {
+            width: 90%;
+          }
+        }
+      }
+      .doctors-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 64px;
+        width: 80%;
+        height: 325px;
+        /* Inside auto layout */
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+        overflow-x: auto;
+        background-color: #fff;
+        .grid-item {
+          width: 160px;
+          height: 224px;
+          margin: 20px;
+          /* Inside auto layout */
+
+          flex: none;
+          order: 1;
+          flex-grow: 0;
+          // overflow-y: auto;
+          .doctor-avatar {
+            width: 160px;
+            height: 160px;
+
+            /* 1 */
+
+            box-shadow: 0px 1px 3px 1px rgba(0, 48, 83, 0.15);
+            filter: drop-shadow(0px 1px 2px rgba(0, 48, 83, 0.3));
+            // border-radius: 1000px;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            // margin-top: 35px;
+            // height: 160px;
+            // width: 160px;
+            border-radius: 50%;
+            font-size: 0;
+            background: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: #dff0f5;
+            border: 2px solid #f715e4;
+          }
+          .doctor-position {
+            border: 2px solid #35c861;
+          }
+          .professor-position {
+            border: 2px solid #3809e2;
+          }
+          .assi-position {
+            border: 2px solid #1dcbf7;
+          }
+          .master-position {
+            border: 2px solid #e0e407;
+          }
+          .extra-infor {
+            margin-top: 30px;
+            .doctor-name {
+              font-weight: 700;
+              font-size: 20px;
+              min-height: 60px;
+            }
+            .doctor-specialty {
+              font-weight: 200;
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+    .table-time-afternoon {
+      // background-color: #1dcbf7;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      margin-top: 60px;
+      border: 1px solid #75b2eb;
+      border-radius: 15px;
+      span {
+        position: relative;
+        top: -20px;
+        color: #75b2eb;
+        left: 650px; 
+        width: 260px;
+        font-size: 30px;
+        background-color: #ffffff;
+      }
+      .table-time-right {
+        width: 100%;
+        padding: 40px;
+        display: flex;
+        .schedule {
+          width: 100%;
+          display: flex;
+          .day-container {
+            width: 14%;
+            .schedule-day {
+              width: 100%;
+              border: 1px solid #ccc;
+              min-height: 200px;
+              overflow-x: "auto";
+              // flex: 1;
+              .grid-item {
+                // border-right: 1px solid rgba(0, 0, 0, 0.8);
+                // border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .doctor-avatar {
+                  margin-top: 35px;
+                  height: 150px;
+                  width: 150px;
+                  border-radius: 50%;
+                  font-size: 0;
+                  background: center center;
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  border: 2px solid #f715e4;
+                }
+                .doctor-position {
+                  border: 2px solid #35c861;
+                }
+                .professor-position {
+                  border: 2px solid #3809e2;
+                }
+                .assi-position {
+                  border: 2px solid #1dcbf7;
+                }
+                .master-position {
+                  border: 2px solid #e0e407;
+                }
+                .extra-infor {
+                  margin-top: 30px;
+                  .doctor-name {
+                    min-height: 60px;
+
+                    font-weight: 700;
+                    font-size: 20px;
+                  }
+                  .doctor-specialty {
+                    font-weight: 200;
+                    font-size: 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .button-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .btn-save-schedules {
+            width: 80px;
+            height: 80px;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50%;
+            &:hover {
+              background-color: #75b2eb;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    .day-title {
+      background-color: #75b2eb;
+      font-size: 30px;
+      color: #fff;
+      text-align: center;
+    }
+  }
+}

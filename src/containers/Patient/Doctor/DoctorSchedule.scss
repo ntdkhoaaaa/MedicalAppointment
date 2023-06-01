@@ -42,6 +42,7 @@
                     background-color: #fff04b;
                     border-radius: 5px;
                     font-weight: 600;
+                    
                     color: #333;
                     &:hover{
                     background-color: #45c3d2;
@@ -54,6 +55,13 @@
                 .btn-en{
                     min-width: 170px;
                     
+                }
+                .booked{
+                    background-color: #4ca0e9 !important;
+                }
+                .fulled{
+                    background-color:  rgb(30, 218, 155);
+                    cursor: not-allowed;
                 }
                 .unavailable{
                     font-style: italic;

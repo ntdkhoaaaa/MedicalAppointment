@@ -4,12 +4,11 @@ import {
     createNewUserService, getAllUsers,
     editUserService, getTopDoctorHomeService, editUserInforByOwnService,
     getAllDoctors, saveDetailDoctorService, getAllMarkdown, getDetailInforDoctor,
-    getAllSpecialties, getAllClinics, handleGetPermission
+    getAllSpecialties, getAllClinics, handleGetPermission,
 
 } from '../../services/userServices';
 import { toast } from "react-toastify";
 export const fetchGenderStart = () => {
-
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -58,8 +57,8 @@ export const fetchPositionStart = () => {
             dispatch({
                 type: actionTypes.FETCH_GENDER_START
             })
-            let res = await getAllCodeService("Position");
-
+            let res = await getAllCodeService("POSITION");
+            console.log('checkkkk',res)
             if (res && res.errCode === 0) {
                 dispatch(fetchPositionSuccess(res.data));
             }
@@ -80,7 +79,7 @@ export const fetchRolesStart = () => {
             dispatch({
                 type: actionTypes.FETCH_GENDER_START
             })
-            let res = await getAllCodeService("Role");
+            let res = await getAllCodeService("ROLE");
 
             if (res && res.errCode === 0) {
                 dispatch(fetchRolesSuccess(res.data));
@@ -207,12 +206,11 @@ export const EditUser = (userId) => {
                 dispatch(fetchAllUsersStart());
             }
             else {
-                toast.error('Delete a new user failed')
+                toast.error('Edit user failed')
                 dispatch(editUserFailed());
             }
         } catch (e) {
-            toast.error('Delete a new user failed')
-
+            toast.error('Edit user failed')
             dispatch(editUserFailed());
             console.log("editUserFailed", e);
         }
@@ -290,6 +288,7 @@ export const fetchAllDoctors = () => {
         }
     }
 }
+
 export const saveDetailDoctor = (data) => {
     return async (dispatch, getState) => {
         try {

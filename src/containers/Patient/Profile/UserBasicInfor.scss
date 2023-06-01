@@ -1,0 +1,189 @@
+.user-detail-container {
+  width: 100%;
+  background-color: #eff1f5;
+  height: 900px;
+  display: flex;
+  .patient-infor {
+    margin: 50px 150px;
+    height: 620px;
+    background-color: #fff;
+    border-radius: 50px;
+    width: 100%;
+    display: flex;
+    .left {
+      width: 30%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .preview-img {
+        height: 300px;
+        width: 80%;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        font-size: 0;
+        background: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+    .right {
+      width: 60%;
+      .basic-infor {
+        border: #75b2eb 1px solid;
+        border-radius: 10px;
+        position: relative;
+        margin-top: 30px;
+        .title-name {
+          position: absolute;
+          top: -20px;
+          left: 10px;
+          font-size: 24px;
+          font-weight: 700;
+          color: #75b2eb;
+          background-color: #fff;
+        }
+        .user-information {
+          display: flex;
+          flex-direction: column;
+          padding: 10px;
+          justify-content: space-between;
+          gap: 12px;
+          .user-name {
+            display: flex;
+            padding: 10px;
+            justify-content: space-between;
+            gap: 12px;
+          }
+          .extra-infor {
+            display: flex;
+            padding: 10px;
+            // margin: 10px;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 12px;
+            .phone{
+              max-width: 385px;
+            }
+            .basic-information {
+              display: flex;
+              gap: 12px;
+              .radio-group {
+                display: flex;
+                margin: 10px;
+                label {
+                  margin-right: 4px;
+                  font-weight: 300;
+                  min-width: 80px;
+                  // color: #75b2eb;
+                  color: #000;
+                }
+              }
+            }
+          }
+        }
+        label {
+          margin-right: 4px;
+          font-weight: 300;
+          min-width: 80px;
+          color: #75b2eb;
+        }
+        .input-container {
+          height: 40px;
+          min-width: 300px;
+          border-radius: 10px;
+          background-color: #f4f5fa;
+          padding: 10px;
+          border: none;
+          box-shadow: 5px;
+        }
+      }
+      .medical-infor {
+        border: #75b2eb 1px solid;
+        border-radius: 10px;
+        position: relative;
+        margin-top: 30px;
+        .medical-info-title {
+          position: absolute;
+          top: -20px;
+          left: 10px;
+          font-size: 24px;
+          font-weight: 700;
+          color: #75b2eb;
+          background-color: #fff;
+        }
+        label {
+          margin-right: 4px;
+          font-weight: 300;
+          min-width: 80px;
+          color: #75b2eb;
+        }
+        .input-container {
+          height: 40px;
+          min-width: 50px;
+          border-radius: 10px;
+          background-color: #f4f5fa;
+          padding: 10px;
+          border: none;
+          box-shadow: 5px;
+        }
+        .medical-user-information {
+          display: flex;
+          width: 100%;
+          padding: 10px;
+          justify-content: space-between;
+          gap: 12px;
+          .personal-parameters {
+            display: flex;
+            padding: 10px;
+            width: 40%;
+
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+          }
+
+          .personal-pathology {
+            display: flex;
+            width: 60%;
+
+            textarea {
+              // border: #75b2eb 1px solid;
+              border: none;
+              background-color: #f4f5fa;
+              border-radius: 10px;
+
+              height: 200px;
+              width: 400px;
+            }
+          }
+        }
+      }
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+        .btn-submit {
+          width: 200px;
+          height: 40px;
+          border-radius: 5px;
+          border: none;
+          font-size: 20px;
+          background-color: #ddd;
+          &:hover {
+            background-color: #75b2eb;
+          }
+        }
+      }
+    }
+  }
+}
+.bloodType{
+  i{
+    color: red;
+  }
+}

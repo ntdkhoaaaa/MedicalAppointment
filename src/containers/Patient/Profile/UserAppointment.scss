@@ -1,22 +1,199 @@
 .patient-appointment{
-    // margin: 0px 150px;
-    height: 500px;
-    padding: 20px 0;
-    margin: 20px 20px;
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    min-height: 1000px;
+    height: fit-content;
+    gap: 20px;
+    .left-container {
+        width: 20%;
+        margin: 20px;
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        background-color: #fff;
+        label {
+          font-weight: 700;
+          font-size: 20px;
+          margin-bottom: 5px;
+        }
+        .filter-container {
+          width: 100%;
+          background-color: #eff1f5;
+          border-radius: 10px;
+          height: 300px;
+          .date-picker {
+            width: 94%;
+          }
+          .type-search {
+            margin-left: 15px;
+            margin-top: 10px;
+            label {
+              font-weight: 700;
+              font-size: 20px;
+              margin-bottom: 5px;
+            }
+            .type-select {
+              width: 90%;
+            }
+          }
+          .search-container {
+            margin-top: 20px;
+            margin-left: 15px;
+            margin-bottom: 20px;
+            label {
+              font-weight: 700;
+              font-size: 20px;
+              margin-bottom: 5px;
+            }
+            .search {
+              width: 90%;
+              justify-content: space-between;
+              display: flex;
+              border: 1px solid #180202;
+              outline: black;
+              border-radius: 15px;
+              input {
+                border-radius: 15px;
+                border: none;
+                width: 80%;
+                height: 35px;
+                outline: none;
+              }
+              .icon-container {
+                border-radius: 9px;
+                width: 20%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #0a1128;
+                i {
+                  // background-color: aqua;
+                  font-size: 20px;
+                  color: white;
+                }
+              }
+            }
+          }
+        }
+        .statistical-container {
+          // background-color: #fff;
+          background-color: #eff1f5;
+          height: 200px;
+          border-radius: 10px;
+          width: 100%;
+          padding: 20px;
+          label {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          span {
+            font-weight: 500;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+          .total {
+            display: flex;
+            justify-content: space-between;
+          }
+          .total-pill {
+            color: #000;
+          }
+          .total-tupe {
+            color: #000;
+          }
+          .total-medicine {
+            color: #000;
+          }
+          .add-new-medicine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .icon-container {
+              width: 150px;
+              height: 40px;
+              border-radius: 10px;
+              background-color: #c9e1f3;
+              transition: width 0.5s;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              &:hover {
+                cursor: pointer;
+                background-color: rgb(4, 171, 255);
+              }
+              span {
+                font-weight: 600;
+                font-size: 20px;
+                margin-bottom: 5px;
+              }
+              // i {
+              //   height: 80px;
+              //   font-size: 20px;
+              //   align-items: center;
+              //   justify-content: center;
+              //   display: flex;
+              // }
+            }
+          }
+        }
+      }
+    .right-container{
+        width: 80%;
+        margin: 20px;
+        height: fit-content;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #fff;
 
-    .table-manage-patient {
+    }
 
-        table,
-        th,
-        // td {
-        //     border: 1px solid black;
-        //     border-collapse: collapse;
-        // }
-
-        th,
+    .table-manage-appointment {
+        display: flex;
+        width: 100%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        align-items: center;
+        border-radius: 10px;
+        border-collapse: collapse;
+        border-radius: 1em;
+        overflow: hidden;
+        border: #eff1ef solid 2px;
+        .btn-group-patient{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+        th{
+            border: 1px solid #ddd;
+            padding: 8px;
+            align-items: center;
+            text-align: center;
+        }
+        tbody{
+          width: 100%;
+        }
+        th{
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: rgb(125 194 226);
+            color: white;
+        }
         td {
             padding: 5px;
+            border: 1px solid #fff;
             text-align: left;
+            background-color: #eff1f5;
         }
 
         button {
@@ -27,28 +204,46 @@
         }
 
         .mp-btn-cancel {
-            margin-right: 10px;
             height: 30px;
-            min-width: 100px;
+            min-width: 30px;
             border-radius: 3px;
             background: #ff0141;
+            color: #fff;
+
+            &:hover{
+                color: #ff0141;
+                outline: 3px solid #ff0141;
+                background-color: #fff;
+            }
         }
         .mp-btn-rate {
-            margin-right: 10px;
             height: 30px;
-            min-width: 100px;
+            min-width: 30px;
             border-radius: 3px;
-            background: #fcff17;
+            background: #f5c345;
+            color: #fff;
+            &:hover{
+                color: #f5c345;
+                background-color: #fff;
+                outline:3px solid #f5c345;
+            }
         }
 
         .mp-btn-remedy {
             height: 30px;
-            min-width: 100px;
+            min-width: 30px;
             border-radius: 3px;
-            background: #1df82f;
+            background: rgb(125 194 226);
+            color: #fff;
+
+            &:hover{
+                color: rgb(125 194 226);
+                background-color: #fff;
+                outline:3px solid rgb(125 194 226);
+            }
         }
         .no-patient{
-            background-color: red;
+            background-color: rgb(176, 49, 49);
             .no-no{
                 text-align: center;
                 font-size: 25px;

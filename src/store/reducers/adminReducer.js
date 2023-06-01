@@ -35,7 +35,6 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_GENDER_SUCCESS:
             state.genders = action.data;
-            console.log(state);
             return {
                 ...state,
             }
@@ -97,7 +96,6 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_ALL_MARKDOWN_SUCCESS:
             state.allMarkdown = action.allMarkdown;
-            console.log('check for markdown', state.allMarkdown)
             return {
                 ...state,
             }

@@ -137,6 +137,15 @@ class ManageSpecialty extends Component {
         let res = await deleteSpecialtyById(id);
         await this.props.loadAllSpeciatlties();
         if (res && res.errCode === 0) {
+            this.setState({
+                name: '',
+                nameEn: '',
+                imageBase64: '',
+                descriptionMarkdown: '',
+                descriptionHTML: '',
+                action: CRUD_ACTIONS.CREATE,
+                previewImgURL: ''
+            })
             toast.success("Xóa chuyên khoa thành cônggg")
         } else {
             toast.error("Xóa không thành công kiểm tra lại");
@@ -227,7 +236,6 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         allSpecialties: state.admin.allSpecialties,
-
     };
 };
 

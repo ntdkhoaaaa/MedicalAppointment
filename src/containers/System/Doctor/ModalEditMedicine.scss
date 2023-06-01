@@ -1,0 +1,75 @@
+.medicine-table {
+  width: 600px;
+  border-collapse: collapse;
+  margin-top: 15px;
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    background-color: #fff;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #ddd;
+  }
+  .isDuplicated tr {
+    background-color: red($color: #fb0f0f);
+  }
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #75b2eb;
+    color: white;
+  }
+}
+.btn-group {
+  width: 100%;
+  background-color: #fff;
+  height: 130px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+//   flex-direction: column;
+  gap: 20px;
+  .btn-add-new-medicine {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    font-size: 15px;
+    height: 40px;
+    background-color: #75b2eb;
+    &:hover {
+      color: #fff;
+    }
+  }
+  .btn-cancel-medicine {
+    outline: none;
+    border: none;
+    font-size: 15px;
+    border-radius: 5px;
+    width: 120px;
+    background-color: red;
+    height: 40px;
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+// .modal-edit-medicine{
+//   height: 500px !important;
+// }
+// .modal-content {
+//     width: 700px;
+//     min-height: 200px;
+//     height: -moz-fit-content;
+//     height: fit-content;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     flex-direction: column;
+// }

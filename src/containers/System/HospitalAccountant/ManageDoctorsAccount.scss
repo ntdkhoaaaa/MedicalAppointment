@@ -1,0 +1,365 @@
+.manage-container-hospital-doctor {
+    background-color: #eff1f5;
+    height: 2500px;
+    display: flex;
+    flex-direction: column;
+    .title-manage {
+      font-size: 50px;
+      color: #68b690;
+      text-align: center;
+    }
+    .register-form {
+      display: flex;
+      height: 550px;
+      width: 1200px;
+      align-self: center;
+      margin: 50px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      .left {
+        align-items: center;
+        align-self: center;
+        margin: 20px;
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        .preview-img {
+          height: 300px;
+          width: 300px;
+          align-items: center;
+          align-self: center;
+          background-image: url("../../../assets/bac-si-gia-dinh.png");
+          // background-image: url("../../../assets/bac-si-gia-dinh.png");
+          border: 1px solid #ddd;
+          border-radius: 50%;
+          font-size: 0;
+          background: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+      .right {
+        width: 70%;
+        display: flex;
+        height: 100%;
+        .form-container {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          .input-form {
+            border: #68b690 1px solid;
+            border-radius: 10px;
+            position: relative;
+            margin-top: 30px;
+            span {
+              position: absolute;
+              top: -13px;
+              left: 15px;
+              font-size: 15px;
+              // z-index: 100;
+              background-color: #ffffff;
+            }
+            .basic-infor {
+              display: flex;
+              flex-direction: column;
+              padding: 10px;
+              justify-content: space-between;
+              .account-infor {
+                display: flex;
+                // justify-content: space-around;
+                // align-items: flex-start;
+                label {
+                  color: #68b690;
+                  font-size: 20px;
+                  font-weight: 400;
+                }
+                .login-name {
+                  width: 50%;
+                  .user-mail {
+                    width: 250px;
+                  }
+                }
+                .password {
+                  width: 50%;
+                  .user-password {
+                    width: 250px;
+                  }
+                }
+              }
+              .extra-infor {
+                display: flex;
+                justify-content: space-around;
+                flex-direction: column;
+                .extra-infor-basic {
+                  display: flex;
+                  .firstName,
+                  .lastName {
+                    width: 220px;
+                  }
+                  .radio-group {
+                    // margin-left: 20px;
+                    display: flex;
+                    label {
+                      margin-left: 5px;
+                      margin-right: 10px;
+                    }
+                  }
+                }
+                .extra-infor-advanced {
+                  display: flex;
+                  .phone,
+                  .address {
+                    width: 350px;
+                  }
+                }
+              }
+              .basic-infor-container {
+                margin: 10px;
+                label {
+                  margin-right: 4px;
+                  font-weight: 300;
+                }
+                .input-container {
+                  height: 40px;
+                  border-radius: 10px;
+                  background-color: #f4f5fa;
+                  padding: 10px;
+                  border: none;
+                  box-shadow: 5px;
+                }
+              }
+            }
+          }
+          .doctor-infor {
+            border: #68b690 1px solid;
+            margin-top: 40px;
+            border-radius: 10px;
+            position: relative;
+            span {
+              position: absolute;
+              top: -13px;
+              left: 15px;
+              font-size: 15px;
+              // z-index: 100;
+              background-color: #ffffff;
+            }
+            .infor-container {
+              padding: 20px;
+              display: flex;
+              justify-content: space-around;
+              .specialty,
+              .degree,
+              .price,
+              .note,
+              .count {
+                width: 200px;
+                label {
+                  color: #68b690;
+                  font-size: 20px;
+                  font-weight: 400;
+                }
+                Select {
+                  font-size: 40px;
+                  border: 1px solid #000;
+                }
+              }
+              .note-text{
+                min-height: 120px;
+                width: 200px;
+              }
+            }
+          }
+          .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            .create {
+              background-color: #6cb88d;
+            }
+            .edit {
+              background-color: orange;
+            }
+            .submit-btn {
+              border-radius: 10px;
+              border: none;
+              width: 150px;
+              height: 50px;
+              &:hover {
+                background-color: #50a3a5;
+                cursor: pointer;
+                opacity: 0.8;
+              }
+            }
+          }
+        }
+      }
+    }
+    .doctors-hospital {
+      display: flex;
+      // height: 1500px;
+      .filter {
+        width: 400px;
+        background-color: #ffffff;
+        border-radius: 20px;
+        margin-top: 50px;
+        margin-right: 20px;
+        margin-left: 20px;
+        height: 250px;
+        .doctor-search {  
+          margin-top: 20px;
+          margin-left: 15px;
+          label {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: -5px;
+          }
+          .search {
+            width: 90%;
+            justify-content: space-between;
+            display: flex;
+            border: 1px solid #180202;
+            outline: black;
+            input {
+              border: none;
+              width: 80%;
+              height: 35px;
+              outline: none;
+            }
+            .icon-container {
+              width: 20%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #0a1128;
+              i {
+                // background-color: aqua;
+                font-size: 20px;
+                color: white;
+              }
+            }
+          }
+        }
+        .specialty-search {
+          margin-left: 15px;
+  
+          label {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: -5px;
+          }
+          .specialty-select {
+            width: 90%;
+          }
+        }
+        .degree-search {
+          margin-left: 15px;
+  
+          label {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: -5px;
+          }
+          .degree-select {
+            width: 90%;
+          }
+        }
+      }
+      .doctors-contain {
+        // height: fit-content;
+        // min-height: 500px;
+        align-self: center;
+        width: 1140px;
+        background-color: #ffffff;
+        border-radius: 20px;
+        margin-top: 50px;
+        display: grid;
+        height: fit-content;
+        max-height: 1700px;
+        column-gap: 40px;
+        row-gap: 40px;
+        grid-template-columns: 350px 350px 350px ;
+        // grid-template-rows: 450px 450px 450px ;
+        .item-doctor {
+          width: 300px;
+          height: 415px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 30px;
+          border-radius: 20px;
+          background-color: #eff1f5;
+          .doctor-avatar {
+            margin-top: 35px;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            font-size: 0;
+            background: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            border: 2px solid #f715e4;
+          }
+          .doctor-position {
+            border: 2px solid #35c861;
+          }
+          .professor-position {
+            border: 2px solid #3809e2;
+          }
+          .assi-position {
+            border: 2px solid #1dcbf7;
+          }
+          .master-position {
+            border: 2px solid #e0e407;
+          }
+          .extra-infor {
+            margin-top: 30px;
+            .doctor-name {
+              font-weight: 700;
+              font-size: 20px;
+            }
+            .doctor-specialty {
+              font-weight: 200;
+              font-size: 15px;
+              min-height: 50px;
+              max-width: 220px;
+            }
+            .doctor-phoneNumber{
+              font-weight: 600;
+              font-size: 15px;
+            }
+            .btn-group-manage-doctor-account {
+              // margin-top: 10px;
+              .btn-edit-user-item {
+                width: 50px;
+                border: none;
+                outline: none;
+                background: transparent;
+                color: orange;
+                &:hover {
+                  background-color: orange;
+                  color: #fff !important;
+                }
+              }
+              .btn-delete-user-item {
+                width: 50px;
+                border: none;
+                outline: none;
+                background: transparent;
+                color: red;
+                &:hover {
+                  background-color: red;
+                  color: #fff !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

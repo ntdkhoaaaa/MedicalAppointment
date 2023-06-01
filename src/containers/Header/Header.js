@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
-import { adminMenu, doctorMenu } from './menuApp';
+import { adminMenu, doctorMenu,accountantMenu ,doctorHospitalMenu,accountantHospitalMenu} from './menuApp';
 import './Header.scss';
 import { LANGUAGES, USER_ROLE } from "../../utils"
 import { FormattedMessage } from 'react-intl';
@@ -30,6 +30,15 @@ class Header extends Component {
             if (permission === USER_ROLE.DOCTOR) {
                 menu = doctorMenu;
             }
+            if (permission === USER_ROLE.ACCOUNTANT) {
+                menu = accountantMenu;
+            }
+            if (permission === USER_ROLE.HOSPITAL_DOCTOR) {
+                menu = doctorHospitalMenu;
+            }
+            if (permission === USER_ROLE.ACCOUNTANT) {
+                menu = accountantHospitalMenu;
+            }
         }
         this.setState({
             menuApp: menu
@@ -47,6 +56,15 @@ class Header extends Component {
                 if (permission === USER_ROLE.DOCTOR) {
                     menu = doctorMenu;
                 }
+                if (permission === USER_ROLE.ACCOUNTANT) {
+                    menu = accountantMenu;
+                }
+                if (permission === USER_ROLE.HOSPITAL_DOCTOR) {
+                    menu = doctorHospitalMenu;
+                }
+                if (permission === USER_ROLE.ACCOUNTANT) {
+                    menu = accountantHospitalMenu;
+                }
             }
             this.setState({
                 menuApp: menu
@@ -59,7 +77,7 @@ class Header extends Component {
             <div className="header-container">
                 {/* thanh navigator */}
                 <div className="header-tabs-container">
-                    <Navigator menus={this.state.menuApp} />
+                    
                 </div>
                 <div className='languages'>
                     <span className='welcome'><FormattedMessage id={"homeheader.welcome"} />
@@ -71,7 +89,6 @@ class Header extends Component {
                     </div>
                 </div>
                 {/* nút logout */}
-
             </div>
         );
     }

@@ -9,9 +9,11 @@
         "Medical-package": "Medical Packages",
         "General-health-check": "General Health Check",
         "Support": "Support",
-        "welcome": "Welcome Administrator, ",
+        "welcome": "Welcome to KMP Appointment, ",
         "hello": "Welcome, ",
-        "login": "Sign in "
+        "login": "Sign in ",
+        "register": "Sign up"
+
     },
     "banner": {
         "medical-platform": "Medical Platform",
@@ -42,7 +44,7 @@
             "manage-doctor": "Doctors",
             "manage-admin": "Manage Doctors",
             "crud": "CRUD user",
-            "crud-redux": "CRUD redux",
+            "crud-redux": "Manage Users",
             "clinic": "Clinics",
             "manage-clinic": "Manage clinics",
             "specialty": "Specialty",
@@ -51,8 +53,35 @@
             "manage-handbook": "Manage Handbook"
         },
         "doctor": {
+            "general":"Manage General",
+            "schedule": "Manage Doctor's schedule",
+            "patient": "Manage Patient's",
+            "medicine":"Manage Medicine"
+        },
+        "accountant":{
+            "general":"Manage General",
+            "manage-clinic":"Manage clinics",
+            "manage-clinic-specialties":"Manage clinics speicalties",
+            "manage-clinic-doctors": "Manage Doctors' Account",
+            "manage-doctors-extra-infor": "Manage Doctors' Extra Information",
+            "manage-doctors-schedule":"Manage Doctors's schedule"
+        },
+        "accountantHospital": {
+            "general":"Manage General",
+            "manage-hospital":"Manage hospital",
+            "manage-hospital-specialties":"Manage hospital speicalties",
+            "manage-hospital-doctors": "Manage Doctors",
+            "manage-doctors-schedule":"Manage Doctors's schedule",
+            "manage-patients":"Manage Patients"
+        },
+        "doctorHospital": {
+            "general":"Manage General",
             "schedule": "Manage Doctor's schedule",
             "patient": "Manage Patient's"
+        },
+        "patient":{
+            "patient-basic-information":"Information",
+            "patient-booking-history":"Booking History"
         }
     },
     "manage-user": {
@@ -65,6 +94,7 @@
         "address": "Address",
         "gender": "Gender Identity",
         "roleID": "Role",
+        "clinic": "Clinic",
         "position": "Degree",
         "image": "Image",
         "edit": "Edit User",
@@ -79,7 +109,9 @@
         "title": "Manage Doctor's Schedule",
         "choose-doctor": "Choose a doctor",
         "choose-date": "Choose a date",
-        "save": "Save schedule"
+        "save": "Save schedule",
+        "doctor-name":"Doctor Name"
+
     },
     "patient": {
         "detail-doctor": {
@@ -102,10 +134,14 @@
             "address-contact": "Contact Address",
             "prognostic": "Prognostic",
             "booking-for": "Booking for",
-            "patientAge": "Patient's age",
-            "genderIdentity": "Gender Identity",
+            "patientAge": "Age",
+            "genderIdentity": "Gender",
             "Medical-fee": "Medical fee: ",
-            "bookingforfree": "Booking for free"
+            "bookingforfree": "Booking for free",
+            "height":"Height",
+            "weight":"Weight",
+            "bloodType":"Blood Type",
+            "pathology":"Pathology"
         }
     },
     "admin": {
@@ -122,6 +158,38 @@
             "clinic-address": "Clinic's address",
             "clinic-Note": "Note",
             "maximun-patient-in-same-time": "Maximun patient in 1 range time"
+        }
+    },
+    "user-infor":{
+        "user-information":{
+            "individual-information":"Individual",
+            "basic-infor":"Basic Information",
+            "firstName":"First Name",
+            "lastName":"Last Name",
+            "phonenumber":"Phone Number",
+            "address":"Address",
+            "email":"Email",
+            "medical-infor":"Medical Information",
+            "height":"Height",
+            "weight":"Weight",
+            "bloodType":"Blood Type",
+            "pathology":"Pathology"
+        },
+        "user-appointment":{
+            "choose-date":"Choose a date",
+            "filter-status":"Status Filter",
+            "search":"Search",
+            "registered":"Registered",
+            "examinted":"Examinated",
+            "not-yet":"Not Yet",
+            "cancelled":"cancelled",
+            "rated":"Rated",
+            "time":"Time",
+            "forwho":"For Who",
+            "symptom":"Symptom",
+            "doctor":"Doctor Information",
+            "clinicInfor":"Clinic Information",
+            "actions":"Actions"
         }
     }
 }

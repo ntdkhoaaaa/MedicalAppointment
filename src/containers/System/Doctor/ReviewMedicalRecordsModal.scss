@@ -1,49 +1,189 @@
-.review-medical-record-modal-container{
-    .review-modal-content{
-        height: auto;
+.review-medical-record-modal-container {
+  .review-modal-content {
+    height: auto;
+    min-height: 600px;
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    padding: 10px;
+    .review-modal-body {
+      padding: 0px 10px;
+      height: 80%;
+      .doctor-infor {
+        height: 300px;
+      }
+      .medical-info {
+        background-color: #eff1f5;
+        margin: 2px 10px;
+        width: 97%;
+        border-radius: 10px;
+        padding: 15px;
         display: flex;
+        justify-content: center;
+        align-items: center;
         flex-direction: column;
-        .review-modal-header{
-            padding: 10px;
-            border-bottom:1px solid #ccc ;
-            .left{
-                font-size: 15px;
-                font-weight: 600;
-                color: #333;
-            }
-            .right{
-                float: right;
-                cursor: pointer;
-            }
-        }
-        .review-modal-body{
-            padding: 0px 10px;
-            height:80%;
-            .doctor-infor{
-                height:200px
-            }
-        }
-        .review-modal-footer{
-            // padding: 10px;
-            border-top: 1px solid #ccc;
-            display: flex;
-            justify-content: flex-end;
-            gap:15px;
-            margin-top: 5px;
+        .medical-note {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        flex-direction: column;
+        background-color: #fff;
+          width: 98%;
+          height: 30%;
+          // padding: 30px;
+          gap: 10px;
+          border-radius: 10px;
 
-            button{
-                border: none;
-                outline: none;
-                padding: 8px 5px;
-                border-radius: 5px;
-                min-width: 100px;
+          .input-content {
+            height: 40px;
+            border-radius: 10px;
+            background-color: #f4f5fa;
+            padding: 10px;
+            border: none;
+            box-shadow: 5px;
+            width: 40%;
+          }
+          label {
+            margin-right: 4px;
+            font-weight: 500;
+            font-size: 18px;
+            min-width: 80px;
+            color: #75b2eb;
+          }
+          .rangeTime{
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            // justify-content: space-between;
+            align-items: center;
+            label{
+              width: 25%;
             }
-            .btn-review-comfirm{
-                background-color: rgb(73, 234, 73);
+          }
+          .medicalRecord{
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            // justify-content: space-between;
+            align-items: center;
+            label{
+              width: 25%;
             }
-            .btn-review-cancel{
-                background-color: rgb(255, 200, 81);
+            .medicalRecord{
+              width: 75%;
+              height: 70px;
+          }
+          }
+          .top-left {
+            width: 50%;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            label {
+                margin-right: 4px;
+                font-weight: 500;
+                font-size: 18px;
+                min-width: 80px;
+                color: #75b2eb;
+              }
+          }
+          .top-right{
+            width: 50%;
+            background-color: #fff;
+            border-radius: 10px;
+            height: 95%;
+            padding: 10px;
+            label {
+                margin-right: 4px;
+                font-weight: 500;
+                font-size: 18px;
+                min-width: 80px;
+                color: #75b2eb;
+              }
+
+          }
+        }
+        .bottom-container{
+            width: 100%;
+            height: 40%;
+            padding: 10px;
+            border-radius: 10px;
+            // background-color: #fff;
+
+            .table{
+                background-color: #fff;
+                border-radius: 10px;
+                .btn{
+                    margin: 5px;
+                }
             }
         }
+      }
     }
+    .review-modal-footer {
+      // padding: 10px;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 5px;
+
+      button {
+        border: none;
+        outline: none;
+        padding: 8px 5px;
+        border-radius: 5px;
+        min-width: 100px;
+      }
+      .btn-review-comfirm {
+        background-color: rgb(73, 234, 73);
+      }
+      .btn-review-cancel {
+        background-color: rgb(255, 200, 81);
+      }
+    }
+  }
+  #tableMedicine {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    align-items: center;
+    border-radius: 10px;
+    border-collapse: collapse;
+    border-radius: 1em;
+    // overflow: ;
+    overflow-x:auto ;
+    overflow-y: auto;
+    // overflow: hidden;
+    .mp-btn-remedy {
+      border: none;
+      border-radius: 5px;
+      &:hover {
+        background-color: #87c4f3;
+        border-radius: 10px;
+      }
+    }
+  }
+  #tableMedicine td,
+  #tableMedicine th {
+    // border: 1px solid #ddd;
+    padding: 8px;
+
+    align-items: center;
+    text-align: center;
+    // input{
+    //     width: 100%;
+    //     height: 100%;
+    // }
+  }
+  #tableMedicine th {
+    text-align: center;
+    background-color: #75b2eb;
+    color: #fff;
+  }
 }

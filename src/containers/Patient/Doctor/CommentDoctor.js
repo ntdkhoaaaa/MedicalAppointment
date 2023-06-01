@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../../utils';
+// import { FormattedMessage } from 'react-intl';
+// import { LANGUAGES } from '../../../utils';
 import { getListPatientCommentByDoctorId } from '../../../services/userServices'
 import { Rating } from 'react-simple-star-rating'
 import './CommentDoctor.scss'

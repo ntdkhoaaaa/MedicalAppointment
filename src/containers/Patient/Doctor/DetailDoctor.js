@@ -70,11 +70,11 @@ class DetailDoctor extends Component {
                             <div className='schedule-doctor'>
                                 <div className='content-left'>
                                     <DoctorSchedule
-                                        doctorIdFromParent={this.state.currentDoctorId} />
+                                        doctorIdFromParent={this.state?.currentDoctorId} />
                                 </div>
                                 <div className='content-right'>
                                     <DoctorExtraInfor
-                                        doctorIdFromParent={this.state.currentDoctorId} />
+                                        doctorIdFromParent={this.state?.currentDoctorId} />
                                 </div>
                             </div>
                             <div className='detail-infor-doctor'>
@@ -86,7 +86,7 @@ class DetailDoctor extends Component {
                             </div>
                             <div className='comment-doctor'>
                                 <CommentDoctor
-                                    doctorIdFromParent={this.state.currentDoctorId}
+                                    doctorIdFromParent={this.state?.currentDoctorId}
                                 />
                             </div>
                         </div>

@@ -9,9 +9,10 @@
         "Medical-package": "Gói khám",
         "General-health-check": "Khám sức khỏe tổng quát",
         "Support": "Hỗ trợ",
-        "welcome": "Xin chào bạn, ",
+        "welcome": "Chào mừng đến với KMP Appointment,",
         "hello": "Xin chào, ",
-        "login": "Đăng nhập "
+        "login": "Đăng nhập ",
+        "register": "Đăng ký"
     },
     "banner": {
         "medical-platform": "Nền tảng y tế",
@@ -42,7 +43,7 @@
             "manage-doctor": "Bác sĩ",
             "manage-admin": "Administrator",
             "crud": "CRUD user",
-            "crud-redux": "CRUD redux",
+            "crud-redux": "Quản lý người dùng",
             "clinic": "Phòng khám",
             "manage-clinic": "Quản lý phòng Khám",
             "specialty": "Chuyên khoa",
@@ -51,9 +52,37 @@
             "manage-handbook": "Quản lý cẩm nang"
         },
         "doctor": {
+            "general":"Quản lý chung",
+            "schedule": "Quản lý kế hoạch khám bệnh",
+            "patient": "Quản lý bệnh nhân",
+            "medicine":"Quản lý thuốc"
+        },
+        "accountant":{
+            "general":"Quản lý chung",
+            "manage-clinic": "Quản lý phòng Khám",
+            "manage-clinic-specialties": "Quản lý chuyên khoa phòng khám",
+            "manage-clinic-doctors": "Quản lý tài khoản bác sĩ",
+            "manage-doctors-extra-infor": "Quản lý thông tin bác sĩ",
+            "manage-doctors-schedule":"Quản lý lịch khám bệnh"
+        },
+        "accountantHospital": {
+            "general":"Quản lý chung",
+            "manage-hospital": "Quản lý thông tin bệnh viện",
+            "manage-hospital-specialties": "Quản lý chuyên khoa bệnh viện",
+            "manage-hospital-doctors": "Quản lý bác sĩ",
+            "manage-doctors-schedule":"Quản lý lịch khám bệnh",
+            "manage-patients":"Quản lý bệnh nhân"
+        },
+        "doctorHospital": {
+            "general":"Quản lý chung",
             "schedule": "Quản lý kế hoạch khám bệnh",
             "patient": "Quản lý bệnh nhân"
+        },
+        "patient":{
+            "patient-basic-information":"Thông tin",
+            "patient-booking-history":"Lịch sử khám bệnh"
         }
+
     },
     "manage-user": {
         "add": "Thêm mới người dùng",
@@ -64,6 +93,7 @@
         "phonenumber": "Số điện thoại",
         "address": "Địa chỉ",
         "gender": "Bản dạng giới",
+        "clinic": "Phòng khám",
         "roleID": "Vai trò",
         "position": "Học vị",
         "image": "Hình ảnh",
@@ -79,7 +109,8 @@
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
         "choose-doctor": "Chọn bác sĩ",
         "choose-date": "Chọn ngày",
-        "save": "Lưu thông tin"
+        "save": "Lưu thông tin",
+        "doctor-name":"Tên bác sĩ"
     },
     "patient": {
         "detail-doctor": {
@@ -102,10 +133,15 @@
             "address-contact": "Địa chỉ liên hệ",
             "prognostic": "Triệu chứng",
             "booking-for": "Đặt lịch cho ai",
-            "patientAge": "Tuổi của bệnh nhân",
-            "genderIdentity": "Bản dạng giới",
+            "patientAge": "Tuổi",
+            "genderIdentity": "Giới tính",
             "Medical-fee": "Giá khám: ",
-            "bookingforfree": "Miễn phí đặt lịch"
+            "bookingforfree": "Miễn phí đặt lịch",
+            "height":"Chiều cao",
+            "weight":"Cân nặng",
+            "bloodType":"Nhóm máu",
+            "pathology":"Bệnh án từ trước"
+
         }
     },
     "admin": {
@@ -122,6 +158,38 @@
             "clinic-address": "Địa chỉ phòng khám",
             "clinic-Note": "Ghi chú",
             "maximun-patient-in-same-time": "Giới hạn cho 1 khung giờ"
+        }
+    },
+    "user-infor":{
+        "user-information":{
+            "individual-information":"Thông tin cá nhân",
+            "basic-infor":"Thông tin cá nhân",
+            "firstName":"Tên",
+            "lastName":"Họ",
+            "phonenumber":"Điện thoại",
+            "address":"Địa chỉ",
+            "email":"Email",
+            "medical-infor":"Thông tin y tế",
+            "height":"Chiều cao",
+            "weight":"Cân nặng",
+            "bloodType":"Nhóm máu",
+            "pathology":"Bệnh án"
+        },
+        "user-appointment":{
+            "choose-date":"Chọn ngày",
+            "filter-status":"Bộ lọc lịch hẹn",
+            "search":"Tìm kiếm",
+            "registered":"Đã đăng ký",
+            "examinted":"Đã khám",
+            "not-yet":"Chưa khám",
+            "cancelled":"Đã hủy",
+            "rated":"Đã đánh giá",
+            "time":"Thời gian",
+            "forwho":"Đặt cho ai",
+            "symptom":"Triệu chứng",
+            "doctor":"Thông tin bác sĩ",
+            "clinicInfor":"Thông tin phòng khám",
+            "actions":"Thao tác"
         }
     }
 }

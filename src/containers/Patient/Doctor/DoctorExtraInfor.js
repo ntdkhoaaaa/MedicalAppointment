@@ -24,7 +24,6 @@ class DoctorExtraInfor extends Component {
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        let { language } = this.props;
 
         if (this.props.language !== prevProps.language) {
 
@@ -45,7 +44,6 @@ class DoctorExtraInfor extends Component {
         let { language } = this.props;
 
         let { isShowDetailedInfo, extraInfor } = this.state
-        console.log('extra information', extraInfor)
         return (
             <div className='doctor-extra-infor-container'>
                 <div className='content-up'>
