@@ -89,7 +89,7 @@ class ManageHospitalByAccountant extends Component {
     let res = await updateClinicbyId({
       name: this.state.name,
       nameEn: this.state.nameEn,
-      imageBase64: this.state.imageBase64,
+      // imageBase64: this.state.imageBase64,
       descriptionHTML: this.state.descriptionHTML,
       descriptionMarkdown: this.state.descriptionMarkdown,
       address: this.state.address,

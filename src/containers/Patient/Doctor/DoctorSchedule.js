@@ -9,9 +9,10 @@ import {
 } from "../../../services/userServices";
 import { FormattedMessage } from "react-intl";
 import BookingModal from "./Modal/BookingModal";
-import {  withRouter } from "react-router-dom";
+import {  withRouter,Route ,BrowserRouter as Router} from "react-router-dom";
 import { toast } from "react-toastify";
 import NotifyBookedModal from "./Modal/NotifyBookedModal";
+import DetailDoctor from "./DetailDoctor";
 class DoctorSchedule extends Component {
   constructor(props) {
     super(props);
@@ -162,8 +163,10 @@ class DoctorSchedule extends Component {
         });
       }
     } else {
-      this.props.history.push("/login");
-    }
+      this.props.history.push(`/login?redirect=%2Fdetail-doctor%2F${this.props.match.params.id}`);
+      // <Route path="/login/:redirect?" component={DetailDoctor} />
+
+    } 
   };
   closeBookingModal =async () => {
     this.setState({

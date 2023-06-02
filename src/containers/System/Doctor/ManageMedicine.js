@@ -23,8 +23,8 @@ class ManageMedicine extends Component {
       search: "",
       tableFilter: "",
       EditedMedicineId: "",
-      tubeCount:'',
-      pillCount: '',
+      tubeCount: "",
+      pillCount: "",
       unitFilter: {
         value: "All",
         label: "Tất cả",
@@ -37,20 +37,22 @@ class ManageMedicine extends Component {
   async componentDidMount() {
     let { user } = this.props;
     if (user.Doctor_Infor?.clinicId) {
-      this.getMedicineByClinicId(user.Doctor_Infor?.clinicId);
+      await this.getMedicineByClinicId(user.Doctor_Infor?.clinicId);
     } else {
-      this.getMedicineByClinicId(user?.clinicId);
+      await this.getMedicineByClinicId(user?.clinicId);
     }
   }
   async getMedicineByClinicId(id) {
     let medicine = await getMedicineByClinicId(id);
-    let pill=medicine.data.filter(item => item.unit==='viên')
-    let tube=medicine.data.filter(item => item.unit==='tuýp')
-    this.setState({ 
-      medicine: medicine.data,
-      tubeCount:tube.length,
-      pillCount:pill.length
-     });
+    if (medicine && medicine.length > 0) {
+      let pill = medicine.data.filter((item) => item.unit === "viên");
+      let tube = medicine.data.filter((item) => item.unit === "tuýp");
+      this.setState({
+        medicine: medicine.data,
+        tubeCount: tube.length,
+        pillCount: pill.length,
+      });
+    }
   }
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
@@ -62,25 +64,25 @@ class ManageMedicine extends Component {
       if (user.Doctor_Infor?.clinicId) {
         let medicine = await getMedicineByClinicId(user.Doctor_Infor.clinicId);
         if (medicine && medicine.data.length > 0) {
-          let pill=medicine.data.filter(item => item.unit==='viên')
-          let tube=medicine.data.filter(item => item.unit==='tuýp')
-          this.setState({ 
+          let pill = medicine.data.filter((item) => item.unit === "viên");
+          let tube = medicine.data.filter((item) => item.unit === "tuýp");
+          this.setState({
             medicine: medicine.data,
-            tubeCount:tube.length,
-            pillCount:pill.length
-           });
+            tubeCount: tube.length,
+            pillCount: pill.length,
+          });
         }
       } else {
         let medicine = await getMedicineByClinicId(user.clinicId);
         if (medicine && medicine.data.length > 0) {
-          let pill=medicine.data.filter(item => item.unit==='viên')
-          let tube=medicine.data.filter(item => item.unit==='tuýp')
-          console.log(medicine,tube,pill)
-          this.setState({ 
+          let pill = medicine.data.filter((item) => item.unit === "viên");
+          let tube = medicine.data.filter((item) => item.unit === "tuýp");
+          console.log(medicine, tube, pill);
+          this.setState({
             medicine: medicine.data,
-            tubeCount:tube.length,
-            pillCount:pill.length
-           });
+            tubeCount: tube.length,
+            pillCount: pill.length,
+          });
         }
       }
     }
@@ -89,25 +91,25 @@ class ManageMedicine extends Component {
       if (user.Doctor_Infor?.clinicId) {
         let medicine = await getMedicineByClinicId(user.Doctor_Infor.clinicId);
         if (medicine && medicine.data.length > 0) {
-          let pill=medicine.data.filter(item => item.unit==='viên')
-          let tube=medicine.data.filter(item => item.unit==='tuýp')
-          console.log(medicine,tube,pill)
-          this.setState({ 
+          let pill = medicine.data.filter((item) => item.unit === "viên");
+          let tube = medicine.data.filter((item) => item.unit === "tuýp");
+          console.log(medicine, tube, pill);
+          this.setState({
             medicine: medicine.data,
-            tubeCount:tube.length,
-            pillCount:pill.length
-           });
+            tubeCount: tube.length,
+            pillCount: pill.length,
+          });
         }
       } else {
         let medicine = await getMedicineByClinicId(user.clinicId);
         if (medicine && medicine.data.length > 0) {
-          let pill=medicine.data.filter(item => item.unit==='viên')
-          let tube=medicine.data.filter(item => item.unit==='tuýp')
-          this.setState({ 
+          let pill = medicine.data.filter((item) => item.unit === "viên");
+          let tube = medicine.data.filter((item) => item.unit === "tuýp");
+          this.setState({
             medicine: medicine.data,
-            tubeCount:tube.length,
-            pillCount:pill.length
-           });
+            tubeCount: tube.length,
+            pillCount: pill.length,
+          });
         }
       }
     }
@@ -165,8 +167,8 @@ class ManageMedicine extends Component {
   }
   handleChangeSelectInfor = async (selectedInfor, name) => {
     console.log("cos vo day k ?", selectedInfor, name);
-    let {medicine,tableFilter}=this.state
-    let {user}=this.props
+    let { medicine, tableFilter } = this.state;
+    let { user } = this.props;
     let stateName = name.name;
     let stateCopy = { ...this.state };
     stateCopy[stateName] = selectedInfor;
@@ -175,24 +177,20 @@ class ManageMedicine extends Component {
     this.setState({
       ...stateCopy,
     });
-    let filter=[]
-    if(name.name==='unitFilter')
-    {
-      if(selectedInfor.value==='T')
-      {
-        filter=medicine.filter(item =>item.unit==='tuýp')
+    let filter = [];
+    if (name.name === "unitFilter") {
+      if (selectedInfor.value === "T") {
+        filter = medicine.filter((item) => item.unit === "tuýp");
       }
-      if(selectedInfor.value==='V')
-      {
-        filter=medicine.filter(item =>item.unit==='viên')
+      if (selectedInfor.value === "V") {
+        filter = medicine.filter((item) => item.unit === "viên");
       }
-      if(selectedInfor.value==='All')
-      {
-        filter=medicine
+      if (selectedInfor.value === "All") {
+        filter = medicine;
       }
       this.setState({
-        tableFilter:filter
-      })
+        tableFilter: filter,
+      });
     }
   };
   render() {
@@ -256,7 +254,7 @@ class ManageMedicine extends Component {
             <div className="statistical-container">
               <div className="total total-medicine ">
                 <label>Tổng số thuốc</label>
-                <span>{tubeCount+pillCount}</span>
+                <span>{tubeCount + pillCount}</span>
               </div>
               <div className="total total-tupe ">
                 <label>Tổng loại tuýp</label>
@@ -290,19 +288,26 @@ class ManageMedicine extends Component {
                     <th>Ngày sửa</th>
                     <th>Thao tác</th>
                   </tr>
-                  {medicine && search.length > 0 || unitFilter.value!=='All'
+                  {(medicine && search.length > 0) || unitFilter.value !== "All"
                     ? tableFilter.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td width='15%'>{item?.nameMedicine}</td>
-                            <td width='10%'>{item?.medicineCode}</td>
-                            <td width='10%'>{item?.unit}</td>
-                            <td width='0%'>{item?.price}</td>
-                            <td width='20%'>                        {new Date(item?.createdAt).toLocaleDateString()}{" "}
-                              {new Date(item?.createdAt).toLocaleTimeString()}</td>
-                            <td width='20%'>{new Date(item?.updatedAt).toLocaleDateString()}{" "}
-                              {new Date(item?.updatedAt).toLocaleTimeString()}</td>
-                            <td width='15%'>
+                            <td width="15%">{item?.nameMedicine}</td>
+                            <td width="10%">{item?.medicineCode}</td>
+                            <td width="10%">{item?.unit}</td>
+                            <td width="0%">{item?.price}</td>
+                            <td width="20%">
+                              {" "}
+                              {new Date(
+                                item?.createdAt
+                              ).toLocaleDateString()}{" "}
+                              {new Date(item?.createdAt).toLocaleTimeString()}
+                            </td>
+                            <td width="20%">
+                              {new Date(item?.updatedAt).toLocaleDateString()}{" "}
+                              {new Date(item?.updatedAt).toLocaleTimeString()}
+                            </td>
+                            <td width="15%">
                               <button
                                 onClick={() => this.handleEditMedicine(item.id)}
                                 className="btn-edit"
@@ -322,19 +327,20 @@ class ManageMedicine extends Component {
                     : medicine.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td  width='15%'>{item?.nameMedicine}</td>
-                            <td  width='10%'>{item?.medicineCode}</td>
-                            <td  width='10%'>{item?.unit}</td>
-                            <td  width='10%'>{item?.price}</td>
-                            <td  width='20%'>
+                            <td width="15%">{item?.nameMedicine}</td>
+                            <td width="10%">{item?.medicineCode}</td>
+                            <td width="10%">{item?.unit}</td>
+                            <td width="10%">{item?.price}</td>
+                            <td width="20%">
                               {new Date(item?.createdAt).toLocaleDateString()}{" "}
                               {new Date(item?.createdAt).toLocaleTimeString()}
                             </td>
-                            <td width='20%'>
-                            {new Date(item?.updatedAt).toLocaleDateString()}{" "}
-                              {new Date(item?.updatedAt).toLocaleTimeString()}</td>
+                            <td width="20%">
+                              {new Date(item?.updatedAt).toLocaleDateString()}{" "}
+                              {new Date(item?.updatedAt).toLocaleTimeString()}
+                            </td>
 
-                            <td  width='15%'>
+                            <td width="15%">
                               <button
                                 onClick={() => this.handleEditMedicine(item.id)}
                                 className="btn-edit"

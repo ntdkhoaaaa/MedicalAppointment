@@ -6,6 +6,8 @@ import moment from "moment";
 import * as actions from "../../../store/actions";
 import BookingModal from "./../Doctor/Modal/BookingModal";
 import "./DoctorSpecialtySchedule.scss";
+import {  withRouter } from "react-router-dom";
+
 class DoctorSpecialtySchedule extends Component {
   constructor(props) {
     super(props);
@@ -117,7 +119,10 @@ class DoctorSpecialtySchedule extends Component {
         isOpenModalBooking: true,
       });
     } else {
-      this.props.history.push("/login");
+      // this.props.history.push("/login");
+      // /hospital-specialty/:id/:specialtyId
+      this.props.history.push(`/login?redirect=%2Fhospital-specialty%2F${this.props.match.params.id}%2F${this.props.match.params.specialtyId}`);
+
     }
   };
   closeBookingModal = () => {
@@ -250,7 +255,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(DoctorSpecialtySchedule);
+)(DoctorSpecialtySchedule));
