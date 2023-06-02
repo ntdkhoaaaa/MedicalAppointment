@@ -198,7 +198,7 @@ class ModalEditMedicine extends Component {
                 this.handleEditMedicineInfor();
               }}
             >
-              <i class="fas fa-save"></i> Save
+              <i className="fas fa-save"></i> Save
             </button>{" "}
             <button
               className="btn-cancel-medicine"
@@ -206,7 +206,7 @@ class ModalEditMedicine extends Component {
                 this.toggle();
               }}
             >
-              <i class="fas fa-window-close"></i> Close
+              <i className="fas fa-window-close"></i> Close
             </button>
           </div>
         </ModalBody>

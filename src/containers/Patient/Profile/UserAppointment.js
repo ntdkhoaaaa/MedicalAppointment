@@ -568,7 +568,7 @@ class UserAppointment extends Component {
                                   }
                                   className="mp-btn-cancel"
                                 >
-                                  <i class="fas fa-window-close"></i>
+                                  <i className="fas fa-window-close"></i>
                                 </button>
                               </div>
                             ) : item.statusId === "S3" ? (
@@ -581,14 +581,14 @@ class UserAppointment extends Component {
                                     }
                                     className="mp-btn-rate"
                                   >
-                                    <i class="fas fa-star"></i>
+                                    <i className="fas fa-star"></i>
                                   </button>
 
                                   <button
                                     onClick={() => this.ViewingTime(item)}
                                     className="mp-btn-remedy"
                                   >
-                                    <i class="fas fa-eye"></i>
+                                    <i className="fas fa-eye"></i>
                                   </button>
                                 </div>
                               </>
@@ -598,7 +598,7 @@ class UserAppointment extends Component {
                                   onClick={() => this.ViewingTime(item)}
                                   className="mp-btn-remedy"
                                 >
-                                  <i class="fas fa-eye"></i>
+                                  <i className="fas fa-eye"></i>
                                 </button>
                               </div>
                             ) : (

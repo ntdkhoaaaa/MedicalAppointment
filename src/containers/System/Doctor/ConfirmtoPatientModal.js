@@ -240,13 +240,13 @@ class ConfirmtoPatientModal extends Component {
                                 className="btn btn-outline-danger btn-sm"
                                 onClick={this.handleRemoveSprcificRow(idx)}
                               >
-                                <i class="fas fa-trash-alt"></i>
+                                <i className="fas fa-trash-alt"></i>
                               </button>
                               <button
                                 className="btn btn-outline-success btn-sm"
                                 onClick={this.handleAddRow}
                               >
-                                <i class="fas fa-plus"></i>
+                                <i className="fas fa-plus"></i>
                               </button>
                             </td>
                           </tr>
@@ -261,7 +261,7 @@ class ConfirmtoPatientModal extends Component {
                   <div className="form-group">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-clock"></i>Thời gian khám{" "}
+                        <i className="fas fa-clock"></i>Thời gian khám{" "}
                       </span>{" "}
                     </label>
                     :
@@ -275,7 +275,7 @@ class ConfirmtoPatientModal extends Component {
                   <div className="form-group">
                     <label>
                       <span>
-                        <i class="fas fa-sun"></i>
+                        <i className="fas fa-sun"></i>
                       </span>
                       Số ngày cấp
                     </label>
@@ -292,7 +292,7 @@ class ConfirmtoPatientModal extends Component {
                 <div className="top-right">
                   <div className="medicalRecord-content">
                     <label>
-                    <i class="fas fa-notes-medical"></i>Bệnh án</label>
+                    <i className="fas fa-notes-medical"></i>Bệnh án</label>
                     <textarea
                       className="form-control medicalRecord"
                       onChange={(event) =>

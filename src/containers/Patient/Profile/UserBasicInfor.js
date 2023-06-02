@@ -281,7 +281,7 @@ class UserBasicInfor extends Component {
                   <div className="firstName">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i>{" "}
+                        <i className="fas fa-user"></i>{" "}
                         <FormattedMessage
                           id={"user-infor.user-information.firstName"}
                         />
@@ -298,7 +298,7 @@ class UserBasicInfor extends Component {
                   <div className="lastName">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"></i>
                         <FormattedMessage
                           id={"user-infor.user-information.lastName"}
                         />{" "}
@@ -318,7 +318,7 @@ class UserBasicInfor extends Component {
                     <div className="phone">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-phone"></i>{" "}
+                          <i className="fas fa-phone"></i>{" "}
                           <FormattedMessage
                             id={"user-infor.user-information.phonenumber"}
                           />{" "}
@@ -335,7 +335,7 @@ class UserBasicInfor extends Component {
                     <div className="address">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-map-marker-alt"></i>{" "}
+                          <i className="fas fa-map-marker-alt"></i>{" "}
                           <FormattedMessage
                             id={"user-infor.user-information.address"}
                           />{" "}
@@ -354,7 +354,7 @@ class UserBasicInfor extends Component {
                     <div className="email">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-envelope"></i>{" "}
+                          <i className="fas fa-envelope"></i>{" "}
                           <FormattedMessage
                             id={"user-infor.user-information.email"}
                           />{" "}
@@ -402,7 +402,7 @@ class UserBasicInfor extends Component {
                   <div className="user-height">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-ruler-vertical"></i>{" "}
+                        <i className="fas fa-ruler-vertical"></i>{" "}
                         <FormattedMessage
                           id={"user-infor.user-information.height"}
                         />
@@ -422,7 +422,7 @@ class UserBasicInfor extends Component {
                   <div className="user-weight">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-weight"></i>
+                        <i className="fas fa-weight"></i>
                         <FormattedMessage
                           id={"user-infor.user-information.weight"}
                         />
@@ -443,7 +443,7 @@ class UserBasicInfor extends Component {
                   <div className="bloodType">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-tint"></i>{" "}
+                        <i className="fas fa-tint"></i>{" "}
                         <FormattedMessage
                           id={"user-infor.user-information.bloodType"}
                         />{" "}
@@ -461,7 +461,7 @@ class UserBasicInfor extends Component {
                 <div className="personal-pathology">
                   <label className="sub-title">
                     <span>
-                      <i class="fas fa-notes-medical"></i>{" "}
+                      <i className="fas fa-notes-medical"></i>{" "}
                       <FormattedMessage
                         id={"user-infor.user-information.pathology"}
                       />{" "}

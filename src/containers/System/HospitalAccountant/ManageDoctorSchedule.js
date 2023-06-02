@@ -64,7 +64,7 @@ class ManageDoctorSchedule extends Component {
     crr.setMinutes(0);
     crr.setSeconds(0);
     const dateCopy = new Date(crr.getTime());
-    console.log('crr',crr)
+    console.log("crr", crr);
     const nextMonday = new Date(
       dateCopy.setDate(
         dateCopy.getDate() + ((7 - dateCopy.getDay() + 1) % 7 || 7)
@@ -72,27 +72,33 @@ class ManageDoctorSchedule extends Component {
     );
     await this.props.fetchClinicWeekSchedules(
       this.props.userInfo.clinicId,
-      new Date(),
-      "TM"
+      new Date()
     );
-    await this.props.fetchClinicWeekSchedules(
+    await this.props.fetchClinicWeekSchedulesAfternoon(
       this.props.userInfo.clinicId,
-      new Date(),
-      "TA"
+      new Date()
     );
     let { arrDayofWeekTimeStamp, arrDayofWeek } = this.state;
     nextMonday.setDate(nextMonday.getDate() - nextMonday.getDay() + 1);
     for (var i = 1; i <= 7; i++) {
-      nextMonday.setHours(0)
-      nextMonday.setMinutes(0)
-      nextMonday.setSeconds(0)
-      let value = moment().startOf('days').isoWeekday(i+7).valueOf("day");
-      console.log(moment().startOf('days').isoWeekday(i+7).valueOf())
+      nextMonday.setHours(0);
+      nextMonday.setMinutes(0);
+      nextMonday.setSeconds(0);
+      let value = moment()
+        .startOf("days")
+        .isoWeekday(i + 7)
+        .valueOf("day");
+      console.log(
+        moment()
+          .startOf("days")
+          .isoWeekday(i + 7)
+          .valueOf()
+      );
       arrDayofWeekTimeStamp.push(value);
       arrDayofWeek.push(new Date(nextMonday));
       nextMonday.setDate(nextMonday.getDate() + 1);
     }
-    console.log(arrDayofWeekTimeStamp,arrDayofWeek)
+    console.log(arrDayofWeekTimeStamp, arrDayofWeek);
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -100,7 +106,7 @@ class ManageDoctorSchedule extends Component {
     }
     if (prevProps.clinicWeekSchedules !== this.props.clinicWeekSchedules) {
       let { clinicWeekSchedules } = this.props;
-      console.log('clinicWeekSchedules',clinicWeekSchedules)
+      console.log("clinicWeekSchedules", clinicWeekSchedules);
       let MondayArr = [];
       let TuesdayArr = [];
       let WednesdayArr = [];
@@ -110,7 +116,57 @@ class ManageDoctorSchedule extends Component {
       let SundayArr = [];
       clinicWeekSchedules.forEach((element) => {
         let date = new Date(element.picked_date).getDay();
-        console.log(date,element.picked_date);
+        console.log(date, element.picked_date);
+        if (date === 1) {
+          MondayArr.push(element);
+        }
+        if (date === 2) {
+          TuesdayArr.push(element);
+        }
+        if (date === 3) {
+          WednesdayArr.push(element);
+        }
+        if (date === 4) {
+          ThursdayArr.push(element);
+        }
+        if (date === 5) {
+          FridayArr.push(element);
+        }
+        if (date === 6) {
+          SaturdayArr.push(element);
+        }
+        if (date === 0) {
+          SundayArr.push(element);
+        }
+      });
+      if (clinicWeekSchedules && clinicWeekSchedules.length > 0) {
+        this.setState({
+          MondayMorning: MondayArr,
+          TuesdayMorning: TuesdayArr,
+          WednesdayMorning: WednesdayArr,
+          ThursdayMorning: ThursdayArr,
+          FridayMorning: FridayArr,
+          SaturdayMorning: SaturdayArr,
+          SundayMorning: SundayArr,
+        });
+      }
+    }
+    if (
+      prevProps.clinicWeekSchedulesAfternoon !==
+      this.props.clinicWeekSchedulesAfternoon
+    ) {
+      let { clinicWeekSchedulesAfternoon } = this.props;
+      console.log("clinicWeekSchedules", clinicWeekSchedulesAfternoon);
+      let MondayArr = [];
+      let TuesdayArr = [];
+      let WednesdayArr = [];
+      let ThursdayArr = [];
+      let FridayArr = [];
+      let SaturdayArr = [];
+      let SundayArr = [];
+      clinicWeekSchedulesAfternoon.forEach((element) => {
+        let date = new Date(element.picked_date).getDay();
+        console.log(date, element.picked_date);
         if (date === 1) {
           MondayArr.push(element);
         }
@@ -134,20 +190,10 @@ class ManageDoctorSchedule extends Component {
         }
       });
       if (
-        clinicWeekSchedules &&
-        clinicWeekSchedules.length > 0 &&
-        clinicWeekSchedules[0].timetype === "T1"
-      ) {
-        this.setState({
-          MondayMorning: MondayArr,
-          TuesdayMorning: TuesdayArr,
-          WednesdayMorning: WednesdayArr,
-          ThursdayMorning: ThursdayArr,
-          FridayMorning: FridayArr,
-          SaturdayMorning: SaturdayArr,
-          SundayMorning: SundayArr,
-        });
-      } else {
+        clinicWeekSchedulesAfternoon &&
+        clinicWeekSchedulesAfternoon.length > 0
+      ) 
+      {
         this.setState({
           MondayAfternoon: MondayArr,
           TuesdayAfternoon: TuesdayArr,
@@ -163,7 +209,7 @@ class ManageDoctorSchedule extends Component {
       let { hospitalDoctors } = this.props;
       this.setState({
         doctorArr: hospitalDoctors,
-        doctorForShow:hospitalDoctors
+        doctorForShow: hospitalDoctors,
       });
     }
     if (prevProps.clinicSpecialties !== this.props.clinicSpecialties) {
@@ -181,7 +227,7 @@ class ManageDoctorSchedule extends Component {
       });
     }
     if (prevProps.positionRedux !== this.props.positionRedux) {
-      console.log("Position", this.props.positionRedux)
+      console.log("Position", this.props.positionRedux);
 
       let arrPositions = this.buildDataInputSelect(
         this.props.positionRedux,
@@ -255,7 +301,7 @@ class ManageDoctorSchedule extends Component {
     let result = [];
     arrSchedulesForAfternoon.map((item) => {
       let object = {};
-      object.currentNumber = "";
+      object.currentNumber = 0;
       object.maxNumber = item.count;
       object.date = item.date;
       object.timetype = item.timetype;
@@ -272,12 +318,11 @@ class ManageDoctorSchedule extends Component {
     await this.props.SaveBulkScheduleForClinic(data);
   };
   handleChange = async (selectedInfor, name) => {
-    console.log("cos vo day k ?", selectedInfor, name);
-    let { filterDegree, filterSpecialty,doctorForShow,doctorArr } = this.state;
+    let { filterDegree, filterSpecialty, doctorForShow, doctorArr } =
+      this.state;
     let stateName = name.name;
     let stateCopy = { ...this.state };
     stateCopy[stateName] = selectedInfor;
-    console.log("cos vo day k ?");
     console.log(selectedInfor);
     this.setState({
       ...stateCopy,
@@ -287,28 +332,24 @@ class ManageDoctorSchedule extends Component {
       filterDegree:{}, */
     }
     if (name.name === "filterSpecialty") {
-      console.log("ewwe", selectedInfor);
-      
-      let temp=this.state.doctorArr.filter(e => e.specialtyId === selectedInfor.value)
+      let temp = this.state.doctorArr.filter(
+        (e) => e.specialtyId === selectedInfor.value
+      );
       this.setState({
-        doctorForShow:temp
-      })
-      // await this.props.fetchAllDoctorsOfHospital({
-      //   clinicId: this.props.userInfo.clinicId,
-      //   specialtyCode: selectedInfor.value,
-      //   positionCode: filterDegree.value,
-      // });
+        doctorForShow: temp,
+      });
     }
     if (name.name === "filterDegree") {
-      let temp=this.state.doctorArr.filter(e => e.positionId === selectedInfor.value)
+      let temp = this.state.doctorArr.filter(
+        (e) => e.positionId === selectedInfor.value
+      );
       this.setState({
-        doctorForShow:temp
-      })
+        doctorForShow: temp,
+      });
     }
   };
   render() {
-    let { arrDayofWeekTimeStamp, arrDayofWeek, doctorForShow } =
-      this.state;
+    let { arrDayofWeekTimeStamp, arrDayofWeek, doctorForShow } = this.state;
     let dayofWeek = [];
     let today = new Date();
     today.setHours(0);
@@ -1361,8 +1402,9 @@ const mapStateToProps = (state) => {
     userInfo: state.user.userInfo,
     positionRedux: state.admin.position,
     clinicSpecialties: state.clinicAccountant.clinicSpecialties,
-    // clinicDoctors: state.clinicAccountant.clinicDoctors,
     clinicWeekSchedules: state.clinicAccountant.clinicWeekSchedules,
+    clinicWeekSchedulesAfternoon:
+      state.clinicAccountant.clinicWeekSchedulesAfternoon,
     hospitalDoctors: state.clinicAccountant.hospitalDoctors,
   };
 };
@@ -1380,6 +1422,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.SaveBulkScheduleForClinic(data)),
     fetchClinicWeekSchedules: (clinicId, date, type) =>
       dispatch(actions.fetchClinicWeekSchedules(clinicId, date, type)),
+    fetchClinicWeekSchedulesAfternoon: (clinicId, date) =>
+      dispatch(actions.fetchClinicWeekSchedulesAfternoon(clinicId, date)),
     fetchAllDoctorsOfHospital: (data) =>
       dispatch(actions.fetchAllDoctorsOfHospital(data)),
   };

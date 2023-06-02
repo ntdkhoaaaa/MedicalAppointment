@@ -67,7 +67,7 @@ class DetailClinicSpecialties extends Component {
                         {language === LANGUAGES.VI ? item.name : item.nameEn}
                       </div>
                       <div className="apartment-location">
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i className="fas fa-map-marker-alt"></i>
                         {language === LANGUAGES.VI
                           ? item.location
                           : item.locationEn}

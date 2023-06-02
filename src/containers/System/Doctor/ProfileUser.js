@@ -128,7 +128,7 @@ class ProfileUser extends Component {
                     <div className="title">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-user"></i> Họ và tên{" "}
+                          <i className="fas fa-user"></i> Họ và tên{" "}
                         </span>{" "}
                       </label>
 
@@ -141,7 +141,7 @@ class ProfileUser extends Component {
                     <div className="title">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-phone"></i> Điện thoại{" "}
+                          <i className="fas fa-phone"></i> Điện thoại{" "}
                         </span>{" "}
                       </label>
                       <input
@@ -155,7 +155,7 @@ class ProfileUser extends Component {
                     <div className="title">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-envelope"></i> Email
+                          <i className="fas fa-envelope"></i> Email
                         </span>
                       </label>
                       <input
@@ -167,7 +167,7 @@ class ProfileUser extends Component {
                     <div className="title">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-map-marker-alt"></i> Địa chỉ
+                          <i className="fas fa-map-marker-alt"></i> Địa chỉ
                         </span>{" "}
                       </label>
                       <input
@@ -186,7 +186,7 @@ class ProfileUser extends Component {
                     <div className="title-tiny">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-envelope"></i> Mã hẹn
+                          <i className="fas fa-envelope"></i> Mã hẹn
                         </span>
                       </label>
                       <input
@@ -198,7 +198,7 @@ class ProfileUser extends Component {
                     <div className="title">
                       <label className="sub-title">
                         <span>
-                          <i class="fas fa-envelope"></i> Đặt cho
+                          <i className="fas fa-envelope"></i> Đặt cho
                         </span>
                       </label>
                       <input
@@ -210,7 +210,7 @@ class ProfileUser extends Component {
                     <div className="title-tiny">
                       <label className="sub-title">
                         <span>
-                        <i class="fas fa-birthday-cake"></i>Tuổi
+                        <i className="fas fa-birthday-cake"></i>Tuổi
                         </span>
                       </label>
                       <input
@@ -240,7 +240,7 @@ class ProfileUser extends Component {
                   <div className="title">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-user"></i> Họ và tên{" "}
+                        <i className="fas fa-user"></i> Họ và tên{" "}
                       </span>{" "}
                     </label>
                     :
@@ -253,7 +253,7 @@ class ProfileUser extends Component {
                   <div className="title">
                     <label className="sub-title">
                       <span>
-                        <i class="fas fa-phone"></i> Điện thoại{" "}
+                        <i className="fas fa-phone"></i> Điện thoại{" "}
                       </span>{" "}
                     </label>
                     :
@@ -289,7 +289,7 @@ class ProfileUser extends Component {
                   </table>
                   <div className="pathology">
                     <label>
-                      <i class="fas fa-notes-medical"></i>
+                      <i className="fas fa-notes-medical"></i>
                       <span> </span>
                       <FormattedMessage id="patient.modal-booking.pathology" />
                     </label>

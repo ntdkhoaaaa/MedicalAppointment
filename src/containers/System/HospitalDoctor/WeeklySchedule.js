@@ -191,7 +191,7 @@ class WeeklySchedule extends Component {
               <button className="btn"
                 onClick={() => this.handleChangeWeeklySchedule(-1)}
               >
-                <i class="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left"></i>
               </button>
             </div>
             <div className=" ExtraCalendar">
@@ -454,7 +454,7 @@ class WeeklySchedule extends Component {
                 className="btn"
                 onClick={() => this.handleChangeWeeklySchedule(+1)}
               >
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </button>
             </div>
           </div>

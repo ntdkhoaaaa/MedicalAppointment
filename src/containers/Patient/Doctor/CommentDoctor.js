@@ -67,7 +67,7 @@ class CommentDoctor extends Component {
                                         </div>
                                     </div>
                                     <div className='infor-down'>
-                                        <span> <i class="far fa-comment"></i>
+                                        <span> <i className="far fa-comment"></i>
 
                                             {item.sothang === 0 && item.songay > 0 && `Đã đánh giá vào ${item.songay} ngày trước`}
                                             {item.sothang === 0 && item.songay === 0 && 'Đã đánh giá gần đây'}
@@ -101,7 +101,7 @@ class CommentDoctor extends Component {
 
                                     <div className='comment-container-down'>
                                         <div className='confirmed'>
-                                            <i class="fas fa-check-circle"></i>
+                                            <i className="fas fa-check-circle"></i>
                                             <span> Đã khám bệnh</span>
                                         </div>
                                         <div className='comment-content'>

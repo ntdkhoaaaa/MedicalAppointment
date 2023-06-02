@@ -56,7 +56,7 @@ class ReviewMedicalRecordsModal extends Component {
                 <div className="rangeTime">
                   <label>
                     <span>
-                      <i class="fas fa-sun"></i>
+                      <i className="fas fa-sun"></i>
                     </span>
                     Số ngày cấp
                   </label>
@@ -68,7 +68,7 @@ class ReviewMedicalRecordsModal extends Component {
                 </div>
                 <div className="medicalRecord">
                   <label>
-                    <i class="fas fa-notes-medical"></i>Bệnh án
+                    <i className="fas fa-notes-medical"></i>Bệnh án
                   </label>
                   <textarea
                     className="form-control medicalRecord"
@@ -77,7 +77,7 @@ class ReviewMedicalRecordsModal extends Component {
                 </div>
               </div>
               <div className="bottom-container">
-                <table class="table" id="tableMedicine">
+                <table className="table" id="tableMedicine">
                   <thead>
                     <tr>
                       <th scope="col">#</th>

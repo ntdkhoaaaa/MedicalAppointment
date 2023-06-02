@@ -127,9 +127,9 @@ class Patient extends Component {
                               : "icon-container"
                           }
                         >
-                          {item.stt === 1 && <i class="fas fa-info-circle"></i>}
+                          {item.stt === 1 && <i className="fas fa-info-circle"></i>}
                           {item.stt === 2 && (
-                         <i class="fas fa-clipboard-list"></i>
+                         <i className="fas fa-clipboard-list"></i>
                           )}
                         </div>
                         <span className="navigate-name">

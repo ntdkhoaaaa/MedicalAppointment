@@ -101,14 +101,14 @@ class ModalViewMedicalRecord extends Component {
             <div className="medical-note">
               <div className="medicalRecord">
                 <label>
-                  <i class="fas fa-notes-medical"></i>Bệnh án
+                  <i className="fas fa-notes-medical"></i>Bệnh án
                 </label>
                 <div className="btn-research">
                 <button
                   onClick={() => this.ResearchTime(Record.medicalRecords)}
                   className="mp-btn-remedy"
                 >
-                 <i class="fas fa-question-circle"></i>
+                 <i className="fas fa-question-circle"></i>
                 </button>
               </div>
               <Modal
@@ -135,7 +135,7 @@ class ModalViewMedicalRecord extends Component {
               <div className="rangeTime">
                 <label>
                   <span>
-                    <i class="fas fa-sun"></i>
+                    <i className="fas fa-sun"></i>
                   </span>
                   Số ngày cấp
                 </label>

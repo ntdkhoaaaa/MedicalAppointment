@@ -143,13 +143,13 @@ export const SaveBulkScheduleForClinicFailed = () => ({
   type: actionTypes.SAVE_BULK_SCHEDULES_FOR_CLINIC_FAIL,
 });
 
-export const fetchClinicWeekSchedules = (clinicId, date,type) => {
+export const fetchClinicWeekSchedules = (clinicId, date) => {
   return async (dispatch, getState) => {
     try {
       let res = await getClinicWeekSchedules({
         clinicId: clinicId,
         currentDate: date,
-        timetype: type
+        timetype: 'TM'
       });
       if (res && res.errCode === 0) {
         dispatch({
@@ -177,7 +177,40 @@ export const fetchClinicWeekSchedulesSuccess = (data) => ({
 export const fetchClinicWeekSchedulesFailed = () => ({
   type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_FAILED,
 });
+export const fetchClinicWeekSchedulesAfternoon = (clinicId, date) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getClinicWeekSchedules({
+        clinicId: clinicId,
+        currentDate: date,
+        timetype: 'TA'
+      });
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_AFTERNOON_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_AFTERNOON_FAILED,
+        });
+      }
+    } catch (e) {
+      console.log("fetch all clinic week schedules by clinicId", e);
+      dispatch({
+        type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_AFTERNOON_FAILED,
+      });
+    }
+  };
+};
+export const fetchClinicWeekSchedulesAfternoonSuccess = (data) => ({
+  type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_AFTERNOON_SUCCESS,
+  data: data,
+});
 
+export const fetchClinicWeekSchedulesAfternoonFailed = () => ({
+  type: actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_AFTERNOON_FAILED,
+});
 export const SaveNewClinicDoctor = (data) => {
   return async (dispatch, getState) => {
     try {

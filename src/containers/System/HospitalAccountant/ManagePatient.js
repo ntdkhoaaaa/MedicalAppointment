@@ -270,7 +270,7 @@ class ManagePatient extends Component {
                                   this.handleClickScheduleTime(item)
                                 }
                               >
-                                <i class="fas fa-paper-plane"></i>
+                                <i className="fas fa-paper-plane"></i>
                               </button>
                             </td>
                           </tr>
@@ -303,7 +303,7 @@ class ManagePatient extends Component {
                                   )
                                 }
                               >
-                                <i class="fas fa-eye"></i>
+                                <i className="fas fa-eye"></i>
                               </button>
                             </td>
                           </tr>

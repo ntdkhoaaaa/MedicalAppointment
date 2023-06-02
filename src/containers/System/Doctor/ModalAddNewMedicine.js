@@ -336,7 +336,7 @@ class ModalAddNewMedicine extends Component {
                         this.handleDownloadTemplateExcelFile();
                       }}
                     >
-                      <i class="fas fa-download"></i>
+                      <i className="fas fa-download"></i>
                     </button>
                   </span>
 

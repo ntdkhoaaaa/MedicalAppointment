@@ -142,12 +142,12 @@ class Doctor extends Component {
                           }
                         >
                           {item.stt === 1 && (
-                            <i class="fas fa-calendar-alt"></i>
+                            <i className="fas fa-calendar-alt"></i>
                           )}
                           {item.stt === 2 && (
-                           <i class="fas fa-procedures"></i>
+                           <i className="fas fa-procedures"></i>
                           )}
-                          {item.stt === 3 && <i class="fas fa-capsules"></i>}
+                          {item.stt === 3 && <i className="fas fa-capsules"></i>}
                         </div>
                         <span className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>

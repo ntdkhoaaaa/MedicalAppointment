@@ -132,7 +132,7 @@ class Register extends Component {
                 ></input>
                 <span
                   onClick={() => { this.handleShowHidePassword() }}
-                > <i class={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}> </i></span>
+                > <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}> </i></span>
 
               </div>
             </div>

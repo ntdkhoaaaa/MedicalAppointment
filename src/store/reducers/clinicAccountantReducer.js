@@ -5,6 +5,7 @@ const initialState = {
   clinicSpecialties: [],
   clinicDoctors: [],
   clinicWeekSchedules: [],
+  clinicWeekSchedulesAfternoon: [],
   saveNewUserSuccess: {},
   hospitalDoctors: [],
 };
@@ -31,6 +32,11 @@ const clinicAccountantReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+      case actionTypes.FETCH_CLINIC_WEEK_SCHEDULES_AFTERNOON_SUCCESS:
+        state.clinicWeekSchedulesAfternoon = action.data;
+        return {
+          ...state,
+        };
     case actionTypes.SAVE_NEW_DOCTOR_SUCCESS:
       state.saveNewUserSuccess = action.data;
       return {

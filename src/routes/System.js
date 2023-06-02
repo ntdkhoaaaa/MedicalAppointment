@@ -133,8 +133,8 @@ class System extends Component {
                     >
                       <Link className="link" to={item.link}>
                         <div className="icon-container">
-                          {item.stt === 1 && <i class="fas fa-users"></i>}
-                          {item.stt === 2 && <i class="fas fa-user-md"></i>}
+                          {item.stt === 1 && <i className="fas fa-users"></i>}
+                          {item.stt === 2 && <i className="fas fa-user-md"></i>}
                         </div>
                         <div className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>

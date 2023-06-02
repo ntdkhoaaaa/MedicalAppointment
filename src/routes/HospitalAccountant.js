@@ -129,15 +129,15 @@ class HospitalAccountant extends Component {
                               : "icon-container"
                           }
                         >
-                          {item.stt === 1 && <i class="fas fa-hospital"></i>}
+                          {item.stt === 1 && <i className="fas fa-hospital"></i>}
                           {item.stt === 2 && (
-                            <i class="fas fa-notes-medical"></i>
+                            <i className="fas fa-notes-medical"></i>
                           )}
-                          {item.stt === 3 && <i class="fas fa-user-md"></i>}
+                          {item.stt === 3 && <i className="fas fa-user-md"></i>}
                           {item.stt === 4 && (
-                            <i class="fas fa-calendar-alt"></i>
+                            <i className="fas fa-calendar-alt"></i>
                           )}
-                          {item.stt === 5 && <i class="fas fa-procedures"></i>}
+                          {item.stt === 5 && <i className="fas fa-procedures"></i>}
                         </div>
                         <span className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>
