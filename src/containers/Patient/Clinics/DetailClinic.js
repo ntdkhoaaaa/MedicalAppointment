@@ -42,8 +42,6 @@ class DetailClinic extends Component {
             });
           }
         }
-      console.log("check res", res);
-
         this.setState({
           dataDetailClinic: res.data,
           arrDoctors: arrDoc,
@@ -82,7 +80,7 @@ class DetailClinic extends Component {
                 <div className="each-doctor" key={index}>
                   <div className="dt-content-left">
                     <ProfileDoctor
-                      doctorId={item.id}
+                      doctorId={item.doctorId}
                       doctorInfor={item}
                       isShowDescription={true}
                       isShowDetail={true}
@@ -92,11 +90,11 @@ class DetailClinic extends Component {
                   </div>
                   <div className="dt-content-right">
                     <div className="doctor-schedule">
-                      <DoctorSchedule doctorIdFromParent={item} />
+                      <DoctorSchedule doctorIdFromParent={item.doctorId} />
                     </div>
 
                     <div className="doctor-extra-infor">
-                      <DoctorExtraInfor doctorIdFromParent={item} />
+                      <DoctorExtraInfor doctorIdFromParent={item.doctorId} />
                     </div>
                   </div>
                 </div>

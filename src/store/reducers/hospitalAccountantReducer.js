@@ -2,6 +2,9 @@ import actionTypes from "../actions/actionTypes";
 const initialState = {
   specialtyWeekSchedules: [],
   extraSpecialtyInfor: {},
+  appointmentByDate: [],
+  statisticalForHospitalSpecialty: [],
+  statisticalForDoctorHospitalSpecialty: [],
 };
 const hospitalAccountantReducer = (state = initialState, action) => {
   let copyState = { ...state };
@@ -14,6 +17,24 @@ const hospitalAccountantReducer = (state = initialState, action) => {
       };
     case actionTypes.FETCH_EXTRA_SPECIALTY_INFOR_SUCCESS:
       copyState.extraSpecialtyInfor = action.data;
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_ALL_APPOINTMENT_HOSPITAL_SUCCESS:
+      copyState.appointmentByDate = action.data;
+      console.log("form hospital reducer", action.data);
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_STATISTICAL_FOR_HOSPITAL_SPECIALTY_SUCCESS:
+      copyState.statisticalForHospitalSpecialty = action.data;
+      console.log("form hospital reducer", action.data);
+      return {
+        ...copyState,
+      };
+    case actionTypes.FETCH_STATISTICAL_FOR_DOCTOR_HOSPITAL_SPECIALTY_SUCCESS:
+      copyState.statisticalForDoctorHospitalSpecialty = action.data;
+      console.log("form hospital reducer", action.data);
       return {
         ...copyState,
       };

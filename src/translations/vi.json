@@ -71,7 +71,9 @@
             "manage-hospital-specialties": "Quản lý chuyên khoa bệnh viện",
             "manage-hospital-doctors": "Quản lý bác sĩ",
             "manage-doctors-schedule":"Quản lý lịch khám bệnh",
-            "manage-patients":"Quản lý bệnh nhân"
+            "manage-patients":"Quản lý bệnh nhân",
+            "statistical":"Thống kê"
+
         },
         "doctorHospital": {
             "general":"Quản lý chung",

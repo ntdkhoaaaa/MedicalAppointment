@@ -31,7 +31,69 @@
           width: 100%;
           background-color: #eff1f5;
           border-radius: 10px;
-          height: 400px;
+          height: 330px;
+          .statistical-container {
+            // background-color: #fff;
+            background-color: #eff1f5;
+            height: 50px;
+            border-radius: 10px;
+            width: 100%;
+            padding: 20px;
+            label {
+              font-weight: 700;
+              font-size: 20px;
+              margin-bottom: 5px;
+            }
+            span {
+              font-weight: 500;
+              font-size: 20px;
+              margin-bottom: 5px;
+            }
+            .total {
+              display: flex;
+              justify-content: space-between;
+            }
+            .total-pill {
+              color: #000;
+            }
+            .total-tupe {
+              color: #000;
+            }
+            .total-medicine {
+              color: #000;
+            }
+            .add-new-medicine {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .icon-container {
+                width: 150px;
+                height: 40px;
+                border-radius: 10px;
+                background-color: #c9e1f3;
+                transition: width 0.5s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover {
+                  cursor: pointer;
+                  background-color: rgb(4, 171, 255);
+                }
+                span {
+                  font-weight: 600;
+                  font-size: 20px;
+                  margin-bottom: 5px;
+                }
+                // i {
+                //   height: 80px;
+                //   font-size: 20px;
+                //   align-items: center;
+                //   justify-content: center;
+                //   display: flex;
+                // }
+              }
+            }
+          }
           .date-picker {
             width: 94%;
           }
@@ -70,6 +132,7 @@
                 height: 35px;
                 outline: none;
               }
+
               .icon-container {
                 border-radius: 9px;
                 width: 20%;
@@ -86,68 +149,7 @@
             }
           }
         }
-        .statistical-container {
-          // background-color: #fff;
-          background-color: #eff1f5;
-          height: 200px;
-          border-radius: 10px;
-          width: 100%;
-          padding: 20px;
-          label {
-            font-weight: 700;
-            font-size: 20px;
-            margin-bottom: 5px;
-          }
-          span {
-            font-weight: 500;
-            font-size: 20px;
-            margin-bottom: 5px;
-          }
-          .total {
-            display: flex;
-            justify-content: space-between;
-          }
-          .total-pill {
-            color: #000;
-          }
-          .total-tupe {
-            color: #000;
-          }
-          .total-medicine {
-            color: #000;
-          }
-          .add-new-medicine {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .icon-container {
-              width: 150px;
-              height: 40px;
-              border-radius: 10px;
-              background-color: #c9e1f3;
-              transition: width 0.5s;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              &:hover {
-                cursor: pointer;
-                background-color: rgb(4, 171, 255);
-              }
-              span {
-                font-weight: 600;
-                font-size: 20px;
-                margin-bottom: 5px;
-              }
-              // i {
-              //   height: 80px;
-              //   font-size: 20px;
-              //   align-items: center;
-              //   justify-content: center;
-              //   display: flex;
-              // }
-            }
-          }
-        }
+
       }
       .right-container {
         display: flex;

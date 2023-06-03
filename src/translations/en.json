@@ -72,7 +72,8 @@
             "manage-hospital-specialties":"Manage hospital speicalties",
             "manage-hospital-doctors": "Manage Doctors",
             "manage-doctors-schedule":"Manage Doctors's schedule",
-            "manage-patients":"Manage Patients"
+            "manage-patients":"Manage Patients",
+            "statistical":"Statistical"
         },
         "doctorHospital": {
             "general":"Manage General",

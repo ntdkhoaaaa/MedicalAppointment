@@ -374,7 +374,7 @@ class BookingModal extends Component {
     // if()
   };
   handleConfirmBooking = async () => {
-    console.log("login with enter");
+    console.log("login with enter",this.props);
     let { specialtyBooking, dataTime } = this.props;
     let checkState = this.checkState();
     if (checkState) {
@@ -552,6 +552,7 @@ class BookingModal extends Component {
       nameEn,
       image,
       specialtyBooking,
+      doctorInfor
     } = this.props;
     let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : "";
     const bloodTypeArr = [
@@ -592,7 +593,6 @@ class BookingModal extends Component {
         label: "Chưa xác định",
       },
     ];
-    console.log(this.state);
     return (
       <Modal
         isOpen={isOpenModal}
@@ -614,7 +614,6 @@ class BookingModal extends Component {
           </div>
           <ModalWaiting isOpenModalWaiting={isOpenModalWaiting} />
           <div className="booking-modal-body">
-            {/* {JSON.stringify(dataTime)} */}
             <div className="doctor-infor">
               {specialtyBooking === true ? (
                 <ProfileDoctorSpecialty
@@ -633,6 +632,7 @@ class BookingModal extends Component {
                   dataTime={dataTime}
                   isShowPrice={true}
                   isShowDetail={false}
+                  doctorInfor={doctorInfor}
                 />
               )}
             </div>

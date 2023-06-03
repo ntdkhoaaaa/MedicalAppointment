@@ -9,9 +9,12 @@ export const applyDrag = (arr, dragResult, day) => {
     itemToAdd = result.splice(removedIndex, 1)[0];
     return result;
   }
-  if(arr.some(e => e.id===payload.id))
+  console.log("check arr",arr)
+  if(arr.some(e => e.doctorId===payload.id))
   {
+    console.log("checkkkkkkkkkkkkkk")
     payload.checked=false
+    toast.warn('Bác sĩ này đã được đăng ký cho ngày này')
     return arr
   }
   else{

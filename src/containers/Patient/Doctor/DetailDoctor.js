@@ -41,6 +41,7 @@ class DetailDoctor extends Component {
             nameVi = `${detailDoctor.positionData.valueVi},${detailDoctor.lastName} ${detailDoctor.firstName}`;
             nameEn = `${detailDoctor.positionData.valueEn},${detailDoctor.firstName} ${detailDoctor.lastName}`;
         }
+        console.log('detailDoctor', detailDoctor)
         return (
             <>
                 {!this.props.isLoggedIn || (this.props.isLoggedIn && this.props.permission) ?
@@ -70,11 +71,14 @@ class DetailDoctor extends Component {
                             <div className='schedule-doctor'>
                                 <div className='content-left'>
                                     <DoctorSchedule
-                                        doctorIdFromParent={this.state?.currentDoctorId} />
+                                        doctorIdFromParent={this.state?.currentDoctorId}
+                                        doctorInfor={detailDoctor} />
                                 </div>
                                 <div className='content-right'>
                                     <DoctorExtraInfor
-                                        doctorIdFromParent={this.state?.currentDoctorId} />
+                                        doctorIdFromParent={this.state?.currentDoctorId} 
+                                        
+                                        />
                                 </div>
                             </div>
                             <div className='detail-infor-doctor'>

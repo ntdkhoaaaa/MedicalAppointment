@@ -126,7 +126,7 @@ class ManageClinicDoctorSchedules extends Component {
       if (selectedOption) {
         await this.props.fetchAllScheduleForWeek(
           selectedOption.value,
-          new Date().getTime()
+          currentDate
         );
       }
     }
@@ -237,7 +237,6 @@ class ManageClinicDoctorSchedules extends Component {
                 className="form-control picker-date"
                 onChange={this.handleOnChangeDataPicker}
                 value={this.state.currentDate}
-                // minDate={yesterday}
               />
             </div>
             <div className="color-description">

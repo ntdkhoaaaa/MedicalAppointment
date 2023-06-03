@@ -124,6 +124,11 @@ export const accountantHospitalMenu = [
                 name: 'menu.accountantHospital.manage-patients',
                 link: '/accountantHospital/manage-hospital-patients',
                 stt:5
+            },
+            { //Quản lý kế hoạch khám bệnh của bác sĩ trong phòng khám
+                name: 'menu.accountantHospital.statistical',
+                link: '/accountantHospital/statistical',
+                stt:6
             }
         ]
     }

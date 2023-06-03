@@ -6,6 +6,7 @@ import DatePicker from "../../../components/Input/DatePicker";
 import Select from "react-select";
 import "./ManagePatient.scss";
 import * as actions from "../../../store/actions";
+import moment from "moment";
 
 class ManagePatient extends Component {
   constructor(props) {
@@ -20,11 +21,13 @@ class ManagePatient extends Component {
       examinatedPatients: "",
       registeredPatients: "",
       listSpecialty: [],
-      selectedSpecialty: {
-
-      },
+      selectedSpecialty: {},
+      rangeTime: [],
+      currentDate: moment(new Date("06-06-2023")).startOf("days").valueOf(),
       selectedDoctor: {},
       DoctorsArr: [],
+      appointmentByDate: [],
+      appointmentForShow: [],
     };
   }
   async componentDidMount() {
@@ -34,6 +37,14 @@ class ManagePatient extends Component {
       specialtyCode: "All",
       positionCode: "All",
     });
+    let { currentDate } = this.state;
+    if (currentDate) {
+      let formatedDate = new Date(currentDate).getTime();
+      this.props.fetchAllAppointmentByDate({
+        hospitalId: this.props.userInfo.clinicId,
+        date: formatedDate,
+      });
+    }
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -68,6 +79,13 @@ class ManagePatient extends Component {
       this.setState({
         DoctorsArr: listDoctor,
         selectedDoctor: listDoctor[0],
+      });
+    }
+    if (prevProps.appointmentByDate !== this.props.appointmentByDate) {
+      console.log(this.props.appointmentByDate);
+      this.setState({
+        appointmentByDate: this.props.appointmentByDate,
+        appointmentForShow: this.props.appointmentByDate,
       });
     }
   }
@@ -115,8 +133,6 @@ class ManagePatient extends Component {
     });
     let { user } = this.props;
     let formatedDate = new Date(date[0]).getTime();
-    await this.props.fetchRegisteredPatientByDate(user.id, formatedDate);
-    await this.props.fetchExaminatedPatientByDate(user.id, formatedDate);
   };
   handleChangeSelectInfor = async (selectedInfor, name) => {
     let stateName = name.name;
@@ -125,12 +141,34 @@ class ManagePatient extends Component {
     this.setState({
       ...stateCopy,
     });
+    let { appointmentForShow, appointmentByDate } = this.state;
     if (stateName === "selectedSpecialty") {
-      this.props.fetchAllDoctorsOfHospital({
-        clinicId: this.props.userInfo.clinicId,
-        specialtyCode: selectedInfor.value,
-        positionCode: "All",
-      });
+      if (selectedInfor.value !== "All") {
+        let temp = appointmentByDate.filter(
+          (x) => x.specialtyId === selectedInfor.value
+        );
+        this.setState({
+          appointmentForShow: temp,
+        });
+      } else {
+        this.setState({
+          appointmentForShow: appointmentByDate,
+        });
+      }
+    }
+    if (stateName === "selectedDoctor") {
+      if (selectedInfor.value !== "All") {
+        let temp = appointmentByDate.filter(
+          (x) => x.doctorId === selectedInfor.value
+        );
+        this.setState({
+          appointmentForShow: temp,
+        });
+      } else {
+        this.setState({
+          appointmentForShow: appointmentByDate,
+        });
+      }
     }
   };
   render() {
@@ -151,7 +189,10 @@ class ManagePatient extends Component {
       DoctorsArr,
       selectedDoctor,
       selectedSpecialty,
-      listSpecialty
+      listSpecialty,
+      currentDate,
+      appointmentByDate,
+      appointmentForShow,
     } = this.state;
     const checkerPatientArr = [
       {
@@ -167,11 +208,33 @@ class ManagePatient extends Component {
         value: "Y",
       },
     ];
+    let arrDayofWeek = [];
+    let tempDate = new Date(currentDate);
+    tempDate.setDate(tempDate.getDate() - tempDate.getDay() + 1);
+    for (var i = 0; i < 7; i++) {
+      arrDayofWeek.push(new Date(tempDate).toLocaleDateString());
+      tempDate.setDate(tempDate.getDate() + 1);
+    }
+    let mon = [];
+    let tue = [];
+    let wed = [];
+    let thu = [];
+    let fri = [];
+    let sat = [];
+    let sun = [];
     return (
       <div className="manage-patient-container-hospital-accountant">
         <div className="manage-patient-body-hospital-accountant">
           <div className="left-container">
             <div className="filter-container">
+              <div className="col-12 form-group">
+                <label>Chọn ngày</label>
+                <DatePicker
+                  onChange={this.handleOnChangeDatePicker}
+                  className="date-picker form-control"
+                  value={this.state.currentDate}
+                />
+              </div>
               <div className="type-search">
                 <label>Chuyên khoa</label>
                 <Select
@@ -192,44 +255,11 @@ class ManagePatient extends Component {
                   options={DoctorsArr}
                 />
               </div>
-              <div className="type-search">
-                <label>Bộ lọc bệnh nhân</label>
-                <Select
-                  className="type-select"
-                  name="checkerPatient"
-                  value={this.state.checkerPatient}
-                  onChange={this.handleChangeSelectInfor}
-                  options={checkerPatientArr}
-                />
-              </div>
-              <div className="search-container">
-                <label>Bệnh nhân</label>
-                <div className="search">
-                  <input
-                    className="search-medicine"
-                    type="text"
-                    id="myInput"
-                    //   onChange={(event) => this.searchMedicine(event)}
-                    title="Type in a name"
-                  />
-                  <div className="icon-container">
-                    <i className="fas fa-search"></i>
-                  </div>
+              <div className="statistical-container">
+                <div className="total total-pill ">
+                  <label>Chưa khám</label>
+                  <span>{appointmentForShow.length}</span>
                 </div>
-              </div>
-            </div>
-            <div className="statistical-container">
-              <div className="total total-medicine ">
-                <label>Đăng ký</label>
-                {/* <span>{registeredPatients}</span> */}
-              </div>
-              <div className="total total-tupe ">
-                <label>Đã khám</label>
-                {/* <span>{examinatedPatients}</span> */}
-              </div>
-              <div className="total total-pill ">
-                <label>Chưa khám</label>
-                {/* <span>{notYetPatients}</span> */}
               </div>
             </div>
           </div>
@@ -238,73 +268,30 @@ class ManagePatient extends Component {
               <table id="TableManagePatients" style={{ width: "100%" }}>
                 <tbody>
                   <tr>
-                    <th>Thời gian</th>
+                    <th>#</th>
                     <th>Họ và Tên</th>
-                    <th>Cao</th>
-                    <th>Nặng</th>
-                    <th>Máu</th>
-                    <th>Sex</th>
-                    <th>Tuổi</th>
-                    <th>Triệu chứng</th>
-                    <th>Action</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Bác sĩ</th>
+                    <th>Chuyên khoa</th>
                   </tr>
-                  {checkerPatient.value === "N" ||
-                  (checkerPatient.value === "All" &&
-                    dataPatient &&
-                    dataPatient.length > 0)
-                    ? dataPatient.map((item, index) => {
+                  {appointmentForShow && appointmentForShow.length > 0
+                    ? appointmentForShow.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td width="26%">{item.bookingDate}</td>
+                            <td width="3%">{item.id}</td>
                             <td width="20%">{item.forWho}</td>
-                            <td width="3%">{item.height}</td>
-                            <td width="3%">{item.weight}</td>
-                            <td width="3%">{item.bloodType}</td>
-                            <td width="3%">{item.gender}</td>
-                            <td width="3%">{item.patientAge}</td>
-                            <td width="20%">{item.prognostic}</td>
-                            <td width="3%">
-                              <button
-                                className="mp-btn-remedy"
-                                onClick={() =>
-                                  this.handleClickScheduleTime(item)
-                                }
-                              >
-                                <i className="fas fa-paper-plane"></i>
-                              </button>
+                            <td width="22%">{item.address}</td>
+                            <td width="10%">{item.phoneNumber}</td>
+                            <td width="20%">
+                              {item.doctorInfoData.lastName}{" "}
+                              {item.doctorInfoData.firstName}
                             </td>
-                          </tr>
-                        );
-                      })
-                    : ""}
-                  {checkerPatient.value === "Y" ||
-                  (checkerPatient.value === "All" &&
-                    dataExaminatedPatients &&
-                    dataExaminatedPatients.length > 0)
-                    ? dataExaminatedPatients.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td width="24%">{item.bookingDate}</td>
-                            <td width="20%">{item.forWho}</td>
-                            <td width="3%">{item.height}</td>
-                            <td width="3%">{item.weight}</td>
-                            <td width="3%">{item.bloodType}</td>
-                            <td width="3%">{item.gender}</td>
-                            <td width="3%">{item.patientAge}</td>
-                            <td width="20%">{item.prognostic}</td>
-                            <td width="3%">
-                              <button
-                                className="mp-btn-remedy"
-                                onClick={() =>
-                                  this.handleClickReviewMedicalRecord(
-                                    item,
-                                    item.id,
-                                    index
-                                  )
-                                }
-                              >
-                                <i className="fas fa-eye"></i>
-                              </button>
+                            <td width="25%">
+                              {
+                                item.doctorInfoData.Doctor_Clinic_Specialty
+                                  .specialtyData.name
+                              }
                             </td>
                           </tr>
                         );
@@ -325,7 +312,9 @@ const mapStateToProps = (state) => {
     language: state.app.language,
     clinicSpecialties: state.clinicAccountant.clinicSpecialties,
     userInfo: state.user.userInfo,
+    allScheduleTime: state.admin.allScheduleTime,
     hospitalDoctors: state.clinicAccountant.hospitalDoctors,
+    appointmentByDate: state.hospitalAccountant.appointmentByDate,
   };
 };
 
@@ -335,6 +324,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.fetchAllSpecialtiesOfClinic(data)),
     fetchAllDoctorsOfHospital: (data) =>
       dispatch(actions.fetchAllDoctorsOfHospital(data)),
+    fetchAllScheduleTime: () => dispatch(actions.fetchAllScheduleTime()),
+    fetchAllAppointmentByDate: (data) =>
+      dispatch(actions.fetchAllAppointmentByDate(data)),
   };
 };
 

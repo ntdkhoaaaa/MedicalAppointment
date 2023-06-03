@@ -15,10 +15,11 @@ const doctorHospitalReducer = (state = initialState, action) => {
       };
     case actionTypes.FETCH_ALL_MEDICINE_BY_CLINICID_SUCCESS:
       copyState.medicineByClinicId = action.data;
-      console.log('form hospital reducer',action.data)
+      console.log("form hospital reducer", action.data);
       return {
         ...copyState,
       };
+
     default:
       return state;
   }

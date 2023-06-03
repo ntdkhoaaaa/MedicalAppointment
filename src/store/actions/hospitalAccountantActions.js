@@ -10,7 +10,10 @@ import {
   editDoctorHospitalService,
   deleteDoctorService,
   getSpecialtyScheduleByWeek,
-  getExtraSpecialtyInforClinic
+  getExtraSpecialtyInforClinic,
+  getHospitalAppointmentByDate,
+  getStatisticalForHospitalSpecialty,
+  getStatisticalForDoctorHospitalSpecialty
 } from "../../services/userServices";
 import { toast } from "react-toastify";
 export const fetchDetailedClinic = (clinicId) => {
@@ -110,6 +113,92 @@ export const fetchAllDoctorsOfClinicSuccess = (data) => ({
 export const fetchAllDoctorsOfClinicFailed = () => ({
   type: actionTypes.FETCH_ALL_DOCTORS_OF_CLINIC_FAIL,
 });
+
+export const fetchAllAppointmentByDate = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getHospitalAppointmentByDate({
+        hospitalId:data.hospitalId,
+        date:data.date
+      });
+      console.log("check res", res);
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALL_APPOINTMENT_HOSPITAL_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_ALL_APPOINTMENT_HOSPITAL_FAIL,
+        });
+      }
+    } catch (e) {
+      console.log("fetch all specialties by clinicId", e);
+      dispatch({
+        type: actionTypes.FETCH_ALL_APPOINTMENT_HOSPITAL_FAIL,
+      });
+    }
+  };
+};
+export const fetchStatisticalForHospitalSpecialty = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getStatisticalForHospitalSpecialty({
+        hospitalId:data.hospitalId,
+        startDate:data.startDate,
+        endDate:data.endDate
+      });
+
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_STATISTICAL_FOR_HOSPITAL_SPECIALTY_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_STATISTICAL_FOR_HOSPITAL_SPECIALTY_FAIL,
+        });
+      }
+    } catch (e) {
+      console.log("fetch all specialties by clinicId", e);
+      dispatch({
+        type: actionTypes.FETCH_ALL_APPOINTMENT_HOSPITAL_FAIL,
+      });
+    }
+  };
+};
+export const fetchStatisticalForDoctorHospitalSpecialty = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      console.log(data);
+      let res = await getStatisticalForDoctorHospitalSpecialty({
+        hospitalId:data.hospitalId,
+        specialtyId:data.specialtyId,
+        startDate:data.startDate,
+        endDate:data.endDate
+      });
+
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_STATISTICAL_FOR_DOCTOR_HOSPITAL_SPECIALTY_SUCCESS,
+          data: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_STATISTICAL_FOR_DOCTOR_HOSPITAL_SPECIALTY_FAIL,
+        });
+      }
+    } catch (e) {
+      console.log("fetch all specialties by clinicId", e);
+      dispatch({
+        type: actionTypes.FETCH_STATISTICAL_FOR_DOCTOR_HOSPITAL_SPECIALTY_FAIL,
+      });
+    }
+  };
+};
+
+
+
 export const SaveBulkScheduleForClinic = (data) => {
   return async (dispatch, getState) => {
     try {

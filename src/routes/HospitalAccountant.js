@@ -7,6 +7,7 @@ import ManageClinicByAccountant from "../containers/System/Accountant/ManageClin
 import ManageDoctorsAccount from "../containers/System/HospitalAccountant/ManageDoctorsAccount";
 import ManageDoctorSchedule from "../containers/System/HospitalAccountant/ManageDoctorSchedule";
 import Header from "../containers/Header/Header";
+import StatisticalPage from "../containers/System/HospitalAccountant/StatisticalPage";
 import { Link, withRouter } from "react-router-dom";
 import { LANGUAGES, USER_ROLE } from "../utils";
 import _ from "lodash";
@@ -129,7 +130,9 @@ class HospitalAccountant extends Component {
                               : "icon-container"
                           }
                         >
-                          {item.stt === 1 && <i className="fas fa-hospital"></i>}
+                          {item.stt === 1 && (
+                            <i className="fas fa-hospital"></i>
+                          )}
                           {item.stt === 2 && (
                             <i className="fas fa-notes-medical"></i>
                           )}
@@ -137,7 +140,10 @@ class HospitalAccountant extends Component {
                           {item.stt === 4 && (
                             <i className="fas fa-calendar-alt"></i>
                           )}
-                          {item.stt === 5 && <i className="fas fa-procedures"></i>}
+                          {item.stt === 5 && (
+                            <i className="fas fa-procedures"></i>
+                          )}
+                          {item.stt === 6 && <i class="fas fa-chart-bar"></i>}
                         </div>
                         <span className="navigate-name">
                           <FormattedMessage id={item.name}></FormattedMessage>
@@ -168,6 +174,10 @@ class HospitalAccountant extends Component {
                   <Route
                     path="/accountantHospital/manage-hospital-patients"
                     component={ManagePatient}
+                  />
+                  <Route
+                    path="/accountantHospital/statistical"
+                    component={StatisticalPage}
                   />
                 </Switch>
               </div>

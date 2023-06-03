@@ -36,6 +36,8 @@ class ManageDoctorSchedule extends Component {
       doctorForShow: [],
       arrSchedules: [],
       arrSchedulesForAfternoon: [],
+      arrSchedulesForShow: [],
+      arrSchedulesForAfternoonForShow: [],
       arrDayofWeekTimeStamp: [],
       arrDayofWeek: [],
       currentDate: new Date(),
@@ -192,8 +194,7 @@ class ManageDoctorSchedule extends Component {
       if (
         clinicWeekSchedulesAfternoon &&
         clinicWeekSchedulesAfternoon.length > 0
-      ) 
-      {
+      ) {
         this.setState({
           MondayAfternoon: MondayArr,
           TuesdayAfternoon: TuesdayArr,
@@ -295,6 +296,9 @@ class ManageDoctorSchedule extends Component {
       arrSchedule: result,
     };
     await this.props.SaveBulkScheduleForClinic(data);
+    this.setState({
+      arrSchedules: [],
+    });
   };
   handleSaveBulkSchedulesForAfternoon = async () => {
     let { arrSchedulesForAfternoon } = this.state;
@@ -316,37 +320,221 @@ class ManageDoctorSchedule extends Component {
       arrSchedule: result,
     };
     await this.props.SaveBulkScheduleForClinic(data);
+    this.setState({
+      arrSchedulesForAfternoon: [],
+    });
   };
   handleChange = async (selectedInfor, name) => {
-    let { filterDegree, filterSpecialty, doctorForShow, doctorArr } =
-      this.state;
+    let { doctorArr } = this.state;
     let stateName = name.name;
     let stateCopy = { ...this.state };
     stateCopy[stateName] = selectedInfor;
-    console.log(selectedInfor);
+    console.log(selectedInfor, name);
     this.setState({
       ...stateCopy,
     });
-    {
-      /* filterSpecialty:{},
-      filterDegree:{}, */
-    }
     if (name.name === "filterSpecialty") {
-      let temp = this.state.doctorArr.filter(
-        (e) => e.specialtyId === selectedInfor.value
-      );
-      this.setState({
-        doctorForShow: temp,
-      });
+      if (selectedInfor.value !== "All") {
+        let temp = doctorArr.filter(
+          (e) => e.specialtyId === selectedInfor.value
+        );
+
+        let scheduleTemp = this.props.clinicWeekSchedules.filter(
+          (e) => e.specialtyId === selectedInfor.value
+        );
+        let MondayArr = [];
+        let TuesdayArr = [];
+        let WednesdayArr = [];
+        let ThursdayArr = [];
+        let FridayArr = [];
+        let SaturdayArr = [];
+        let SundayArr = [];
+        scheduleTemp.forEach((element) => {
+          let date = new Date(element.picked_date).getDay();
+          console.log(date, element.picked_date);
+          if (date === 1) {
+            MondayArr.push(element);
+          }
+          if (date === 2) {
+            TuesdayArr.push(element);
+          }
+          if (date === 3) {
+            WednesdayArr.push(element);
+          }
+          if (date === 4) {
+            ThursdayArr.push(element);
+          }
+          if (date === 5) {
+            FridayArr.push(element);
+          }
+          if (date === 6) {
+            SaturdayArr.push(element);
+          }
+          if (date === 0) {
+            SundayArr.push(element);
+          }
+        });
+        this.setState({
+          MondayMorning: MondayArr,
+          TuesdayMorning: TuesdayArr,
+          WednesdayMorning: WednesdayArr,
+          ThursdayMorning: ThursdayArr,
+          FridayMorning: FridayArr,
+          SaturdayMorning: SaturdayArr,
+          SundayMorning: SundayArr,
+        });
+
+        let scheduleTempForAfternoon =
+          this.props.clinicWeekSchedulesAfternoon.filter(
+            (e) => e.specialtyId === selectedInfor.value
+          );
+        let MondayArrAfternoon = [];
+        let TuesdayArrAfternoon = [];
+        let WednesdayArrAfternoon = [];
+        let ThursdayArrAfternoon = [];
+        let FridayArrAfternoon = [];
+        let SaturdayArrAfternoon = [];
+        let SundayArrAfternoon = [];
+        scheduleTempForAfternoon.forEach((element) => {
+          let date = new Date(element.picked_date).getDay();
+          console.log(date, element.picked_date);
+          if (date === 1) {
+            MondayArrAfternoon.push(element);
+          }
+          if (date === 2) {
+            TuesdayArrAfternoon.push(element);
+          }
+          if (date === 3) {
+            WednesdayArrAfternoon.push(element);
+          }
+          if (date === 4) {
+            ThursdayArrAfternoon.push(element);
+          }
+          if (date === 5) {
+            FridayArrAfternoon.push(element);
+          }
+          if (date === 6) {
+            SaturdayArrAfternoon.push(element);
+          }
+          if (date === 0) {
+            SundayArrAfternoon.push(element);
+          }
+        });
+        this.setState({
+          MondayAfternoon: MondayArrAfternoon,
+          TuesdayAfternoon: TuesdayArrAfternoon,
+          WednesdayAfternoon: WednesdayArrAfternoon,
+          ThursdayAfternoon: ThursdayArrAfternoon,
+          FridayAfternoon: FridayArrAfternoon,
+          SaturdayAfternoon: SaturdayArrAfternoon,
+          SundayAfternoon: SundayArrAfternoon,
+        });
+        this.setState({
+          doctorForShow: temp,
+        });
+      } else {
+        this.setState({
+          doctorForShow: doctorArr,
+        });
+        let { clinicWeekSchedules } = this.props;
+        let MondayArr = [];
+        let TuesdayArr = [];
+        let WednesdayArr = [];
+        let ThursdayArr = [];
+        let FridayArr = [];
+        let SaturdayArr = [];
+        let SundayArr = [];
+        clinicWeekSchedules.forEach((element) => {
+          let date = new Date(element.picked_date).getDay();
+          console.log(date, element.picked_date);
+          if (date === 1) {
+            MondayArr.push(element);
+          }
+          if (date === 2) {
+            TuesdayArr.push(element);
+          }
+          if (date === 3) {
+            WednesdayArr.push(element);
+          }
+          if (date === 4) {
+            ThursdayArr.push(element);
+          }
+          if (date === 5) {
+            FridayArr.push(element);
+          }
+          if (date === 6) {
+            SaturdayArr.push(element);
+          }
+          if (date === 0) {
+            SundayArr.push(element);
+          }
+        });
+        this.setState({
+          MondayMorning: MondayArr,
+          TuesdayMorning: TuesdayArr,
+          WednesdayMorning: WednesdayArr,
+          ThursdayMorning: ThursdayArr,
+          FridayMorning: FridayArr,
+          SaturdayMorning: SaturdayArr,
+          SundayMorning: SundayArr,
+        });
+        let { clinicWeekSchedulesAfternoon } = this.props;
+
+        let MondayArrAfternoon = [];
+        let TuesdayArrAfternoon = [];
+        let WednesdayArrAfternoon = [];
+        let ThursdayArrAfternoon = [];
+        let FridayArrAfternoon = [];
+        let SaturdayArrAfternoon = [];
+        let SundayArrAfternoon = [];
+        clinicWeekSchedulesAfternoon.forEach((element) => {
+          let date = new Date(element.picked_date).getDay();
+          console.log(date, element.picked_date);
+          if (date === 1) {
+            MondayArrAfternoon.push(element);
+          }
+          if (date === 2) {
+            TuesdayArrAfternoon.push(element);
+          }
+          if (date === 3) {
+            WednesdayArrAfternoon.push(element);
+          }
+          if (date === 4) {
+            ThursdayArrAfternoon.push(element);
+          }
+          if (date === 5) {
+            FridayArrAfternoon.push(element);
+          }
+          if (date === 6) {
+            SaturdayArrAfternoon.push(element);
+          }
+          if (date === 0) {
+            SundayArrAfternoon.push(element);
+          }
+        });
+        this.setState({
+          MondayAfternoon: MondayArrAfternoon,
+          TuesdayAfternoon: TuesdayArrAfternoon,
+          WednesdayAfternoon: WednesdayArrAfternoon,
+          ThursdayAfternoon: ThursdayArrAfternoon,
+          FridayAfternoon: FridayArrAfternoon,
+          SaturdayAfternoon: SaturdayArrAfternoon,
+          SundayAfternoon: SundayArrAfternoon,
+        });
+      }
     }
     if (name.name === "filterDegree") {
-      let temp = this.state.doctorArr.filter(
-        (e) => e.positionId === selectedInfor.value
-      );
+      let temp = doctorArr.filter((e) => e.positionId === selectedInfor.value);
       this.setState({
         doctorForShow: temp,
       });
     }
+    // if(name.name==='All')
+    // {
+    //   this.setState({
+    //     doctorForShow: doctorArr,
+    //   });
+    // }
   };
   render() {
     let { arrDayofWeekTimeStamp, arrDayofWeek, doctorForShow } = this.state;

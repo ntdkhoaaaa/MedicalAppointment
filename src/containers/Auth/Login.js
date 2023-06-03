@@ -127,14 +127,14 @@ class Login extends Component {
                         <div className='col-12'>
                             <span className='forgetpassword'><Link to='/forgot-password'>Forget your password</Link></span>
                         </div>
-                        <div className='col-12 text-center mt-3'>
+                        {/* <div className='col-12 text-center mt-3'>
                             <span className='text-otherlogin'>Or Login with:</span>
                         </div>
                         <div className='col-12 social-login'>
                             <i className="fab fa-google google"></i>
                             <i className="fab fa-facebook-f facebook"></i>
-                        </div>
-                        <div className='col-12 '>
+                        </div> */}
+                        <div className='col-12 social-login'>
                             <button className='btn-register' onClick={() => { this.handleRegister() }}>
                                 Register
                             </button>

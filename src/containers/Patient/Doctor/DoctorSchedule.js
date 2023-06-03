@@ -209,7 +209,7 @@ class DoctorSchedule extends Component {
       dataScheduleTimeModal,
       isNotifyBooked,
     } = this.state;
-    let { language } = this.props;
+    let { language,doctorInfor } = this.props;
     return (
       <>
         <div className="doctor-schedule-container">
@@ -285,6 +285,7 @@ class DoctorSchedule extends Component {
           isOpenModal={isOpenModalBooking}
           closeBookingModal={this.closeBookingModal}
           dataTime={dataScheduleTimeModal}
+          doctorInfor={doctorInfor}
         />
         <NotifyBookedModal
           isNotify={isNotifyBooked}

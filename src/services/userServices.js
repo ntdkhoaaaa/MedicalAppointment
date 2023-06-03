@@ -75,6 +75,15 @@ const saveBulkScheduleDoctor = (data) => {
 const saveBulkScheduleForClinic = (data) => {
     return axios.post(`/api/create-bulk-schedules-for-doctors`, data)
 }
+const getHospitalAppointmentByDate = (data) => {
+    return axios.post(`/api/get-booking-appointment-from-hospital`, data)
+}
+const getStatisticalForHospitalSpecialty = (data) => {
+    return axios.post(`/api/get-statistical-for-specialty`, data)
+}
+const getStatisticalForDoctorHospitalSpecialty = (data) => {
+    return axios.post(`/api/get-statistical-for-doctor-clinic-specialty`, data)
+}
 const getSelectedSchedule = (doctorId, date) => {
     return axios.get(`/api/get-selected-schedule-byId?doctorId=${doctorId}&date=${date}`)
 }
@@ -262,8 +271,9 @@ export {
     deleteSelectedSchedule, getExtraInforDoctorById,getMedicalRecordByDate,
     getProfileDoctorById, postPatientAppointment,deleteDoctorClinicService,
     postVerifyBooking, addNewSpecialty, getAllAppointmentOfPatient,
+    getHospitalAppointmentByDate,getStatisticalForHospitalSpecialty,
     getAllSpecialties, addNewClinic, getAllClinics,editDoctorClinicService,
-    getDetailSpecialtyById, handleRegisterApi, handleGetPermission,
+    getDetailSpecialtyById, handleRegisterApi, handleGetPermission,getStatisticalForDoctorHospitalSpecialty,
     getDetailClinicById, getListPatientForDoctor, editUserInforByOwnService, postVerifyRegister,
     handleForgotPassWord, checkTokenResetPassword, handleResetPassWord,
     deleteClinicById, updateClinicbyId, deleteSpecialtyById, updateSpecialtybyId, getListSearch

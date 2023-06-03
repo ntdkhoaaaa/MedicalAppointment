@@ -1,0 +1,136 @@
+.StatisticalPage{
+    width: 100%;
+    background-color: #eff1f5;
+    // background-color: #fff;
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    .StatisticalPage-container{
+        width: 100%;
+        margin: 50px;
+        background-color: #fff;
+        border-radius: 10px;
+        height: fit-content;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 30px;
+        .left-container{
+            width: 20%;
+            margin: 15px;
+            border-radius: 10px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            // height: ;
+            .date-container{
+                width: 100%;
+                background-color: #eff1f5;
+                border-radius: 10px;
+                height: 330px;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                // align-items: center;
+                justify-content: center;
+                .date-picker{
+                    margin:20px 0px;
+                }
+                label {
+                    font-weight: 700;
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                  }
+                  .type-search {
+                    margin-left: 15px;
+                    margin-top: 10px;
+                    label {
+                      font-weight: 700;
+                      font-size: 20px;
+                      margin-bottom: 5px;
+                    }
+                    .type-select {
+                      width: 90%;
+                    }
+                  }
+                  .date-picker {
+                    margin-left: 15px;
+                    margin-top: 10px;
+                    width: 85%;
+                  }
+                  .statistical-container {
+                    background-color: #eff1f5;
+                    height: 50px;
+                    border-radius: 10px;
+                    width: 100%;
+                    padding: 20px;
+                    label {
+                      font-weight: 700;
+                      font-size: 20px;
+                      margin-bottom: 5px;
+                    }
+                    span {
+                      font-weight: 500;
+                      font-size: 20px;
+                      margin-bottom: 5px;
+                    }
+                    .total {
+                      display: flex;
+                      justify-content: space-between;
+                    }
+                    .total-pill {
+                      color: #000;
+                    }
+                    .total-tupe {
+                      color: #000;
+                    }
+                    .total-medicine {
+                      color: #000;
+                    }
+                    .add-new-medicine {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      .icon-container {
+                        width: 150px;
+                        height: 40px;
+                        border-radius: 10px;
+                        background-color: #c9e1f3;
+                        transition: width 0.5s;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        &:hover {
+                          cursor: pointer;
+                          background-color: rgb(4, 171, 255);
+                        }
+                        span {
+                          font-weight: 600;
+                          font-size: 20px;
+                          margin-bottom: 5px;
+                        }
+                        // i {
+                        //   height: 80px;
+                        //   font-size: 20px;
+                        //   align-items: center;
+                        //   justify-content: center;
+                        //   display: flex;
+                        // }
+                      }
+                    }
+                  }
+            }
+        }
+        .right-container{
+            width: 80%;
+            margin: 20px;
+            border-radius: 10px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+}
